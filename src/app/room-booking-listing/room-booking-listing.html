@@ -1,0 +1,765 @@
+<!--Image Grid-->
+<div class="page-wrapper">
+<section class="image-grid">
+
+    <p-carousel #image [value]="images" [numVisible]="3" [numScroll]="1" [circular]="true" [showNavigators]="false"
+        [responsiveOptions]="responsiveOptions">
+
+        <ng-template pTemplate="item" let-item>
+            <img [src]="item.itemImageSrc" class="carousel-img" />
+        </ng-template>
+
+    </p-carousel>
+    <div class="custom-nav left" (click)="prev()">
+        <i class="pi pi-chevron-left"></i>
+    </div>
+    <div class="custom-nav right" (click)="next()">
+        <i class="pi pi-chevron-right"></i>
+    </div>
+
+</section>
+    <section class="filters">
+        <div class="container py-3">
+            <div class="row">
+                <div class="col-12 col-lg-6 d-flex align-items-center">
+                    <div class="d-flex gap-3 align-items-center">
+                        <div class="d-flex justify-content-center align-items-center gap-3 ">
+                            <button type="button" class="show-filters d-flex flex-row px-3 py-2 gap-2 border-0 justify-content-center "
+                                (click)="overlay()">
+
+                                <i class="fa-solid fa-sliders d-flex justify-content-center align-items-center"></i>
+                                <p class="m-0">Show Filters</p>
+                            </button>
+                            @if (isFilterOpen) {
+                                <!-- <div class="filter-overlay"> -->
+                                    <div class="custom-backdrop" (click)="closeFilter()"></div>
+                            <div class="filter-sidebar p-3" [class.open]="isFilterOpen">
+                                <div class="filter-content">
+                                    <div class="d-flex flex-row justify-content-between">
+                                        <p class="filterTitle">Filter</p>
+                                        <div class="close-btn">
+                                            <i class="fa-solid fa-xmark" (click)="closeFilter()"></i>
+                                        </div>
+                                    </div>
+                                    <p class="Options pt-3">City / Category</p>
+                                    <div class="category">
+                                        <div class="category-header d-flex flex-row justify-content-between"
+                                            (click)="toggleCityBoxOpen()">
+                                            <div class="d-flex gap-3">
+                                                <i class="fa-solid fa-bars"></i>
+                                                <p class="m-0">All Cities</p>
+                                            </div>
+                                            <i class="fa-solid fa-chevron-down text-black"
+                                                [class.rotate]="isCityBoxOpen"></i>
+                                        </div>
+                                        @if (isCityBoxOpen) {
+                                        <div class="category-box-contents py-3">
+                                            <div class="search_container">
+                                                <p class="search-btn m-0"><i class="fa-solid fa-magnifying-glass"></i>
+                                                </p>
+                                                <input type="text" pInputText [(ngModel)]="value"
+                                                    placeholder="Search" />
+                                            </div>
+                                            <div class="greenline"> </div>
+                                            <div class="categoryTitle">
+                                                <div class="categorynameTitle">Chennai</div>
+                                                <div class="categorynameTitle">Coimbatore</div>
+                                                <div class="categorynameTitle">Trichy</div>
+                                                <div class="categorynameTitle">Salem</div>
+                                                <div class="categorynameTitle">Madurai</div>
+                                                <div class="categorynameTitle">Kanchipuram</div>
+                                                <div class="categorynameTitle">Ooty</div>
+                                            </div>
+                                        </div>
+                                        }
+                                    </div>
+                                    <p class="Options pt-4">Hotel Name</p>
+                                    <div class="category">
+                                        <div class="category-header d-flex flex-row justify-content-between"
+                                            (click)="toggleHotelBoxOpen()">
+                                            <div class="d-flex gap-3">
+                                                <i class="fa-solid fa-bars"></i>
+                                                <p class="m-0">Hotel Name</p>
+                                            </div>
+                                            <i class="fa-solid fa-chevron-down text-black"
+                                                [class.rotate]="isHotelBoxOpen"></i>
+                                        </div>
+                                        @if (isHotelBoxOpen) {
+                                        <div class="category-box-contents py-3">
+                                            <div class="search_container">
+                                                <p class="search-btn m-0"><i class="fa-solid fa-magnifying-glass"></i>
+                                                </p>
+                                                <input type="text" pInputText [(ngModel)]="value"
+                                                    placeholder="Search" />
+                                            </div>
+                                            <div class="greenline"> </div>
+                                            <div class="categoryTitle">
+                                                <div class="categorynameTitle">Hyatt</div>
+                                                <div class="categorynameTitle">Kaldan Samudhra</div>
+                                                <div class="categorynameTitle">ITC Grand Chola</div>
+                                                <div class="categorynameTitle">Ramada</div>
+                                                <div class="categorynameTitle">Taj</div>
+                                                <div class="categorynameTitle">Raddison Blu</div>
+                                                <div class="categorynameTitle">Park</div>
+                                            </div>
+                                        </div>
+                                        }
+                                    </div>
+                                    <div class="dates">
+                                        <div class="row">
+                                            <div class="col-12 col-lg-6">
+                                                <p class="dateTitle pt-4">Check-in Date</p>
+                                                <div class="chechinDate">
+                                                    <div class="category-header d-flex flex-row "
+                                                        (click)="toggleCheckinBoxOpen()">
+                                                        <div class="d-flex gap-3">
+                                                            <i class="fa-solid fa-bars"></i>
+                                                            <p class="m-0"><p-datepicker [(ngModel)]="date"
+                                                                    [inputStyle]="{'width': '97px' }" /></p>
+                                                        </div>
+                                                        <!-- <i class="fa-solid fa-chevron-down" [class.rotate]="isCheckinBoxOpen"></i> -->
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-12 col-lg-6">
+                                                <p class="dateTitle pt-4">Check-Out Date</p>
+                                                <div class="chechoutDate">
+                                                    <div class="category-header d-flex flex-row "
+                                                        (click)="toggleCheckoutBoxOpen()">
+                                                        <div class="d-flex gap-3">
+                                                            <i class="fa-solid fa-bars"></i>
+                                                            <p class="m-0"><p-datepicker [(ngModel)]="date"
+                                                                    [inputStyle]="{'width': '97px' }" /></p>
+                                                        </div>
+                                                        <!-- <i class="fa-solid fa-chevron-down" [class.rotate]="isCheckinBoxOpen"></i> -->
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="count">
+                                        <div class="row">
+                                            <div class="col-4 col-lg-4 col-md-4 ">
+                                                <!-- <p class="roomTitle pt-4">Rooms</p> -->
+                                                <div class="flex-auto">
+                                                    <label class="roomTitle pt-4" for="minmax-buttons">Rooms</label>
+                                                    <p-inputnumber [(ngModel)]="room" mode="decimal"
+                                                        [showButtons]="true" inputId="minmax-buttons" [min]="0"
+                                                        [max]="100" [inputStyle]="{'width': '10px' }" />
+                                                </div>
+                                            </div>
+                                            <div class="col-4 col-lg-4 col-md-4 col-sm-4">
+                                                <!-- <p class="roomTitle pt-4">Rooms</p> -->
+                                                <div class="flex-auto">
+                                                    <label class="roomTitle pt-4" for="minmax-buttons">Aduts</label>
+                                                    <p-inputnumber [(ngModel)]="adult" mode="decimal"
+                                                        [showButtons]="true" inputId="minmax-buttons" [min]="0"
+                                                        [max]="100" [inputStyle]="{'width': '10px' }" />
+                                                </div>
+                                            </div>
+                                            <div class="col-4 col-lg-4 col-md-4 col-sm-4">
+                                                <!-- <p class="roomTitle pt-4">Rooms</p> -->
+                                                <div class="flex-auto">
+                                                    <label class="roomTitle pt-4" for="minmax-buttons">Children</label>
+                                                    <p-inputnumber [(ngModel)]="children" mode="decimal"
+                                                        [showButtons]="true" inputId="minmax-buttons" [min]="0"
+                                                        [max]="100" [inputStyle]="{'width': '10px' }" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="price-slider">
+                                        <p class="pricesliderTitle pt-4">Price in Thousands</p>
+                                        <div class="d-flex flex-row justify-content-between">
+                                            <div class="minPrice">
+                                                ₹ 1000
+                                            </div>
+                                            <div class="maxPrice">
+                                                ₹ 10000
+                                            </div>
+                                        </div>
+                                        <div class="slider mb-3 mt-4 px-3">
+                                            <p-slider [(ngModel)]="priceRangeValues" [range]="true"
+                                                class="custom-slider" />
+                                        </div>
+                                    </div>
+
+
+                                    <p class="Options pt-4">Star Ratings</p>
+                                    <div class="category">
+                                        <div class="category-header d-flex flex-row justify-content-between"
+                                            (click)="toggleRatingBoxOpen()">
+                                            <div class="d-flex gap-3">
+                                                <i class="fa-solid fa-bars"></i>
+                                                <p class="m-0">Star Ratings</p>
+                                            </div>
+                                            <i class="fa-solid fa-chevron-down text-black"
+                                                [class.rotate]="isRatingBoxOpen"></i>
+                                        </div>
+                                        @if (isRatingBoxOpen) {
+                                        <div class="category-box-contents py-3">
+                                            <div class="search_container">
+                                                <p class="search-btn m-0"><i class="fa-solid fa-magnifying-glass"></i>
+                                                </p>
+                                                <input type="text" pInputText [(ngModel)]="value"
+                                                    placeholder="Search" />
+                                            </div>
+                                            <div class="greenline"> </div>
+                                            <div class="rating">
+                                                <div class="categorynameTitle d-flex flex-row align-items-center gap-2">
+                                                    <div class="d-flex flex-row">
+                                                        <i class="fa-solid fa-star"></i>
+                                                        <i class="fa-solid fa-star"></i>
+                                                        <i class="fa-solid fa-star"></i>
+                                                        <i class="fa-solid fa-star"></i>
+                                                        <i class="fa-solid fa-star"></i>
+                                                    </div> 5 stars
+                                                </div>
+                                                <div class="categorynameTitle d-flex flex-row align-items-center gap-2">
+                                                    <div class="d-flex flex-row">
+                                                        <i class="fa-solid fa-star"></i>
+                                                        <i class="fa-solid fa-star"></i>
+                                                        <i class="fa-solid fa-star"></i>
+                                                        <i class="fa-solid fa-star"></i>
+                                                    </div> 4 stars
+                                                </div>
+                                                <div class="categorynameTitle d-flex flex-row align-items-center gap-2">
+                                                    <div class="d-flex flex-row">
+                                                        <i class="fa-solid fa-star"></i>
+                                                        <i class="fa-solid fa-star"></i>
+                                                        <i class="fa-solid fa-star"></i>
+                                                    </div> 3 stars & below
+                                                </div>
+                                            </div>
+                                        </div>
+                                        }
+                                    </div>
+
+                                    <p class="Options pt-3">Aminities</p>
+                                    <div class="category">
+                                        <div class="category-header d-flex flex-row justify-content-between"
+                                            (click)="toggleAminitiesBoxOpen()">
+                                            <div class="d-flex gap-3">
+                                                <i class="fa-solid fa-bars"></i>
+                                                <p class="m-0">Aminities</p>
+                                            </div>
+                                            <i class="fa-solid fa-chevron-down text-black"
+                                                [class.rotate]="isAminitiesBoxOpen"></i>
+                                        </div>
+                                        @if (isAminitiesBoxOpen) {
+                                        <div class="category-box-contents py-3">
+                                            <div class="search_container">
+                                                <p class="search-btn m-0"><i class="fa-solid fa-magnifying-glass"></i>
+                                                </p>
+                                                <input type="text" pInputText [(ngModel)]="value"
+                                                    placeholder="Search" />
+                                            </div>
+                                            <div class="greenline"> </div>
+                                            <div class="categoryTitle">
+                                                <div class="categorynameTitle">Wifi</div>
+                                                <div class="categorynameTitle">Air conditioner</div>
+                                                <div class="categorynameTitle">Gym</div>
+                                                <div class="categorynameTitle">Spa</div>
+                                                <div class="categorynameTitle">Toiletries</div>
+                                                <div class="categorynameTitle">Swimming Pool</div>
+                                                <div class="categorynameTitle">Parking</div>
+                                            </div>
+                                        </div>
+                                        }
+                                    </div>
+
+                                    <div class="distance-slider">
+                                        <p class="distancesliderTitle pt-4">Distance in kms</p>
+                                        <div class="d-flex flex-row justify-content-between">
+                                            <div class="mindist">
+                                                0
+                                            </div>
+                                            <div class="maxdist">
+                                                100
+                                            </div>
+                                        </div>
+                                        <div class="slider mb-3 mt-4 px-3">
+                                            <p-slider [(ngModel)]="distRangeValues" [range]="true"
+                                                class="custom-slider" />
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-12 mt-4 px-3">
+                                            <div class="open-btn d-flex justify-content-center align-items-center">
+                                                <i class="fa-solid fa-clock"></i> Open
+                                                <div class="check"><i class="fa-solid fa-check"></i></div>
+                                            </div>
+
+                                        </div>
+
+                                        <!-- more option -->
+                                        @if (isMoreOptionOpen) {
+
+                                        <!-- Facitilies -->
+                                        <p class="Options pt-4">Facilities</p>
+                                        <div class="category">
+                                            <div class="category-header d-flex flex-row justify-content-between"
+                                                (click)="toggleFacilitiesBoxOpen()">
+                                                <div class="d-flex gap-3">
+                                                    <i class="fa-solid fa-bars"></i>
+                                                    <p class="m-0">Facilities</p>
+                                                </div>
+                                                <i class="fa-solid fa-chevron-down text-black"
+                                                    [class.rotate]="isFacilitiesBoxOpen"></i>
+                                            </div>
+                                            @if (isFacilitiesBoxOpen) {
+                                            <div class="category-box-contents py-3">
+                                                <div class="search_container">
+                                                    <p class="search-btn m-0"><i
+                                                            class="fa-solid fa-magnifying-glass"></i>
+                                                    </p>
+                                                    <input type="text" pInputText [(ngModel)]="value"
+                                                        placeholder="Search" />
+                                                </div>
+                                                <div class="greenline"> </div>
+                                                <div class="categoryTitle">
+                                                    <div class="categorynameTitle">Air Conditioning</div>
+                                                    <div class="categorynameTitle">Airport Shuttle</div>
+                                                    <div class="categorynameTitle">Breakfast Included</div>
+                                                    <div class="categorynameTitle">Fitness Center</div>
+                                                    <div class="categorynameTitle">Free Wifi</div>
+                                                    <div class="categorynameTitle">Non-Smoking Rooms</div>
+                                                    <div class="categorynameTitle">Parking</div>
+                                                </div>
+                                            </div>
+                                            }
+                                        </div>
+
+                                        <!-- Room type -->
+                                        <p class="Options pt-4">Room Type</p>
+                                        <div class="category">
+                                            <div class="category-header d-flex flex-row justify-content-between"
+                                                (click)="toggleRoomBoxOpen()">
+                                                <div class="d-flex gap-3">
+                                                    <i class="fa-solid fa-bars"></i>
+                                                    <p class="m-0">Room Type</p>
+                                                </div>
+                                                <i class="fa-solid fa-chevron-down text-black"
+                                                    [class.rotate]="isRoomBoxOpen"></i>
+                                            </div>
+                                            @if (isRoomBoxOpen) {
+                                            <div class="category-box-contents py-3">
+                                                <div class="search_container">
+                                                    <p class="search-btn m-0"><i
+                                                            class="fa-solid fa-magnifying-glass"></i>
+                                                    </p>
+                                                    <input type="text" pInputText [(ngModel)]="value"
+                                                        placeholder="Search" />
+                                                </div>
+                                                <div class="greenline"> </div>
+                                                <div class="categoryTitle">
+                                                    <div class="categorynameTitle">Budget</div>
+                                                    <div class="categorynameTitle">Mid-range</div>
+                                                    <div class="categorynameTitle">Luxury</div>
+                                                    <div class="categorynameTitle">Family-friendly</div>
+                                                    <div class="categorynameTitle">Business</div>
+
+                                                </div>
+                                            </div>
+                                            }
+                                        </div>
+
+                                        <!--Style-->
+                                        <p class="Options pt-4">Style</p>
+                                        <div class="category">
+                                            <div class="category-header d-flex flex-row justify-content-between"
+                                                (click)="toggleStyleBoxOpen()">
+                                                <div class="d-flex gap-3">
+                                                    <i class="fa-solid fa-bars"></i>
+                                                    <p class="m-0">Style</p>
+                                                </div>
+                                                <i class="fa-solid fa-chevron-down text-black"
+                                                    [class.rotate]="isStyleBoxOpen"></i>
+                                            </div>
+                                            @if (isStyleBoxOpen) {
+                                            <div class="category-box-contents py-3">
+                                                <div class="search_container">
+                                                    <p class="search-btn m-0"><i
+                                                            class="fa-solid fa-magnifying-glass"></i>
+                                                    </p>
+                                                    <input type="text" pInputText [(ngModel)]="value"
+                                                        placeholder="Search" />
+                                                </div>
+                                                <div class="greenline"> </div>
+                                                <div class="categoryTitle">
+                                                    <div class="categorynameTitle">Budget</div>
+                                                    <div class="categorynameTitle">Mid-range</div>
+                                                    <div class="categorynameTitle">Luxury</div>
+                                                    <div class="categorynameTitle">Family-friendly</div>
+                                                    <div class="categorynameTitle">Business</div>
+                                                    <div class="categorynameTitle">Romantic</div>
+                                                </div>
+                                            </div>
+                                            }
+                                        </div>
+
+                                        <!--Neighbourhood-->
+                                        <p class="Options pt-4">Neighbourhood</p>
+                                        <div class="category">
+                                            <div class="category-header d-flex flex-row justify-content-between"
+                                                (click)="toggleNeighbourhoodBoxOpen()">
+                                                <div class="d-flex gap-3">
+                                                    <i class="fa-solid fa-bars"></i>
+                                                    <p class="m-0">Neighbourhood</p>
+                                                </div>
+                                                <i class="fa-solid fa-chevron-down text-black"
+                                                    [class.rotate]="isNeighbourhoodBoxOpen"></i>
+                                            </div>
+                                            @if (isNeighbourhoodBoxOpen) {
+                                            <div class="category-box-contents py-3">
+                                                <div class="search_container">
+                                                    <p class="search-btn m-0"><i
+                                                            class="fa-solid fa-magnifying-glass"></i>
+                                                    </p>
+                                                    <input type="text" pInputText [(ngModel)]="value"
+                                                        placeholder="Search" />
+                                                </div>
+                                                <div class="greenline"> </div>
+                                                <div class="categoryTitle">
+                                                    <div class="categorynameTitle">Neighbourhood - 1</div>
+                                                    <div class="categorynameTitle">Neighbourhood - 2</div>
+                                                    <div class="categorynameTitle">Neighbourhood - 3</div>
+                                                </div>
+                                            </div>
+                                            }
+                                        </div>
+
+                                        <!--Deals-->
+                                        <p class="Options pt-4">Deals</p>
+                                        <div class="category">
+                                            <div class="category-header d-flex flex-row justify-content-between"
+                                                (click)="toggleDealsBoxOpen()">
+                                                <div class="d-flex gap-3">
+                                                    <i class="fa-solid fa-bars"></i>
+                                                    <p class="m-0">Deals</p>
+                                                </div>
+                                                <i class="fa-solid fa-chevron-down text-black"
+                                                    [class.rotate]="isDealsBoxOpen"></i>
+                                            </div>
+                                            @if (isDealsBoxOpen) {
+                                            <div class="category-box-contents py-3">
+                                                <div class="search_container">
+                                                    <p class="search-btn m-0"><i
+                                                            class="fa-solid fa-magnifying-glass"></i>
+                                                    </p>
+                                                    <input type="text" pInputText [(ngModel)]="value"
+                                                        placeholder="Search" />
+                                                </div>
+                                                <div class="greenline"> </div>
+                                                <div class="categoryTitle">
+                                                    <div class="categorynameTitle">Free Cancellation</div>
+                                                    <div class="categorynameTitle">Reserve now, pay at stay </div>
+                                                    <div class="categorynameTitle">Properties with special offers</div>
+                                                </div>
+                                            </div>
+                                            }
+                                        </div>
+                                        }
+                                        <div class="col-12 col-lg-6 mt-4 px-3">
+                                            <button type="button" class="more-option" (click)="toggleMoreOption()">
+                                                <i class="fa-solid"
+                                                    [ngClass]="isMoreOptionOpen ? 'fa-xmark' : 'fa-plus'"></i>
+                                                {{ isMoreOptionOpen ? 'Close Option' : 'More Option' }} </button>
+                                        </div>
+                                        <!--reset-->
+                                        <div class="col-12 col-lg-6 mt-4">
+                                            <div class="reset-filter">
+                                                <i class="fa-solid fa-rotate-left d-flex align-items-center"></i>
+                                                Reset Filter
+                                            </div>
+
+                                        </div>
+                                        <div class="col-12 mt-4">
+                                            <div class="d-flex flex-row gap-2">
+                                                <button type="button" class="search-button">
+                                                    <i class="fa-solid fa-magnifying-glass"></i>
+                                                    <div class="vertical-line"></div>
+                                                    <p class="m-0">Search</p>
+                                                </button>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                                <!-- </div> -->
+                            
+
+                            }
+                            <p class="d-flex justify-content-center align-items-center m-0">Result for: City name</p>
+                        </div>
+                        <div class="showing-result d-flex justify-content-center align-items-center m-0">
+                            <p class="m-0">Showing 1-18 of 256 results</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-lg-6 d-flex justify-content-end">
+
+                    <div class="d-flex gap-3 align-items-center">
+                        <div class="featured d-flex gap-3 justify-content-center align-items-center">
+                            <p class="m-0">Sort by:</p>
+                            <div class="featured-dropdown">
+                                <button class="featured-btn" (click)="toggleFeatured()">
+                                    <span><i class="fa-solid fa-bars"></i></span>{{ selectedFeatured }}
+                                    <span class="arrow">
+                                        <i class="fa-solid fa-angle-down"></i>
+                                    </span>
+                                </button>
+
+                                @if (isFeaturedOpen) {
+                                <ul class="featured-list">
+                                    @for (option of featuredOptions; track option) {
+                                    <li (click)="selectFeatured(option)" [class.active]="option === selectedFeatured">
+                                        {{ option }}
+                                    </li>
+                                    <hr class="m-0">
+                                    }
+                                </ul>
+                                }
+                            </div>
+                        </div>
+
+                        <button type="button" class="view-map px-3 py-2 gap-2 justify-content-center align-items-center"
+                            (click)="toggleViewMap()">
+                            <i class="fa-solid fa-sliders"></i>
+                            <p class="m-0">View Map</p>
+                        </button>
+
+                    </div>
+                </div>
+                @if (isViewMapOpen) {
+                <iframe
+                    src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d15346778.079700144!2d58.931226176230695!3d24.36700599805653!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2sin!4v1772530819370!5m2!1sen!2sin"
+                    width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy"
+                    referrerpolicy="no-referrer-when-downgrade"></iframe>
+                }
+            </div>
+        </div>
+    </section>
+
+    <!--Hotel Cards-->
+    <section class="hotel-cards">
+        <div class="py-4">
+            <div class="row">
+                @for (hotel of hotelcard; track hotel.id) {
+                <div class="col-12 col-md-4 col-lg-3 col-sm-6 mt-3 p-1">
+                    <div class="card">
+                        <div class="card-img">
+                            <img [src]="hotel.cardImg">
+                            <div class="profileimg">
+                                <img [src]="hotel.profileimg">
+                            </div>
+                            <div class="stars d-flex flex-row">
+                                @for (star of hotel.starArray; track $index) {
+                                <i class="fa-solid fa-star"></i>
+                                }
+                            </div>
+                            <div class="views d-flex flex-row gap-1">
+                                <i class="fa-solid fa-eye"></i>
+                                <p class="m-0">Views: {{ hotel.views }}</p>
+                            </div>
+                            <div class="review-container">
+                                <div class="review-text">
+                                    <h5>{{ hotel.reviewText }}</h5>
+                                    <h6>{{ hotel.reviews }} Reviews</h6>
+                                </div>
+                                <div class="rating-box">
+                                    {{ hotel.rating }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="hotel">{{ hotel.hotelType }}</div>
+                            <h3 class="hotel-title">{{ hotel.hotelTitle }}</h3>
+                            <hr>
+                            <div class="facilities">
+                                <div class="facility-item">
+                                    <i class="fa-solid fa-bed"></i>
+                                    <span>{{ hotel.rooms }} Room</span>
+                                </div>
+                                <div class="facility-item">
+                                    <i class="fa-solid fa-bath"></i>
+                                    <span>{{ hotel.bathrooms }} Bathroom</span>
+                                </div>
+                                <div class="facility-item">
+                                    <i class="fa-solid fa-cube"></i>
+                                    <span>{{ hotel.size }}</span>
+                                </div>
+                            </div>
+                            <div class="amenities gap-2">
+                                <i class="pi pi-wifi"></i>
+                                <i class="fa-solid fa-square-parking"></i>
+                                <i class="fa-solid fa-ban-smoking"></i>
+                                <i class="fa-solid fa-utensils"></i>
+                            </div>
+                            <hr class="divider">
+                            <div class="bottom-section">
+                                <div class="price-box">
+                                    <span class="avg">AVG/NIGHT</span>
+                                    <span class="price">$ {{ hotel.price }}</span>
+                                </div>
+                                <div class="action-buttons">
+                                    <button class="contact-btn" (click)="togglePopup(hotel.id)">Contact Info</button>
+                                     @if(activeContactId===hotel.id)
+                                {
+                                    <div class="popup card gap-3">
+                                        <div class="d-flex justify-content-between gap-3">
+                                        <div class="phone gap-2 align-items-center">
+                                            <i class="pi pi-phone"></i>Phone: +7(111)123456789
+                                        </div>
+                                        <div  class="close-btn" (click)="closePopup()">
+                                            <i class="pi pi-times"></i>
+                                        </div>
+                                        </div>
+                                          
+                                       <div class="email gap-2 align-items-center">
+                                            <i class="pi pi-envelope"></i> Mail: yourmail@domain.com
+                                        </div>
+                                      
+                                    </div>
+                                }
+                                    <button class="icon-btn">
+                                        <i class="fa-regular fa-heart"></i>
+                                    </button>
+                                    <button class="icon-btn">
+                                        <i class="fa-solid fa-location-dot"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                }
+            </div>
+        </div>
+        
+    </section>
+</div>
+
+
+<!--Pagination-->
+<section class="pagination d-flex justify-content-center">
+    @if (totalPages > 1) {
+    <div class="d-flex justify-content-center mt-4 gap-2">
+        <button class="btn btn-page border" [disabled]="currentPage === 1" (click)="changePage(currentPage - 1)">
+            <i class="fa-solid fa-angle-left"></i>
+        </button>
+
+        @for (page of pages; track page) {
+        <button class="btn btn-page border" [class.active-page]="currentPage === page" (click)="changePage(page)">
+            {{ page }}
+        </button>
+        }
+
+        <button class="btn btn-page border" [disabled]="currentPage === totalPages"
+            (click)="changePage(currentPage + 1)">
+            <i class="fa-solid fa-angle-right"></i>
+        </button>
+    </div>
+    }
+</section>
+
+<!--Promoted Listing-->
+<section class="hotel-cards">
+    <div class="py-4">
+        <p class="promotedTitle">Promoted Listing</p>
+        <div class="row">
+            @for (hotel of promotedHotels; track hotel.id) {
+            <div class="col-12 col-md-4 col-lg-3 col-sm-6 mt-4">
+                <div class="card">
+                    <div class="card-img">
+                        <img [src]="hotel.cardImg">
+                        <div class="profileimg">
+                            <img [src]="hotel.profileimg">
+                        </div>
+                        <div class="stars d-flex flex-row">
+                            @for (star of hotel.starArray; track $index) {
+                            <i class="fa-solid fa-star"></i>
+                            }
+                        </div>
+                        <div class="views d-flex flex-row gap-1">
+                            <i class="fa-solid fa-eye"></i>
+                            <p class="m-0">Views: {{ hotel.views }}</p>
+                        </div>
+                        <div class="review-container">
+                            <div class="review-text">
+                                <h5>{{ hotel.reviewText }}</h5>
+                                <h6>{{ hotel.reviews }} Reviews</h6>
+                            </div>
+                            <div class="rating-box">
+                                {{ hotel.rating }}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="hotel">{{ hotel.hotelType }}</div>
+                        <h3 class="hotel-title">{{ hotel.hotelTitle }}</h3>
+                        <hr>
+                        <div class="facilities">
+                            <div class="facility-item">
+                                <i class="fa-solid fa-bed"></i>
+                                <span>{{ hotel.rooms }} Room</span>
+                            </div>
+                            <div class="facility-item">
+                                <i class="fa-solid fa-bath"></i>
+                                <span>{{ hotel.bathrooms }} Bathroom</span>
+                            </div>
+                            <div class="facility-item">
+                                <i class="fa-solid fa-cube"></i>
+                                <span>{{ hotel.size }}</span>
+                            </div>
+                        </div>
+                        <div class="amenities gap-2">
+                            <i class="fa-solid fa-wifi"></i>
+                            <i class="fa-solid fa-square-parking"></i>
+                            <i class="fa-solid fa-ban-smoking"></i>
+                            <i class="fa-solid fa-utensils"></i>
+                        </div>
+                        <hr class="divider">
+                        <div class="bottom-section">
+                            <div class="price-box">
+                                <span class="avg">AVG/NIGHT</span>
+                                <span class="price">$ {{ hotel.price }}</span>
+                            </div>
+                                                            <div class="action-buttons">
+                                    <button class="contact-btn" (click)="togglePopup(hotel.id)">Contact Info</button>
+                                     @if(activeContactId===hotel.id)
+                                {
+                                    <div class="popup card gap-3">
+                                        <div class="d-flex justify-content-between gap-3">
+                                        <div class="phone gap-2 align-items-center">
+                                            <i class="pi pi-phone"></i>Phone: +7(111)123456789
+                                        </div>
+                                        <div  class="close-btn" (click)="closePopup()">
+                                            <i class="pi pi-times"></i>
+                                        </div>
+                                        </div>
+                                          
+                                       <div class="email gap-2 align-items-center">
+                                            <i class="pi pi-envelope"></i> Mail: yourmail@domain.com
+                                        </div>
+                                      
+                                    </div>
+                                }
+                                    <button class="icon-btn">
+                                        <i class="fa-regular fa-heart"></i>
+                                    </button>
+                                    <button class="icon-btn">
+                                        <i class="fa-solid fa-location-dot"></i>
+                                    </button>
+                                </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            }
+        </div>
+    </div>
+</section>

@@ -1,0 +1,706 @@
+<!--Image Grid-->
+<div class="page-wrapper">
+<section class="image-grid">
+
+  <p-carousel #image [value]="images" [numVisible]="3" [numScroll]="1" [circular]="true" [showNavigators]="false"
+    [responsiveOptions]="responsiveOptions">
+
+    <ng-template pTemplate="item" let-item>
+      <img [src]="item.itemImageSrc" class="carousel-img" />
+    </ng-template>
+
+  </p-carousel>
+
+  <!-- Custom Left Button -->
+  <div class="custom-nav left" (click)="prev()">
+    <i class="pi pi-chevron-left"></i>
+  </div>
+
+  <!-- Custom Right Button -->
+  <div class="custom-nav right" (click)="next()">
+    <i class="pi pi-chevron-right"></i>
+  </div>
+
+</section>
+
+<!--filters-->
+
+
+  <section class="filters">
+    <div class="container py-3">
+      <div class="row align-items-center">
+
+        <div class="col-12 col-lg-6 mb-2 d-flex flex-wrap">
+          <div class="d-flex align-items-center gap-4">
+            <button type="button" class="show-filters d-flex align-items-center gap-2 px-3 py-2" (click)="overlay()">
+              <i class="fa-solid fa-sliders"></i>
+              <span>Show Filters</span>
+            </button>
+            @if (isFilterOpen) {
+
+            <!-- Backdrop -->
+            <div class="custom-backdrop" (click)="closeFilter()"></div>
+
+            <!-- Sidebar -->
+            <div class="filter-sidebar">
+              <div class="filter-content">
+                <div class="d-flex flex-row justify-content-between">
+                  <h5>Filter</h5>
+                  <button type="button" class="close-btn" (click)="close()">
+                    <i class="fa-solid fa-xmark"></i>
+                  </button>
+                </div>
+
+                <div class="search mt-5 p-4">
+                  <div class="search-by d-flex flex-row gap-4 py-4 px-3">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    <p class="m-0">Search By Package</p>
+                  </div>
+
+                  <p class="or">or</p>
+
+                  <div class="search-by d-flex flex-row gap-4 py-4 px-3">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    <p class="m-0">Search By Guide</p>
+                  </div>
+                </div>
+
+                <div class="filter-titles px-3">
+                  <p class="mt-4">Date</p>
+                  <div class="search-by px-3 py-4 d-flex flex-row justify-content-between">
+                    <div class="d-flex gap-3">
+                      <i class="fa-solid fa-bars"></i>
+                      <p class="m-0">Select Date</p>
+                    </div>
+                    <i class="fa-solid fa-angle-down"></i>
+                  </div>
+                </div>
+
+                <div class="filter-titles px-3">
+                  <p class="mt-3">Destination City</p>
+                  <div class="search-by card py-4">
+                    <div class="d-flex flex-row justify-content-between px-3" (click)="headerDestinationOpen()">
+                      <div class="d-flex gap-3">
+                        <i class="fa-solid fa-bars"></i>
+                        <p class="m-0">Select Destination City</p>
+                      </div>
+                      <i class="fa-solid fa-angle-down" [class.rotate]="isDestinationOpen"></i>
+                    </div>
+                    @if (isDestinationOpen) {
+                    <div class="text-body">
+                      <div class="underline"></div>
+                      <div class="search-text px-3 d-flex flex-row gap-3">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                        <p class="m-0">Search</p>
+                      </div>
+                      <div class="underline"></div>
+                      <div class="tours">
+                        <div class="search-item">Group Tour</div>
+                        <div class="search-item">Private Tour</div>
+                        <div class="search-item">Daily Tour</div>
+                        <div class="search-item">Package Tour</div>
+                        <div class="search-item">City Tour</div>
+                        <div class="search-item">Cultural & Thematic Tours</div>
+                      </div>
+
+                    </div>
+                    }
+                  </div>
+
+                </div>
+
+
+                <!--guest-->
+
+                <div class="filter-titles px-3">
+                  <p class="mt-3">Guest</p>
+                  <div class="search-by card py-4">
+                    <div class="d-flex flex-row justify-content-between px-3" (click)="headerGuestOpen()">
+                      <div class="d-flex gap-3">
+                        <i class="fa-solid fa-bars"></i>
+                        <p class="m-0">Select Guest</p>
+                      </div>
+                      <i class="fa-solid fa-angle-down" [class.rotate]="isGuestOpen"></i>
+                    </div>
+                    @if (isGuestOpen) {
+                    <div class="text-body">
+                      <div class="underline"></div>
+                      <div class="search-text px-3 d-flex flex-row gap-3">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                        <p class="m-0">Search</p>
+                      </div>
+                      <div class="underline"></div>
+                      <div class="tours">
+                        <div class="search-item">1 - 5</div>
+                        <div class="search-item">5 - 10</div>
+                        <div class="search-item">10 - 15</div>
+                        <div class="search-item">15 - 20</div>
+                        <div class="search-item">20 +</div>
+                      </div>
+
+                    </div>
+                    }
+                  </div>
+
+                </div>
+
+                <!--duration-->
+                <div class="duration mt-4">
+                  <div class="p-3">
+                    <p class="duration-text">Duration</p>
+                    <div class="d-flex flex-row gap-3">
+                      <button type="button" class="duration-btn">Days</button>
+                      <button type="button" class="duration-btn">Hours</button>
+                    </div>
+                    <div class="d-flex justify-content-between mt-3">
+                      <div class="min-value">1</div>
+                      <div class="max-value">3</div>
+                    </div>
+
+
+                    <!--slider-->
+                    <div class="slider mt-3">
+                      <p-slider [(ngModel)]="rangeValues" [range]="true" class="custom-slider w-56" />
+                    </div>
+                  </div>
+
+
+
+                </div>
+
+
+                <div class="price mt-4 px-3">
+                  <p class="duration-text">Price in Thousands</p>
+                  <div class="d-flex justify-content-between">
+                    <div class="min-value">1000</div>
+                    <div class="max-value">10000</div>
+                  </div>
+
+                  <!--slider-->
+                  <div class="slider mt-4">
+                    <p-slider [(ngModel)]="priceRangeValues" [range]="true" class="custom-slider w-56" />
+                  </div>
+                </div>
+
+
+                <!--open now, more option , reset and search-->
+                <div class="row px-1 mt-3">
+                  <div class="col-12 mt-4">
+                    <div class="open-btn d-flex justify-content-center align-items-center">
+                      <i class="fa-solid fa-clock"></i> Open
+                      <div class="check"><i class="fa-solid fa-check"></i></div>
+                    </div>
+
+                  </div>
+
+                  <!-- more option -->
+                  @if (isMoreOptionOpen) {
+
+                  <div class="filter-titles px-3">
+                    <p class="mt-3">Star rating</p>
+                    <div class="search-by card py-4">
+                      <div class="d-flex flex-row justify-content-between px-3" (click)="headerStarRatingOpen()">
+                        <div class="d-flex gap-3">
+                          <i class="fa-solid fa-bars"></i>
+                          <p class="m-0">Select Star Rating</p>
+                        </div>
+                        <i class="fa-solid fa-angle-down" [class.rotate]="isStarRatingOpen"></i>
+                      </div>
+                      @if (isStarRatingOpen) {
+                      <div class="text-body">
+                        <div class="underline"></div>
+                        <div class="search-text px-3 d-flex flex-row gap-3">
+                          <i class="fa-solid fa-magnifying-glass"></i>
+                          <p class="m-0">Search</p>
+                        </div>
+                        <div class="underline"></div>
+                        <div class="tours">
+                          <div class="search-item d-flex gap-2">
+                            <div class="star d-flex flex-row">
+                              <i class="fa-solid fa-star"></i>
+                              <i class="fa-solid fa-star"></i>
+                              <i class="fa-solid fa-star"></i>
+                              <i class="fa-solid fa-star"></i>
+                              <i class="fa-solid fa-star"></i>
+                            </div> 5 Star</div>
+                          <div class="search-item d-flex gap-2">
+                            <div class="star d-flex flex-row">
+                              <i class="fa-solid fa-star"></i>
+                              <i class="fa-solid fa-star"></i>
+                              <i class="fa-solid fa-star"></i>
+                              <i class="fa-solid fa-star"></i>
+                            </div> 4 Star</div>
+                          <div class="search-item d-flex gap-2">
+                            <div class="star d-flex flex-row">
+                              <i class="fa-solid fa-star"></i>
+                              <i class="fa-solid fa-star"></i>
+                              <i class="fa-solid fa-star"></i>
+                            </div> 3 Star & Below</div>
+                        </div>
+
+                      </div>
+                      }
+                    </div>
+
+                  </div>
+
+                  <div class="filter-titles px-3">
+                    <p class="mt-3">Amenities</p>
+                    <div class="search-by card py-4">
+                      <div class="d-flex flex-row justify-content-between px-3" (click)="headerAmenitiesOpen()">
+                        <div class="d-flex gap-3">
+                          <i class="fa-solid fa-bars"></i>
+                          <p class="m-0">Select Amenities</p>
+                        </div>
+                        <i class="fa-solid fa-angle-down" [class.rotate]="isAmenitiesOpen"></i>
+                      </div>
+                      @if (isAmenitiesOpen) {
+                      <div class="text-body">
+                        <div class="underline"></div>
+                        <div class="search-text px-3 d-flex flex-row gap-3">
+                          <i class="fa-solid fa-magnifying-glass"></i>
+                          <p class="m-0">Search</p>
+                        </div>
+                        <div class="underline"></div>
+                        <div class="tours">
+                          <div class="search-item">Wifi</div>
+                          <div class="search-item">Air Conditioner</div>
+                          <div class="search-item">Gym</div>
+                          <div class="search-item">Spa</div>
+                          <div class="search-item">Toiletries</div>
+                        </div>
+
+                      </div>
+                      }
+                    </div>
+
+                  </div>
+
+                  <div class="filter-titles px-3">
+                    <p class="mt-3">Activities</p>
+                    <div class="search-by card py-4">
+                      <div class="d-flex flex-row justify-content-between px-3" (click)="headerActivitiesOpen()">
+                        <div class="d-flex gap-3">
+                          <i class="fa-solid fa-bars"></i>
+                          <p class="m-0">Select Activities</p>
+                        </div>
+                        <i class="fa-solid fa-angle-down" [class.rotate]="isActivitiesOpen"></i>
+                      </div>
+                      @if (isActivitiesOpen) {
+                      <div class="text-body">
+                        <div class="underline"></div>
+                        <div class="search-text px-3 d-flex flex-row gap-3">
+                          <i class="fa-solid fa-magnifying-glass"></i>
+                          <p class="m-0">Search</p>
+                        </div>
+                        <div class="underline"></div>
+                        <div class="tours">
+                          <div class="search-item d-flex flex-row justify-content-between">
+                            Ancient Ruins <span>5</span>
+                          </div>
+                          <div class="search-item d-flex flex-row justify-content-between">
+                            Fine Dining <span>2</span>
+                          </div>
+                          <div class="search-item d-flex flex-row justify-content-between">
+                            City Sightseeing <span>8</span>
+                          </div>
+                          <div class="search-item d-flex flex-row justify-content-between">
+                            Eating Pasta <span>3</span>
+                          </div>
+
+                        </div>
+
+                      </div>
+                      }
+                    </div>
+
+                  </div>
+
+                  <div class="filter-titles px-3">
+                    <p class="mt-3">Time of Day</p>
+                    <div class="search-by card py-4">
+                      <div class="d-flex flex-row justify-content-between px-3" (click)="headerTimeOfDayOpen()">
+                        <div class="d-flex gap-3">
+                          <i class="fa-solid fa-bars"></i>
+                          <p class="m-0">Select Time of Day</p>
+                        </div>
+                        <i class="fa-solid fa-angle-down" [class.rotate]="isTimeOfDayOpen"></i>
+                      </div>
+                      @if (isTimeOfDayOpen) {
+                      <div class="text-body">
+                        <div class="underline"></div>
+                        <div class="search-text px-3 d-flex flex-row gap-3">
+                          <i class="fa-solid fa-magnifying-glass"></i>
+                          <p class="m-0">Search</p>
+                        </div>
+                        <div class="underline"></div>
+                        <div class="tours">
+                          <div class="search-item">Morning, 8 AM - 12 PM</div>
+                          <div class="search-item">Afternoon, 12 PM - 5 PM</div>
+                          <div class="search-item">Evening, 5 PM - 12 AM</div>
+
+                        </div>
+
+                      </div>
+                      }
+                    </div>
+
+                  </div>
+
+                  <div class="filter-titles px-3">
+                    <p class="mt-3">Neighbourhood</p>
+                    <div class="search-by card py-4">
+                      <div class="d-flex flex-row justify-content-between px-3" (click)="headerNeighbourhoodOpen()">
+                        <div class="d-flex gap-3">
+                          <i class="fa-solid fa-bars"></i>
+                          <p class="m-0">Select Neighbourhood</p>
+                        </div>
+                        <i class="fa-solid fa-angle-down" [class.rotate]="isNeighbourhoodOpen"></i>
+                      </div>
+                      @if (isNeighbourhoodOpen) {
+                      <div class="text-body">
+                        <div class="underline"></div>
+                        <div class="search-text px-3 d-flex flex-row gap-3">
+                          <i class="fa-solid fa-magnifying-glass"></i>
+                          <p class="m-0">Search</p>
+                        </div>
+                        <div class="underline"></div>
+                        <div class="tours">
+                          <div class="search-item">Neighbourhood 1</div>
+                          <div class="search-item">Neighbourhood 2</div>
+                          <div class="search-item">Neighbourhood 3</div>
+
+                        </div>
+
+                      </div>
+                      }
+                    </div>
+
+                  </div>
+
+                  <div class="filter-titles px-3">
+                    <p class="mt-3">Deals</p>
+                    <div class="search-by card py-4">
+                      <div class="d-flex flex-row justify-content-between px-3" (click)="headerDealsOpen()">
+                        <div class="d-flex gap-3">
+                          <i class="fa-solid fa-bars"></i>
+                          <p class="m-0">Select Neighbourhood</p>
+                        </div>
+                        <i class="fa-solid fa-angle-down" [class.rotate]="isDealsOpen"></i>
+                      </div>
+                      @if (isDealsOpen) {
+                      <div class="text-body">
+                        <div class="underline"></div>
+                        <div class="search-text px-3 d-flex flex-row gap-3">
+                          <i class="fa-solid fa-magnifying-glass"></i>
+                          <p class="m-0">Search</p>
+                        </div>
+                        <div class="underline"></div>
+                        <div class="tours">
+                          <div class="search-item">Free Cancellation</div>
+                          <div class="search-item">Reserve Now, Pay at stay</div>
+                          <div class="search-item">Package with special offer</div>
+
+                        </div>
+
+                      </div>
+                      }
+                    </div>
+
+                  </div>
+
+                  }
+                  <!--moreoptions-->
+                  <div class="col-12 col-lg-6 mt-4">
+                    <button type="button" class="more-option" (click)="toggleMoreOption()">
+                      <i class="fa-solid" [ngClass]="isMoreOptionOpen ? 'fa-xmark' : 'fa-plus'"></i>
+                      {{ isMoreOptionOpen ? 'Close Option' : 'More Option' }} </button>
+                  </div>
+                  <!--reset-->
+                  <div class="col-12 col-lg-6 mt-4">
+                    <div class="reset-filter">
+                      <i class="fa-solid fa-rotate-left d-flex align-items-center"></i>
+                      Reset Filter
+                    </div>
+
+                  </div>
+                  <!--search-->
+                  <div class="col-12 mt-4">
+                    <div class="d-flex flex-row gap-2">
+                      <button type="button" class="search-button">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                        <div class="vertical-line"></div>
+                        <p class="m-0">Search</p>
+                      </button>
+                    </div>
+
+                  </div>
+                </div>
+
+
+              </div>
+            </div>
+
+            }
+            <span>Results for : <strong>City name</strong></span>
+            <span>Showing 1-18 of 256 results</span>
+
+          </div>
+        </div>
+
+        <div class="col-12 col-lg-6 mb-2">
+          <div class="d-flex justify-content-lg-end align-items-center flex-wrap gap-4">
+
+            <div class="d-flex align-items-center gap-2">
+
+              <span>Sort by:</span>
+
+              <div class="featured-dropdown position-relative">
+                <button class="featured-btn d-flex align-items-center gap-2" (click)="toggleFeatured()">
+                  <i class="fa-solid fa-sliders"></i>
+                  {{ selectedFeatured }}
+                  <i class="fa-solid fa-angle-down"></i>
+                </button>
+
+                @if (isFeaturedOpen) {
+                <ul class="featured-list">
+                  @for (option of featuredOptions; track option) {
+                  <li (click)="selectFeatured(option)" [class.active]="option === selectedFeatured">
+                    {{ option }}
+                  </li>
+                  <hr class="m-0">
+                  }
+                </ul>
+                }
+              </div>
+            </div>
+            <button type="button" class="view-map d-flex align-items-center gap-2 px-3 py-2" (click)="toggleViewMap()">
+              <i class="fa-solid fa-sliders"></i>
+              <span>View on Map</span>
+            </button>
+
+
+
+          </div>
+        </div>
+
+        <!-- MAP SECTION -->
+        @if (isViewMapOpen) {
+        <div class="col-12 mt-3">
+          <iframe
+            src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d15346778.079700144!2d58.931226176230695!3d24.36700599805653!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2sin!4v1772530819370!5m2!1sen!2sin"
+            width="100%" height="450" style="border:0;" loading="lazy">
+          </iframe>
+        </div>
+        }
+
+      </div>
+    </div>
+  </section>
+
+
+  <!--main-section-->
+  <section class="main-section">
+    <div class="py-4">
+      <div class="row">
+
+        @for (card of cards; track card.id) {
+        <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+          <div class="card">
+            <div class="image-on-top">
+              <img [src]="card.image" alt="travel">
+              <div class="fav-icon"><i class="fa-solid fa-heart"></i></div>
+              <div class="trending d-flex gap-2 justify-content-center align-items-center">
+                <i class="pi pi-star"></i><span>Trending</span>
+              </div>
+            </div>
+
+            <div class="card-body flex-column p-3 d-flex">
+
+              <div class="d-flex flex-row justify-content-evenly">
+                <div class="eco-tourism d-flex flex-row gap-2 flex-wrap">
+                  <i class="pi pi-receipt"></i>
+                  <p class="fw-bold">{{ card.category }}</p>
+                </div>
+                <div class="line"></div>
+                <div class="review d-flex flex-row gap-2">
+                  <p class="number-review">{{ card.rating }}</p>
+                  <p>({{ card.reviews }} reviews)</p>
+                </div>
+              </div>
+
+              <div class="destination mt-2">
+                <p>{{ card.destinationName }}</p>
+              </div>
+
+              <div class="location d-flex flex-row mt-2 gap-2">
+                <i class="fa-solid fa-location-dot"></i>
+                <p class="m-0">{{ card.location }}</p>
+              </div>
+
+              <div class="rate mt-3 d-flex flex-row gap-2">
+                <p>Starts From</p>
+                <div class="offer-rate d-flex gap-1">
+                  <p>${{ card.price }}</p>
+                </div>
+                <div class="actual-rate d-flex gap-1">
+                  <s>
+                    <p>${{ card.oldPrice }}</p>
+                  </s>
+                </div>
+              </div>
+
+              <hr>
+              @if(activeContactId === card.id)
+              {
+              <div class="popup card d-flex justify-content-start p-1">
+                <div class="closebtn" (click)="toggleContactInfo()">
+                  <i class="pi pi-times"></i>
+                </div>
+                <div class="contact-details d-flex flex-row gap-3 mt-2 px-3">
+                  <i class="pi pi-phone"></i>
+                  <p class="m-0"> phone : +7(111)234567</p>
+                </div>
+                <div class="contact-details d-flex flex-row gap-3 mt-2 px-3">
+                  <i class="pi pi-envelope"></i>
+                  <p class="m-0"> mail : mail@gmail.com</p>
+                </div>
+              </div>
+              }
+              <div class="contact-info d-flex flex-row gap-3">
+                <div class="days d-flex flex-row gap-2">
+                  <i class="pi pi-calendar-clock"></i>
+                  <p>{{ card.duration }}</p>
+                </div>
+                <div class="line"></div>
+                <div class="contact-buttons d-flex flex-row gap-2 flex-wrap">
+
+                  <button type="button" class="contact px-3 py-1" (click)="toggleContact(card.id)">Contact</button>
+
+                  <div class="like"><i class="pi pi-heart px-2 py-2"></i></div>
+                  <div class="location-dot"><i class="pi pi-map-marker px-2 py-2"></i></div>
+                </div>
+              </div>
+
+
+            </div>
+          </div>
+        </div>
+        }
+      </div>
+    </div>
+  </section>
+</div>
+
+
+<!--pagination-->
+
+<section class="pagination d-flex justify-content-center align-items-center">
+  @if (totalPages > 1) {
+  <div class="d-flex gap-2">
+    <button class="btn btn-page border" [disabled]="currentPage === 1" (click)="changePage(currentPage - 1)">
+      <i class="fa-solid fa-angle-left"></i>
+    </button>
+
+    @for (page of pages; track page) {
+    <button class="btn btn-page border" [class.active-page]="currentPage === page" (click)="changePage(page)">
+      {{ page }}
+    </button>
+    }
+
+    <button class="btn btn-page border" [disabled]="currentPage === totalPages" (click)="changePage(currentPage + 1)">
+      <i class="fa-solid fa-angle-right"></i>
+    </button>
+  </div>
+  }
+
+</section>
+
+<!--promoted-listing-->
+
+<section class="main-section">
+  <p class="promoted-listing">Promoted listings</p>
+  <div class="row py-3">
+    @for (card of promotedListingCards; track card.id) {
+    <div class="col-md-4 col-lg-3">
+      <div class="card">
+        <div class="image-on-top">
+          <img [src]="card.image" alt="travel">
+          <div class="fav-icon"><i class="fa-solid fa-heart"></i></div>
+          <div class="trending d-flex gap-2 justify-content-center align-items-center">
+            <i class="pi pi-star"></i><span>Trending</span>
+          </div>
+        </div>
+
+        <div class="card-body flex-column p-3 d-flex">
+
+          <div class="d-flex flex-row justify-content-evenly">
+            <div class="eco-tourism d-flex flex-row gap-2">
+              <i class="pi pi-receipt"></i>
+              <p class="fw-bold">{{ card.category }}</p>
+            </div>
+            <div class="line"></div>
+            <div class="review d-flex flex-row gap-2">
+              <p class="number-review">{{ card.rating }}</p>
+              <p>({{ card.reviews }} reviews)</p>
+            </div>
+          </div>
+
+          <div class="destination mt-2">
+            <p>{{ card.destinationName }}</p>
+          </div>
+
+          <div class="location d-flex flex-row mt-2 gap-2">
+            <i class="fa-solid fa-location-dot"></i>
+            <p class="m-0">{{ card.location }}</p>
+          </div>
+
+          <div class="rate mt-3 d-flex flex-row gap-2">
+            <p>Starts From</p>
+            <div class="offer-rate d-flex gap-1">
+              <p>${{ card.price }}</p>
+            </div>
+            <div class="actual-rate d-flex gap-1">
+              <s>
+                <p>${{ card.oldPrice }}</p>
+              </s>
+            </div>
+          </div>
+
+          <hr>
+          @if(activeContactId === card.id)
+              {
+              <div class="popup card d-flex justify-content-start p-1">
+                <div class="closebtn" (click)="toggleContactInfo()">
+                  <i class="pi pi-times"></i>
+                </div>
+                <div class="contact-details d-flex flex-row gap-3 mt-2 px-3">
+                  <i class="pi pi-phone"></i>
+                  <p class="m-0"> phone : +7(111)234567</p>
+                </div>
+                <div class="contact-details d-flex flex-row gap-3 mt-2 px-3">
+                  <i class="pi pi-envelope"></i>
+                  <p class="m-0"> mail : mail@gmail.com</p>
+                </div>
+              </div>
+              }
+          <div class="contact-info d-flex flex-row gap-3">
+            <div class="days d-flex flex-row gap-2">
+              <i class="pi pi-calendar-clock"></i>
+              <p>{{ card.duration }}</p>
+            </div>
+            <div class="line"></div>
+            <div class="contact-buttons d-flex flex-row gap-2">
+              <button type="button" class="contact px-3 py-1" (click)="toggleContact(card.id)">Contact</button>
+              <div class="like"><i class="pi pi-heart px-2 py-2"></i></div>
+              <div class="location-dot"><i class="pi pi-map-marker px-2 py-2"></i></div>
+            </div>
+          </div>
+
+
+        </div>
+      </div>
+    </div>
+    }
+  </div>
+</section>
