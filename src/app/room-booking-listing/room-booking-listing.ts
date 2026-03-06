@@ -426,7 +426,8 @@ toggleCheckinBoxOpen(){
 }
 toggleCheckoutBoxOpen(){
 }
-date: Date | undefined;
+indate: Date | undefined;
+outdate: Date | undefined;
 
 //Count
   room: number = 1;
