@@ -1,0 +1,159 @@
+@media(max-width:768px){
+    .discount{
+        padding-inline: 20px !important;
+    }
+
+}
+
+.discount{
+    background-color: #fff;
+    padding-inline: 10.625rem;
+    overflow: hidden; 
+    .discount-details{
+        position: relative !important;
+        transform: translateY(80px);
+    opacity: 0;
+    transition: all 0.4s ease;
+        
+    }
+    &:hover .discount-details {
+    transform: translateY(0);
+    opacity: 1;
+  }
+   
+    .discount-details img{
+        width: 100%;
+        object-fit: cover;
+        z-index: 0;
+    }
+    .featurehotel-content{
+        z-index: 1;
+        position: absolute;
+        top:10%;
+        left: 10%;
+        color: #fff;
+    }
+    .summerdeal-content{
+        position: absolute;
+        z-index: 1;
+        top:10%;
+        left: 10%;
+        color: #fff;
+    }
+    .top-title{
+        font-size: 19px;
+    }
+    .bold-title{
+        font-size: 32px;
+        font-weight: 600;
+        line-height: 40px;
+        width: 300px;
+    }
+    .discount-btn{
+        border: none;
+        border-radius: 15px;
+        padding: 10px 25px;
+        width:fit-content;
+        height: fit-content;
+    }
+}
+
+//benefits
+
+
+.benefits-section{
+    background-color: #EDF7F6;
+    overflow: hidden;   // prevents cards showing outside section
+  padding: 60px 0;
+
+ 
+  
+
+.features {
+  transform: translateY(120px);
+  transition: transform 0.1s ease, opacity 0.1s ease;
+}
+
+.benefits-section:hover .features {
+  opacity: 1;
+  transform: translateY(0);
+}
+ 
+    .features {
+        background-color: #fff;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        padding: 20px;
+        border-radius: 5px;
+      
+    }
+    .features img{
+        width: 60px;
+        height: 60px;
+    }
+    .feature-title{
+        font-size: 23px;
+        font-weight: 500;
+        padding-top: 10px;
+    }
+    .feature-content{
+        font-size: 15px;
+        color: #666565;
+        width: 100%;
+    }
+    
+
+
+}
+
+
+
+//testimonial 
+    .title{
+        border: 1px solid #F3F4F9;
+        background-color: #F3F4F9;
+        color: #008080;
+        padding: 3px 15px;
+        width:fit-content;
+        height: fit-content;
+        border-radius: 20px;
+    }
+    .main-title{
+        font-size: 28px;
+        font-weight: 600;
+    }
+    .room img{
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+    }
+    .testimonial-card{
+        border: 1px solid #d6d6d631;
+        border-radius: 10px;
+        width: 1000px;
+        box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    }
+    .testimonial-content img{
+        height: 40px;
+        width: 50px;
+    }
+    .testimonial-content i{
+        color: rgb(255, 196, 0);
+    }
+    .feedback{
+        width: 700px;
+    }
+   
+
+.partners{
+    background-color: #008080;
+    padding: 90px 0px;
+    .partner-title{
+        font-size: 34px;
+        font-weight: 600;
+        color: #fff;
+    }
+}
