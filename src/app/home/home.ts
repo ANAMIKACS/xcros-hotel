@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 
+
 @Component({
   selector: 'app-home',
   imports: [],
@@ -7,5 +8,9 @@ import { Component } from '@angular/core';
   styleUrl: './home.scss',
 })
 export class Home {
-
+//
+islocationOpen= false;
+toggleDropdown(){
+  this.islocationOpen = !this.islocationOpen;
+}
 }
