@@ -1,4 +1,53 @@
-<section class="herosection">
+<!-- <section class="herosection-container">
+    <h1>Hero Section</h1>
+    <p>This section has a beautiful background image.</p>
+</section> -->
+<div class="herosection-container">
+  <img src="/home/heroimg.jpg" alt="Description of the image">
+  <div class="text-container">
+    <div class="title-container">
+         <div class="title">
+        <h2>Unlock Your Next Adventure Book Your Hotel Stay </h2>
+        </div>
+    </div>
+     <p>Discover Your Ideal Getaway Find the Perfect Hotel, Villa, or Cottage by Name, Category, or Location!</p>
+     <div class="choose-hotel">
+        <div class="choose-contents gap-5">
+            <div class="d-flex flex-column justify-content-center align-self-center py-4">
+                 <h6 class="m-0 choosecategoryTitle">Find Hotel</h6>
+                 <h5 class="m-0 searchTiTle">Search here</h5>
+            </div>
+            <div class="d-flex flex-column justify-content-center align-self-center">
+                <h6 class="m-0 choosecategoryTitle">Choose Location</h6>
+                 <!-- <h5 class="m-0 searchTiTle">Dhaka</h5>  -->
+                  <div class="locationdropdown">
+                    <button class="loction"(click)="toggleDropdown()">
+                        Dhaka
+                        <i class="fa-solid fa-chevron-down text-black" [class.rotate]="islocationOpen"></i>
+                    </button>
+                    @if(islocationOpen){
+                        <div class="places">
+                            <div class="categorynameTitle">Hyatt</div>
+                            <div class="categorynameTitle">Kaldan Samudhra</div>
+                            <div class="categorynameTitle">ITC Grand Chola</div>
+                            <div class="categorynameTitle">Ramada</div>
+                            <div class="categorynameTitle">Taj</div>
+                        </div>
+                    }
+                  </div>
+            </div>
+            <div class="d-flex flex-column justify-content-center align-self-center">
+                <h6 class="m-0 choosecategoryTitle">Select Category</h6>
+                 <h5 class="m-0 searchTiTle">Resort</h5> 
+            </div>
+            <div class="d-flex flex-column justify-content-center align-self-center">
+                <h6 class="m-0 choosecategoryTitle">Select Rating</h6>
+                 <h5 class="m-0 searchTiTle">4 stars</h5> 
+            </div>
+        </div>
+     </div>
+  </div>
+ 
+</div>
 
-</section>
 
