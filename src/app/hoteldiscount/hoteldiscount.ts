@@ -1,10 +1,15 @@
 import { Component, OnInit, OnDestroy  } from '@angular/core';
 import { AvatarModule } from 'primeng/avatar';
 import { CommonModule } from '@angular/common';
+import { InputGroupModule } from 'primeng/inputgroup';
+import { MenuModule } from 'primeng/menu';
+import { InputTextModule } from 'primeng/inputtext';
+import { MenuItem } from 'primeng/api';
+import { Button } from "primeng/button";
 
 @Component({
   selector: 'app-hoteldiscount',
-  imports: [CommonModule, AvatarModule],
+  imports: [CommonModule, AvatarModule, InputGroupModule, MenuModule, InputTextModule, Button],
   templateUrl: './hoteldiscount.html',
   styleUrl: './hoteldiscount.scss',
 })
@@ -60,20 +65,21 @@ hideCards() {
 
   // Testimonial
  
-  currentIndex = 0;
-  intervalId: any;
-
+  
   testimonials = [
-    {
-      roomImage: '/home/room1.png',
-      quotes: '/home/SVG.png',
-      title: 'Quality Service',
-      description: `In this ever evolving digital world understanding the
-      significance of staying ahead.`
-    }
+ { roomImage:'/home/room1.png', quotes:'/home/SVG.png', title:'Quality Service', description:'...' },
+ { roomImage:'/home/room2.png', quotes:'/home/SVG.png', title:'Excellent Support', description:'...' },
+ { roomImage:'/home/room3.png', quotes:'/home/SVG.png', title:'Trusted Experience', description:'...' }
+
   ];
 
-  
+  //subscribe
+
+    items: MenuItem[] | undefined;
+    
+    ngOnInit() {
+        this.items = [{ label: 'Web Search' }, { label: 'AI Assistant' }, { label: 'History' }];
+    }
 
 
 }
