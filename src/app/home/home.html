@@ -1,53 +1,147 @@
-<!-- <section class="herosection-container">
-    <h1>Hero Section</h1>
-    <p>This section has a beautiful background image.</p>
-</section> -->
-<div class="herosection-container">
-  <img src="/home/heroimg.jpg" alt="Description of the image">
-  <div class="text-container">
-    <div class="title-container">
-         <div class="title">
-        <h2>Unlock Your Next Adventure Book Your Hotel Stay </h2>
+<section class="hero-section" (mouseenter)="showHero()" (mouseleave)="hideHero()">
+
+    <div class="hero-container">
+
+        <img src="/home/heroimg.jpg" alt="hero">
+
+        <div class="hero-content">
+            <div class="hero-tagline-mask">
+                <h1 class="hero-tagline" [ngClass]="heroAnimation">
+                    ⭐ Enjoy Your Beautiful Moment
+                </h1>
+            </div>
+
+            <div class="hero-title-mask">
+                <h1 class="hero-title " [ngClass]="heroAnimation">
+                    Unlock Your Next Adventure <br>
+                    Book Your Hotel Stay
+                </h1>
+            </div>
+
+            <div class="hero-desc-mask">
+                <h1 class="hero-desc " [ngClass]="heroAnimation">
+                    Discover Your Ideal Getaway Find the Perfect Hotel,
+                    Villa, or Cottage by Name, Category, or Location!
+                </h1>
+            </div>
+
+            <div class="choose-hotel-mask">
+                <div class="choose-hotel d-flex flex-row justify-content-between ">
+
+                    <div class="choose-contents">
+
+                        <div class="location">
+                            <h6>Select Location</h6>
+                            <h5>Dhaka</h5>
+                        </div>
+
+                        <div class="item">
+                            <h6>Select Category</h6>
+                            <h5>Resort</h5>
+                        </div>
+
+                        <div class="item">
+                            <h6>Select Rating</h6>
+                            <h5>4 Star</h5>
+                        </div>
+                    </div>
+                    <button class="search-btn">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                        Search
+                    </button>
+
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+<!--Categories-->
+<section class="categories-section d-flex flex-column" (mouseenter)="showCategory()" (mouseleave)="hideCategory()">
+<div class="container">
+    <div class="categories-mask d-flex justify-content-center pt-3">
+        <h1 class="category-title " [ngClass]="categoriesAnimation">
+            Categories
+        </h1>
+    </div>
+    <div class="categories-heading-mask d-flex justify-content-center">
+        <h1 class="category-heading" [ngClass]="categoriesAnimation">
+            Most Demanding Categories
+        </h1>
+    </div>
+    <div class="categories-card-mask">
+        <div class="categories-card d-flex justify-content-center flex-row gap-4 align-items-center p-5">
+            @for(card of categoryCards; track card.id){
+
+            <div class="types card d-flex flex-column align-items-center justify-content-center gap-2">
+
+                <img [src]="card.icon" class="icon" alt="category">
+
+                <p class="card-title">
+                    {{ card.cardtitle }}
+                </p>
+
+                <p class="card-items">
+                    {{ card.categoryItem }}
+                </p>
+
+            </div>
+
+            }
         </div>
     </div>
-     <p>Discover Your Ideal Getaway Find the Perfect Hotel, Villa, or Cottage by Name, Category, or Location!</p>
-     <div class="choose-hotel">
-        <div class="choose-contents gap-5">
-            <div class="d-flex flex-column justify-content-center align-self-center py-4">
-                 <h6 class="m-0 choosecategoryTitle">Find Hotel</h6>
-                 <h5 class="m-0 searchTiTle">Search here</h5>
-            </div>
-            <div class="d-flex flex-column justify-content-center align-self-center">
-                <h6 class="m-0 choosecategoryTitle">Choose Location</h6>
-                 <!-- <h5 class="m-0 searchTiTle">Dhaka</h5>  -->
-                  <div class="locationdropdown">
-                    <button class="loction"(click)="toggleDropdown()">
-                        Dhaka
-                        <i class="fa-solid fa-chevron-down text-black" [class.rotate]="islocationOpen"></i>
-                    </button>
-                    @if(islocationOpen){
-                        <div class="places">
-                            <div class="categorynameTitle">Hyatt</div>
-                            <div class="categorynameTitle">Kaldan Samudhra</div>
-                            <div class="categorynameTitle">ITC Grand Chola</div>
-                            <div class="categorynameTitle">Ramada</div>
-                            <div class="categorynameTitle">Taj</div>
-                        </div>
-                    }
-                  </div>
-            </div>
-            <div class="d-flex flex-column justify-content-center align-self-center">
-                <h6 class="m-0 choosecategoryTitle">Select Category</h6>
-                 <h5 class="m-0 searchTiTle">Resort</h5> 
-            </div>
-            <div class="d-flex flex-column justify-content-center align-self-center">
-                <h6 class="m-0 choosecategoryTitle">Select Rating</h6>
-                 <h5 class="m-0 searchTiTle">4 stars</h5> 
+    <!--pagination-->
+     <section class="pagination d-flex justify-content-center">
+        <div class="pagination-mask">
+                    @if (totalPages > 1) {
+        <div class="pagination-dots d-flex gap-3">
+            @for (page of pages; track page) {
+            <span class="dot" [class.active]="currentPage === page" (click)="changePage(page)">
+            </span>
+            }
+        </div>
+        }
+        </div>
+
+    </section>
+</div>
+</section>
+<!--Offers Section -->
+<section class="offers-section">
+    <div class="container py-5">
+        <div class="row" (mouseenter)="showCards()"
+     (mouseleave)="hideCards()">
+     <div class="card-mask" [ngClass]="offersAnimation">
+         <div class="Dealscards d-flex flex-row gap-2 justify-content-center">
+             @for (offers of offersCard; track $index) {
+                    <div class="offersCard card col-12 col-lg-4">
+            <div class="offers"
+                [ngClass]="offersAnimation">
+                <div class="offerTitle-mask">
+                     <p class="OfferTitle">{{offers.OfferTitle}}</p>
+                </div>
+                <div class="button-mask">
+                    <button class="discover-btn mt-3">Discover</button>
+                </div>
+               
             </div>
         </div>
+        }
+           </div>
      </div>
-  </div>
- 
-</div>
+        </div>
+    </div>
+</section>  
 
-
+<!--Featured section-->
+<!-- <section class="featured-section " (mouseenter)="showFeatured()" (mouseleave)="hideFeatured()">
+    <div class="container">
+        <div class="featured-mask">
+            <div class="FeaturedHotelsTitle" [ngClass]="featuresAnimation">
+                Featured Hotels
+            </div>
+        </div>
+    </div>
+</section> -->
