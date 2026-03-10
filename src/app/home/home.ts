@@ -1,30 +1,72 @@
-import { Component, OnInit, OnDestroy  } from '@angular/core';
+import { Component, OnInit, OnDestroy, AfterViewInit  } from '@angular/core';
 import { AvatarModule } from 'primeng/avatar';
 import { CommonModule } from '@angular/common';
+// import { Hoteldiscount } from "../hoteldiscount/hoteldiscount";
+import { gsap } from "gsap";
 
 
 @Component({
   selector: 'app-home',
-  imports: [CommonModule, AvatarModule],
+  imports: [CommonModule, AvatarModule,],
   templateUrl: './home.html',
   styleUrl: './home.scss',
 })
-export class Home {
+export class Home implements AfterViewInit  {
 //
 // islocationOpen= false;
 // toggleDropdown(){
 //   this.islocationOpen = !this.islocationOpen;
 // }
- heroAnimation = '';
+//  heroAnimation = '';
 
-  showHero(){
-    this.heroAnimation = 'animate__slideInUp animate__faster';
+//   showHero(){
+//     this.heroAnimation = 'animate__slideInUp animate__faster';
+//   }
+
+//   hideHero(){
+//     this.heroAnimation = 'animate__slideOutDown animate__faster';
+//   }
+
+ngAfterViewInit() {
+
+    const tl = gsap.timeline();
+
+    tl.from(".hero-tagline", {
+      y: 60,
+      opacity: 0,
+      duration: 0.6,
+      ease: "power3.out"
+    })
+
+    .from(".hero-title", {
+      y: 80,
+      opacity: 0,
+      duration: 0.7,
+      ease: "power3.out"
+    })
+
+    .from(".hero-desc", {
+      y: 60,
+      opacity: 0,
+      duration: 0.6,
+      ease: "power3.out"
+    })
+
+    .from(".choose-hotel", {
+      x: -200,
+      opacity: 0,
+      duration: 0.7,
+      ease: "power3.out"
+    });
+
+    // Background slow zoom
+    gsap.to(".hero-container img", {
+      scale: 1.4,
+      duration: 10,
+      ease: "none"
+    });
+
   }
-
-  hideHero(){
-    this.heroAnimation = 'animate__slideOutDown animate__faster';
-  }
-
 
   categoriesAnimation ='';
 showCategory(){
@@ -111,5 +153,10 @@ offersCard=[
   //Featured Section
   featuredbg='/home/Featuredsectionbg.png';
   featuresAnimation='';
+  isFeaturedBoxOpen=false;
+  toggleFeaturedBox(){
+    this.isFeaturedBoxOpen= !this.isFeaturedBoxOpen
+  }
   
+
 }
