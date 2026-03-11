@@ -1,72 +1,43 @@
-import { Component, OnInit, OnDestroy, AfterViewInit  } from '@angular/core';
+import { Component, OnInit, OnDestroy  } from '@angular/core';
 import { AvatarModule } from 'primeng/avatar';
 import { CommonModule } from '@angular/common';
 // import { Hoteldiscount } from "../hoteldiscount/hoteldiscount";
-import { gsap } from "gsap";
+import { FormsModule } from '@angular/forms';
+import { DatePickerModule } from 'primeng/datepicker';
+
 
 
 @Component({
   selector: 'app-home',
-  imports: [CommonModule, AvatarModule,],
+  imports: [CommonModule, AvatarModule, FormsModule, DatePickerModule],
   templateUrl: './home.html',
   styleUrl: './home.scss',
 })
-export class Home implements AfterViewInit  {
+export class Home {
+
+   isLocationOpen = true;
+
+  locations = ['Dhaka','Noakhali','Cumilla'];
+
+  selectedLocation = 'Dhaka';
+
+  toggleLocation(){
+    this.isLocationOpen = !this.isLocationOpen;
+  }
+
+  selectLocation(city:string){
+    this.selectedLocation = city;
+    this.isLocationOpen = false;
+  }
+
+  checkInDate:any;
+  checkOutDate:any;
+
 //
 // islocationOpen= false;
 // toggleDropdown(){
 //   this.islocationOpen = !this.islocationOpen;
 // }
-//  heroAnimation = '';
-
-//   showHero(){
-//     this.heroAnimation = 'animate__slideInUp animate__faster';
-//   }
-
-//   hideHero(){
-//     this.heroAnimation = 'animate__slideOutDown animate__faster';
-//   }
-
-ngAfterViewInit() {
-
-    const tl = gsap.timeline();
-
-    tl.from(".hero-tagline", {
-      y: 60,
-      opacity: 0,
-      duration: 0.6,
-      ease: "power3.out"
-    })
-
-    .from(".hero-title", {
-      y: 80,
-      opacity: 0,
-      duration: 0.7,
-      ease: "power3.out"
-    })
-
-    .from(".hero-desc", {
-      y: 60,
-      opacity: 0,
-      duration: 0.6,
-      ease: "power3.out"
-    })
-
-    .from(".choose-hotel", {
-      x: -200,
-      opacity: 0,
-      duration: 0.7,
-      ease: "power3.out"
-    });
-
-    // Background slow zoom
-    gsap.to(".hero-container img", {
-      scale: 1.4,
-      duration: 10,
-      ease: "none"
-    });
-
-  }
 
   categoriesAnimation ='';
 showCategory(){
@@ -158,5 +129,125 @@ offersCard=[
     this.isFeaturedBoxOpen= !this.isFeaturedBoxOpen
   }
   
+  hotelcard = [
+  {
+    id:1,
+    cardImg: '/listingpage/hotelimg.jpg',
+    profileimg: '/listingpage/profileimg.jpg',
+    stars: 4,
+    starArray: Array(4),
+    views: 0,
+    reviewText: 'Good',
+    reviews: 8,
+    rating: 4.1,
+    hotelType: 'Hotel',
+    hotelTitle: 'Moonlight Hotel',
+    rooms: 4,
+    bathrooms: 3,
+    size: '8×9 m2',
+    price: 105
+  },
+  {
+    id:2,
+    cardImg: '/listingpage/hotelimg.jpg',
+    profileimg: '/listingpage/profileimg.jpg',
+    stars: 4,
+    starArray: Array(4),
+    views: 0,
+    reviewText: 'Good',
+    reviews: 8,
+    rating: 4.1,
+    hotelType: 'Hotel',
+    hotelTitle: 'Moonlight Hotel',
+    rooms: 4,
+    bathrooms: 3,
+    size: '8×9 m2',
+    price: 105
+  },
+  {
+    id:3,
+    cardImg: '/listingpage/hotelimg.jpg',
+    profileimg: '/listingpage/profileimg.jpg',
+    stars: 4,
+    starArray: Array(4),
+    views: 0,
+    reviewText: 'Good',
+    reviews: 8,
+    rating: 4.1,
+    hotelType: 'Hotel',
+    hotelTitle: 'Moonlight Hotel',
+    rooms: 4,
+    bathrooms: 3,
+    size: '8×9 m2',
+    price: 105
+  },
+  {
+    id:4,
+    cardImg: '/listingpage/hotelimg.jpg',
+    profileimg: '/listingpage/profileimg.jpg',
+    stars: 4,
+    starArray: Array(4),
+    views: 0,
+    reviewText: 'Good',
+    reviews: 8,
+    rating: 4.1,
+    hotelType: 'Hotel',
+    hotelTitle: 'Moonlight Hotel',
+    rooms: 4,
+    bathrooms: 3,
+    size: '8×9 m2',
+    price: 105
+  },
+];
 
+//Contact Popup
+closePopup(){
+  this.activeContactId=null;
+}
+activeContactId: number | null = null;
+
+togglePopup(id: number) {
+  if (this.activeContactId === id) {
+    this.activeContactId = null; 
+  } else {
+    this.activeContactId = id;
+  }
+}
+//PROMOTED HOTEL
+  promotedHotels=[
+    {
+      id:1,
+    cardImg: '/listingpage/hotelimg.jpg',
+    profileimg: '/listingpage/profileimg.jpg',
+    stars: 4,
+    starArray: Array(4),
+    views: 0,
+    reviewText: 'Good',
+    reviews: 8,
+    rating: 4.1,
+    hotelType: 'Hotel',
+    hotelTitle: 'Moonlight Hotel',
+    rooms: 4,
+    bathrooms: 3,
+    size: '8×9 m2',
+    price: 105
+  },
+  {
+    id:2,
+    cardImg: '/listingpage/hotelimg.jpg',
+    profileimg: '/listingpage/profileimg.jpg',
+    stars: 4,
+    starArray: Array(4),
+    views: 0,
+    reviewText: 'Good',
+    reviews: 8,
+    rating: 4.1,
+    hotelType: 'Hotel',
+    hotelTitle: 'Moonlight Hotel',
+    rooms: 4,
+    bathrooms: 3,
+    size: '8×9 m2',
+    price: 105
+  },
+  ]
 }

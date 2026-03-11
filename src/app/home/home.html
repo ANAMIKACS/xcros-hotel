@@ -1,170 +1,506 @@
 <section class="hero-section">
-
-  <div class="hero-container">
-
-    <img src="/home/heroimg.jpg" alt="hero">
-
-    <div class="hero-content">
-      <div class="hero-tagline-mask">
-        <h1 class="hero-tagline">
-          ⭐ Enjoy Your Beautiful Moment
-        </h1>
-      </div>
-      <div class="hero-title-mask">
-        <h1 class="hero-title">
-          Unlock Your Next Adventure <br>
-          Book Your Hotel Stay
-        </h1>
-      </div>
-      <div class="hero-desc-mask">
-        <p class="hero-desc">
-          Discover Your Ideal Getaway Find the Perfect Hotel,
-          Villa, or Cottage by Name, Category, or Location!
-        </p>
-      </div>
-      <div class="choose-hotel-mask">
-
-        <div class="choose-hotel d-flex justify-content-between">
-
-          <div class="choose-contents">
-
-            <div class="location">
-              <h6>Select Location</h6>
-              <h5>Dhaka</h5>
+    <div class="hero-container">
+        <img src="/home/heroimg.jpg" alt="hero">
+        <div class="hero-content">
+            <div class="hero-tagline-mask">
+                <h1 class="hero-tagline" >
+                    ⭐ Enjoy Your Beautiful Moment
+                </h1>
             </div>
-
-            <div class="item">
-              <h6>Select Category</h6>
-              <h5>Resort</h5>
+            <div class="hero-title-mask">
+                <h1 class="hero-title " >
+                    Unlock Your Next Adventure <br>
+                    Book Your Hotel Stay
+                </h1>
             </div>
-
-            <div class="item">
-              <h6>Select Rating</h6>
-              <h5>4 Star</h5>
+            <div class="hero-desc-mask">
+                <h1 class="hero-desc">
+                    Discover Your Ideal Getaway Find the Perfect Hotel,
+                    Villa, or Cottage by Name, Category, or Location!
+                </h1>
             </div>
-
-          </div>
-
-          <button class="search-btn">
-            <i class="fa-solid fa-magnifying-glass"></i>
-            Search
-          </button>
-
+            <div class="choose-hotel-mask">
+                <div class="choose-hotel d-flex flex-row justify-content-between ">
+                    <div class="choose-contents">
+                        <div class="location">
+                            <h6>Select Location</h6>
+                            <div class="dropdown-box" (click)="toggleLocation()">
+                                {{selectedLocation}}
+                                <i class="fa-solid fa-chevron-down" [class.rotate]="isLocationOpen"></i>
+                            </div>
+                            @if(isLocationOpen){
+                            <div class="dropdown-menu">
+                                @for(city of locations; track city){
+                                <div class="dropdown-item" (click)="selectLocation(city)">
+                                    {{city}}
+                                </div> 
+                                }
+                            </div>
+                            }
+                        </div>
+                        <div class="item">
+                            <h6>Check-in Date</h6>
+                            <p-datepicker [(ngModel)]="checkInDate" appendTo="body"
+                                [showIcon]="true"  [inputStyle]="{'width': '150px' }">
+                            </p-datepicker>
+                        </div>
+                        <div class="item">
+                            <h6>Check-out Date</h6>
+                            <p-datepicker [(ngModel)]="checkOutDate" appendTo="body"
+                                [showIcon]="true"  [inputStyle]="{'width': '150px' }">
+                            </p-datepicker>
+                        </div>
+                        <div class="item">
+                            <h6>Guests</h6>
+                            <h5> 2 adults, 2 children. 1 room</h5>
+                        </div>
+                          </div>
+                        <button class="search-btn d-flex justify-content-end">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                            Search
+                        </button>
+                </div>
+            </div>
         </div>
-
-      </div>
-
     </div>
-
-  </div>
-
 </section>
 <!--Categories-->
 <section class="categories-section d-flex flex-column" (mouseenter)="showCategory()" (mouseleave)="hideCategory()">
-<div class="container">
-    <div class="categories-mask d-flex justify-content-center pt-3">
-        <h1 class="category-title " [ngClass]="categoriesAnimation">
-            Categories
-        </h1>
-    </div>
-    <div class="categories-heading-mask d-flex justify-content-center">
-        <h1 class="category-heading" [ngClass]="categoriesAnimation">
-            Most Demanding Categories
-        </h1>
-    </div>
-    <div class="categories-card-mask">
-        <div class="categories-card d-flex justify-content-center flex-row gap-4 align-items-center p-5">
-            @for(card of categoryCards; track card.id){
-
-            <div class="types card d-flex flex-column align-items-center justify-content-center gap-2">
-
-                <img [src]="card.icon" class="icon" alt="category">
-
-                <p class="card-title">
-                    {{ card.cardtitle }}
-                </p>
-
-                <p class="card-items">
-                    {{ card.categoryItem }}
-                </p>
-
+    <div class="container">
+        <div class="categories-mask d-flex justify-content-center pt-3">
+            <h1 class="category-title " [ngClass]="categoriesAnimation">
+                Categories
+            </h1>
+        </div>
+        <div class="categories-heading-mask d-flex justify-content-center">
+            <h1 class="category-heading" [ngClass]="categoriesAnimation">
+                Most Demanding Categories
+            </h1>
+        </div>
+        <div class="categories-card-mask">
+            <div class="categories-card d-flex justify-content-center flex-row gap-4 align-items-center p-5">
+                @for(card of categoryCards; track card.id){
+                <div class="types card d-flex flex-column align-items-center justify-content-center gap-2">
+                    <img [src]="card.icon" class="icon" alt="category">
+                    <p class="card-title">
+                        {{ card.cardtitle }}
+                    </p>
+                    <p class="card-items">
+                        {{ card.categoryItem }}
+                    </p>
+                </div>
+                }
+            </div>
+        </div>
+        <!--pagination-->
+        <section class="pagination d-flex justify-content-center">
+            <div class="pagination-mask">
+                @if (totalPages > 1) {
+                <div class="pagination-dots d-flex gap-3">
+                    @for (page of pages; track page) {
+                    <span class="dot" [class.active]="currentPage === page" (click)="changePage(page)">
+                    </span>
+                    }
+                </div>
+                }
             </div>
 
-            }
+        </section>
+    </div>
+</section>
+<!--Advertisements-->
+<section class="advertisement-section">
+<div class="container-fluid">
+    <div class="ad-contents pb-3">
+        <p class="ad-title text-center">Advertisements</p>
+    <div class="row py-5">
+        <div class="col-12 col-lg-4">
+            <div class="ad-wrapper">
+                 <div class="ad-banner">
+                 <img src="/home/ad1-img.png">
+            </div>
+            <div class="img-contents">
+                <p class="testTitle m-0">test</p>
+                <p class="subtitle m-0">live</p>
+                <div class="details-contents d-flex flex-row gap-3">
+                      <div class="ad-views d-flex flex-row align-items-center text-white gap-2">
+                    <i class="fa-solid fa-eye"></i> : 22
+                </div>
+                <div class="addetails-btn">
+                    <button class="ad-details-btn">Details ></button>
+                </div>
+                </div>
+            </div>
+            </div>
+        </div>
+        <div class="col-12 col-lg-4">
+             <div class="ad-wrapper">
+                 <div class="ad-banner">
+                 <img src="/home/ad2-img.png">
+            </div>
+            <div class="img-contents">
+                <p class="testTitle m-0">test</p>
+                <p class="subtitle m-0">live</p>
+                <div class="details-contents d-flex flex-row gap-3 mt-2">
+                      <div class="ad-views d-flex flex-row align-items-center text-white gap-2">
+                    <i class="fa-solid fa-eye"></i> : 22
+                </div>
+                <div class="addetails-btn">
+                    <button class="ad-details-btn">Details ></button>
+                </div>
+                </div>
+            </div>
+            </div>
+        </div>
+        <div class="col-12 col-lg-4">
+             <div class="ad-wrapper">
+                 <div class="ad-banner">
+                 <img src="/home/ad3-img.png">
+            </div>
+            <div class="img-contents">
+                <p class="testTitle m-0">test</p>
+                <p class="subtitle m-0">live</p>
+                <div class="details-contents d-flex flex-row gap-3">
+                      <div class="ad-views d-flex flex-row align-items-center text-white gap-2">
+                    <i class="fa-solid fa-eye"></i> : 22
+                </div>
+                <div class="addetails-btn">
+                    <button class="ad-details-btn">Details ></button>
+                </div>
+                </div>
+            </div>
+            </div>
         </div>
     </div>
-    <!--pagination-->
-     <section class="pagination d-flex justify-content-center">
-        <div class="pagination-mask">
-                    @if (totalPages > 1) {
-        <div class="pagination-dots d-flex gap-3">
-            @for (page of pages; track page) {
-            <span class="dot" [class.active]="currentPage === page" (click)="changePage(page)">
-            </span>
-            }
-        </div>
-        }
-        </div>
-
-    </section>
+    </div>
+    
 </div>
 </section>
 <!--Offers Section -->
-<section class="offers-section">
-    <div class="container py-5">
-        <div class="row" (mouseenter)="showCards()"
-     (mouseleave)="hideCards()">
-     <div class="card-mask" [ngClass]="offersAnimation">
-         <div class="Dealscards d-flex flex-row gap-2 justify-content-center">
-             @for (offers of offersCard; track $index) {
-                    <div class="offersCard card col-12 col-lg-4">
-            <div class="offers"
-                [ngClass]="offersAnimation">
-                <div class="offerTitle-mask">
-                     <p class="OfferTitle">{{offers.OfferTitle}}</p>
+<section class="offers-section py-5">
+    <div class="row" (mouseenter)="showCards()" (mouseleave)="hideCards()">
+        <div class="card-mask" [ngClass]="offersAnimation">
+            <div class="Dealscards d-flex flex-row gap-5 justify-content-center">
+                @for (offers of offersCard; track $index) {
+                <div class="offersCard card col-12 col-lg-4">
+                    <div class="offers" [ngClass]="offersAnimation">
+                        <div class="offerTitle-mask">
+                            <p class="OfferTitle">{{offers.OfferTitle}}</p>
+                        </div>
+                        <div class="button-mask">
+                            <button class="discover-btn mt-3">Discover</button>
+                        </div>
+                    </div>
                 </div>
-                <div class="button-mask">
-                    <button class="discover-btn mt-3">Discover</button>
-                </div>
-               
-            </div>
-        </div>
-        }
-           </div>
-     </div>
-        </div>
-    </div>
-</section>  
-
-<!--Featured section-->
-<section class="featured-section py-5">
-    <div class="container">
-            <div class="FeaturedHotelsTitle">
-                Featured Hotels
-            </div>
-            <div class="d-flex flex-row justify-content-between">
-                <div class="FeaturedTitle">
-                See all the Featured Hotels
-            </div>
-            <div class="FeatureDropdown">
-                <div class="Featured-header d-flex flex-row gap-5 justify-content-between" (click)="toggleFeaturedBox()">
-                    <div class="d-flex flex-row justify-content-between">
-                         <p class="m-0">Featured</p>
-                          </div>
-                     <i class="fa-solid fa-chevron-down text-black"
-                        [class.rotate]="isFeaturedBoxOpen"></i>
-                   
-                   
-                </div>
-                @if(isFeaturedBoxOpen){
-                    <div class="FeaturedOptions">Featured</div>
-                    <div class="FeaturedOptions">Recent</div>
-                    <div class="FeaturedOptions">Popular</div>
-                    <div class="FeaturedOptions">Recommended</div>          
                 }
             </div>
-            </div>
-            
+        </div>
     </div>
 </section>
 
+<!--Featured section-->
+<section class="featured-section py-5">
+    <div class="featured-contents">
+        <div class="FeaturedHotelsTitle">
+            Featured Hotels
+        </div>
+        <div class="d-flex flex-row justify-content-between">
+            <div class="FeaturedTitle">
+                See all the Featured Hotels
+            </div>
+            <div class="FeatureDropdown">
+                <div class="Featured-header d-flex flex-row gap-5 justify-content-between"
+                    (click)="toggleFeaturedBox()">
+                    <div class="d-flex flex-row justify-content-between">
+                        <p class="m-0">Featured</p>
+                    </div>
+                    <i class="fa-solid fa-chevron-down text-black" [class.rotate]="isFeaturedBoxOpen"></i>
+
+
+                </div>
+                @if(isFeaturedBoxOpen){
+                <div class="FeaturedOptions">Featured</div>
+                <div class="FeaturedOptions">Recent</div>
+                <div class="FeaturedOptions">Popular</div>
+                <div class="FeaturedOptions">Recommended</div>
+                }
+            </div>
+        </div>
+
+        <div class="hotel-cards py-4">
+            <div class="row">
+                @for (hotel of hotelcard; track hotel.id) {
+                <div class="col-12 col-md-4 col-lg-3 col-sm-6 mt-3 p-1">
+                    <div class="card">
+                        <div class="card-img">
+                            <img [src]="hotel.cardImg">
+                            <div class="profileimg">
+                                <img [src]="hotel.profileimg">
+                            </div>
+                            <div class="stars d-flex flex-row">
+                                @for (star of hotel.starArray; track $index) {
+                                <i class="fa-solid fa-star"></i>
+                                }
+                            </div>
+                            <div class="views d-flex flex-row gap-1">
+                                <i class="fa-solid fa-eye"></i>
+                                <p class="m-0">Views: {{ hotel.views }}</p>
+                            </div>
+                            <div class="review-container">
+                                <div class="review-text">
+                                    <h5>{{ hotel.reviewText }}</h5>
+                                    <h6>{{ hotel.reviews }} Reviews</h6>
+                                </div>
+                                <div class="rating-box">
+                                    {{ hotel.rating }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="hotel">{{ hotel.hotelType }}</div>
+                            <h3 class="hotel-title">{{ hotel.hotelTitle }}</h3>
+                            <hr>
+                            <div class="facilities">
+                                <div class="facility-item">
+                                    <i class="fa-solid fa-bed"></i>
+                                    <span>{{ hotel.rooms }} Room</span>
+                                </div>
+                                <div class="facility-item">
+                                    <i class="fa-solid fa-bath"></i>
+                                    <span>{{ hotel.bathrooms }} Bathroom</span>
+                                </div>
+                                <div class="facility-item">
+                                    <i class="fa-solid fa-cube"></i>
+                                    <span>{{ hotel.size }}</span>
+                                </div>
+                            </div>
+                            <div class="amenities gap-2">
+                                <i class="pi pi-wifi"></i>
+                                <i class="fa-solid fa-square-parking"></i>
+                                <i class="fa-solid fa-ban-smoking"></i>
+                                <i class="fa-solid fa-utensils"></i>
+                            </div>
+                            <hr class="divider">
+                            <div class="bottom-section">
+                                <div class="price-box">
+                                    <span class="avg">AVG/NIGHT</span>
+                                    <span class="price">$ {{ hotel.price }}</span>
+                                </div>
+                                <div class="action-buttons">
+                                    <button class="contact-btn" (click)="togglePopup(hotel.id)">Contact Info</button>
+                                    @if(activeContactId===hotel.id)
+                                    {
+                                    <div class="popup card gap-3">
+                                        <div class="d-flex justify-content-between gap-3">
+                                            <div class="phone gap-2 align-items-center">
+                                                <i class="pi pi-phone"></i>Phone: +7(111)123456789
+                                            </div>
+                                            <div class="close-btn" (click)="closePopup()">
+                                                <i class="pi pi-times"></i>
+                                            </div>
+                                        </div>
+
+                                        <div class="email gap-2 align-items-center">
+                                            <i class="pi pi-envelope"></i> Mail: yourmail@domain.com
+                                        </div>
+
+                                    </div>
+                                    }
+                                    <button class="icon-btn">
+                                        <i class="fa-regular fa-heart"></i>
+                                    </button>
+                                    <button class="icon-btn">
+                                        <i class="fa-solid fa-location-dot"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                }
+            </div>
+            <div class="viewbutton d-flex justify-content-center pt-3">
+                <button class="viewmore-btn">View More ></button>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<section class="details-section">
+    <div class="container">
+        <div class="promo-banner">
+            <img src="/home/promo-img.png" alt="villa">
+            <div class="play-btn">
+                <i class="fa-solid fa-play"></i>
+            </div>
+            <div class="promo-text">
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit,
+                sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+            </div>
+
+        </div>
+
+    </div>
+    <div class="stats-section">
+        <div class="container">
+            <div class="row g-4">
+                <div class="col-md-3">
+                    <div class="stat-card d-flex flex-row justify-content-between ">
+                        <div class="d-flex flex-column">
+                            <div class="stat-number">0+</div>
+                            <p>Locations</p>
+                        </div>
+                        <div class="stats-imgs">
+                            <img src="/home/loaction-img.png" alt="location-img">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-lg-3 col-md-3">
+                    <div class="stat-card d-flex flex-row justify-content-between ">
+                        <div class="d-flex flex-column">
+                            <div class="stat-number">0+</div>
+                            <p>Properties</p>
+                        </div>
+                        <div class="stats-imgs">
+                            <img src="/home/property-img.png" alt="Property-img">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-lg-3 col-md-3">
+                    <div class="stat-card d-flex flex-row justify-content-between ">
+                        <div class="d-flex flex-column">
+                            <div class="stat-number">0+</div>
+                            <p>Bookings</p>
+                        </div>
+                        <div class="stats-imgs">
+                            <img src="/home/booking-img.png" alt="Bookings-img">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-lg-3 col-md-3">
+                    <div class="stat-card d-flex flex-row justify-content-between ">
+                        <div class="d-flex flex-column">
+                            <div class="stat-number">0+</div>
+                            <p>Ratings</p>
+                        </div>
+                        <div class="stats-imgs">
+                            <img src="/home/rating-img.png" alt="Ratings-img">
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+</section>
+
+<section class="exclusiveoffer-section">
+    <div class="offerscontainer py-5">
+        <div class="offer-banner">
+            <img src="/home/exculsiveoffer-img.jpg">
+
+            <div class="offer-text">
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit,
+                sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+            </div>
+            <div class="exclusive-hotels">
+                <div class="row">
+                    @for (hotel of promotedHotels; track hotel.id) {
+                    <div class="col-6 mt-4">
+                        <div class="card">
+                            <div class="card-img">
+                                <img [src]="hotel.cardImg">
+                                <div class="profileimg">
+                                    <img [src]="hotel.profileimg">
+                                </div>
+                                <div class="stars d-flex flex-row">
+                                    @for (star of hotel.starArray; track $index) {
+                                    <i class="fa-solid fa-star"></i>
+                                    }
+                                </div>
+                                <div class="views d-flex flex-row gap-1">
+                                    <i class="fa-solid fa-eye"></i>
+                                    <p class="m-0">Views: {{ hotel.views }}</p>
+                                </div>
+                                <div class="review-container">
+                                    <div class="review-text">
+                                        <h5>{{ hotel.reviewText }}</h5>
+                                        <h6>{{ hotel.reviews }} Reviews</h6>
+                                    </div>
+                                    <div class="rating-box">
+                                        {{ hotel.rating }}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <div class="hotel">{{ hotel.hotelType }}</div>
+                                <h3 class="hotel-title">{{ hotel.hotelTitle }}</h3>
+                                <hr class="divider">
+                                <div class="facilities">
+                                    <div class="facility-item">
+                                        <i class="fa-solid fa-bed"></i>
+                                        <span>{{ hotel.rooms }} Room</span>
+                                    </div>
+                                    <div class="facility-item">
+                                        <i class="fa-solid fa-bath"></i>
+                                        <span>{{ hotel.bathrooms }} Bathroom</span>
+                                    </div>
+                                    <div class="facility-item">
+                                        <i class="fa-solid fa-cube"></i>
+                                        <span>{{ hotel.size }}</span>
+                                    </div>
+                                </div>
+                                <div class="amenities gap-2">
+                                    <i class="fa-solid fa-wifi"></i>
+                                    <i class="fa-solid fa-square-parking"></i>
+                                    <i class="fa-solid fa-ban-smoking"></i>
+                                    <i class="fa-solid fa-utensils"></i>
+                                </div>
+                                <hr class="divider">
+                                <div class="bottom-section">
+                                    <div class="price-box">
+                                        <span class="avg">AVG/NIGHT</span>
+                                        <span class="price">$ {{ hotel.price }}</span>
+                                    </div>
+                                    <div class="action-buttons">
+                                        <button class="contact-btn" (click)="togglePopup(hotel.id)">Contact
+                                            Info</button>
+                                        @if(activeContactId===hotel.id)
+                                        {
+                                        <div class="popup card gap-3">
+                                            <div class="d-flex justify-content-between gap-3">
+                                                <div class="phone gap-2 align-items-center">
+                                                    <i class="pi pi-phone"></i>Phone: +7(111)123456789
+                                                </div>
+                                                <div class="close-btn" (click)="closePopup()">
+                                                    <i class="pi pi-times"></i>
+                                                </div>
+                                            </div>
+
+                                            <div class="email gap-2 align-items-center">
+                                                <i class="pi pi-envelope"></i> Mail: yourmail@domain.com
+                                            </div>
+
+                                        </div>
+                                        }
+                                        <button class="icon-btn">
+                                            <i class="fa-regular fa-heart"></i>
+                                        </button>
+                                        <button class="icon-btn">
+                                            <i class="fa-solid fa-location-dot"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    }
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
