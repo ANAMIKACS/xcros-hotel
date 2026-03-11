@@ -32,6 +32,16 @@ export class Hoteldiscount  {
     }
   ];
 
+  //partners
+  logos = [
+    {image: '/home/ri_visa-line.png'},
+    {image: '/home/logos_mastercard.png'},
+    {image: '/home/logos_paypal.png'},
+    {image: '/home/logo (2).png'},
+    {image: '/home/b..png'},
+    {image: '/home/airbnb.png'}
+  ]
+
 
   // Benefits Section
   animationClass = '';
@@ -45,17 +55,17 @@ hideCards() {
 }
   featuresList = [
     {
-      image: '/home/custom-care.png',
+      image: '/home/booking.png',
       title: 'Best Price Guarantee',
       content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'
     },
     {
-      image: '/home/custom-care.png',
+      image: '/home/guarantee.png',
       title: 'Best Price Guarantee',
       content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'
     },
     {
-      image: '/home/custom-care.png',
+      image: '/home/custom-support.png',
       title: 'Best Price Guarantee',
       content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'
     }
@@ -67,9 +77,9 @@ hideCards() {
  
   
   testimonials = [
- { roomImage:'/home/room1.png', quotes:'/home/SVG.png', title:'Quality Service', description:'...' },
- { roomImage:'/home/room2.png', quotes:'/home/SVG.png', title:'Excellent Support', description:'...' },
- { roomImage:'/home/room3.png', quotes:'/home/SVG.png', title:'Trusted Experience', description:'...' }
+ { roomImage:'/home/room1.png', quotes:'/home/SVG.png', title:'Quality Service', description:'In this everi evolving digital understand the significance of staying ahead as through our blog invite explore the dynamic our world of IT with us decoding algorithms to unraveling It is a long established.',profileImg:'/home/profile.png',name:'Matthew C. Lansberry', designation:'CEO & Founder' },
+ { roomImage:'/home/room2.png', quotes:'/home/SVG.png', title:'Excellent Support', description:'In this everi evolving digital understand the significance of staying ahead as through our blog invite explore the dynamic our world of IT with us decoding algorithms to unraveling It is a long established.',profileImg:'/home/profile.png',name:'Matthew C. Lansberry', designation:'CEO & Founder' },
+ { roomImage:'/home/room3.png', quotes:'/home/SVG.png', title:'Trusted Experience', description:'In this everi evolving digital understand the significance of staying ahead as through our blog invite explore the dynamic our world of IT with us decoding algorithms to unraveling It is a long established.',profileImg:'/home/profile.png',name:'Matthew C. Lansberry', designation:'CEO & Founder' }
 
   ];
 

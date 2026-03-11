@@ -35,8 +35,7 @@
 
   @for (feature of featuresList; track $index) {
   <div class="col-12 col-lg-4">
-    <div class="features animate__animated"
-         [ngClass]="animationClass">
+    <div class="features">
 
         <img [src]="feature.image" alt="">
         <p class="feature-title">{{feature.title}}</p>
@@ -87,7 +86,7 @@
                         <img [src]="item.quotes" alt="">
 
                         <div class="d-flex flex-row gap-3 mt-4">
-                            <p>{{item.title}}</p>
+                            <p class="feedback-title">{{item.title}}</p>
                             <span>
                                 <i class="fa-solid fa-star"></i>
                                 <i class="fa-solid fa-star"></i>
@@ -99,6 +98,16 @@
                         <p class="text-muted">
                             {{item.description}}
                         </p>
+
+                        <div class="d-flex flex-row mt-5 gap-4">
+                            <div class="profile-img">
+                                <img [src]="item.profileImg" alt="">
+                            </div>
+                            <div class="profile-details d-flex flex-column">
+                                <p class="name m-0">{{item.name}}</p>
+                                <p class="designation">{{item.designation}}</p>
+                            </div>
+                        </div>
 
                     </div>
                 </div>
@@ -115,21 +124,39 @@
 </div>
 </section> 
 
+<!--partners-->
 
 <section class="partners">
     <div class="container">
         <div class="row d-flex justify-content-center align-items-center">
             
-            <div class="col-12 col-lg-4">
+            <div class="col-12 col-lg-2">
                 <p class="partner-title text-light">Our Partners</p>
             </div>
-            <div class="col-12 col-lg-8">
-
+            <div class="col-12 col-lg-10">
+                <div class="logo d-flex flex-row justify-content-center align-items-center">
+                    <div class="prev-btn">
+                        <i class="fa-solid fa-angle-left"></i>
+                    </div>
+                    <div class="logos d-flex flex-row gap-3">
+                        
+                            @for(item of logos; track $index){
+                                <div class="company-logo">
+                                    <img [src]="item.image" alt="">
+                                </div>
+                            }
+                        
+                    </div>
+                    <div class="next-btn">
+                        <i class="fa-solid fa-angle-right"></i>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 </section>
 
+<!--connect-->
 
 <section class="connect">
     
@@ -154,7 +181,7 @@
             </div>
         </div>
         <div class="col-12 col-lg-4">
-            <div class="custom-support animate__animated">
+            <div class="custom-support">
                 <p class="card-title">Customer Support</p>
                 <p class="contact-title text-light mt-2 mb-0">Can we help you?</p>
                 <p class="call-us">Call us! +00 123 456 789</p>
@@ -181,7 +208,12 @@
    
 </section>
 
+<!--subscribe now-->
+
 <section class="subscribe py-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
         <div class="sign-up d-flex justify-content-center align-items-center flex-column">
             <p class="subscribe-title">Your Travel Journey Starts Here</p>
             <p class="signup">Sign up and we'll send the best deals to you</p>
@@ -200,4 +232,8 @@
             </div>
             </div>
         </div>
+
+            </div>
+        </div>
+    </div>
 </section>
