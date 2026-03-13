@@ -1,189 +1,199 @@
-<section class="hero-section">
+<!--Hero section-->
+<section #heroSection class="hero-section">
     <div class="hero-container">
-        <img src="/home/heroimg.jpg" alt="hero">
+        <!-- <img src="/home/heroimg.jpg" alt="hero"> -->
         <div class="hero-content">
             <div class="hero-tagline-mask">
-                <h1 class="hero-tagline" >
+                <h1 class="hero-tagline hero-item">
                     ⭐ Enjoy Your Beautiful Moment
                 </h1>
             </div>
             <div class="hero-title-mask">
-                <h1 class="hero-title " >
+                <h1 class="hero-title hero-item">
                     Unlock Your Next Adventure <br>
                     Book Your Hotel Stay
                 </h1>
             </div>
             <div class="hero-desc-mask">
-                <h1 class="hero-desc">
+                <h1 class="hero-desc hero-item">
                     Discover Your Ideal Getaway Find the Perfect Hotel,
                     Villa, or Cottage by Name, Category, or Location!
                 </h1>
             </div>
             <div class="choose-hotel-mask">
-                <div class="choose-hotel d-flex flex-row justify-content-between ">
-                    <div class="choose-contents">
-                        <div class="location">
-                            <h6>Select Location</h6>
-                            <div class="dropdown-box" (click)="toggleLocation()">
-                                {{selectedLocation}}
+                <div class="choose-hotel d-flex flex-row justify-content-between card-item ">
+                    <div class="choose-contents d-flex">
+                        <div class="locationdropdown">
+                            <h6 class="loaction-title">Select Location</h6>
+                            <div class="locationdropdown-box d-flex flex-row justify-content-between"
+                                (click)="toggleLocation()">
+                                <p class="m-0">{{selectedLocation}}</p>
                                 <i class="fa-solid fa-chevron-down" [class.rotate]="isLocationOpen"></i>
                             </div>
                             @if(isLocationOpen){
-                            <div class="dropdown-menu">
+                            <div class="location-menu">
                                 @for(city of locations; track city){
-                                <div class="dropdown-item" (click)="selectLocation(city)">
+                                <div class="location-item" (click)="selectLocation(city)"
+                                    [class.selected]="city === selectedLocation">
                                     {{city}}
-                                </div> 
+                                </div>
                                 }
                             </div>
                             }
                         </div>
                         <div class="item">
                             <h6>Check-in Date</h6>
-                            <p-datepicker [(ngModel)]="checkInDate" appendTo="body"
-                                [showIcon]="true"  [inputStyle]="{'width': '150px' }">
+                            <p-datepicker [(ngModel)]="checkInDate" appendTo="body" [showIcon]="true"
+                                [inputStyle]="{'width': '150px' }">
                             </p-datepicker>
                         </div>
                         <div class="item">
                             <h6>Check-out Date</h6>
-                            <p-datepicker [(ngModel)]="checkOutDate" appendTo="body"
-                                [showIcon]="true"  [inputStyle]="{'width': '150px' }">
+                            <p-datepicker [(ngModel)]="checkOutDate" appendTo="body" [showIcon]="true"
+                                [inputStyle]="{'width': '150px' }">
                             </p-datepicker>
                         </div>
                         <div class="item">
                             <h6>Guests</h6>
                             <h5> 2 adults, 2 children. 1 room</h5>
                         </div>
-                          </div>
-                        <button class="search-btn d-flex justify-content-end">
-                            <i class="fa-solid fa-magnifying-glass"></i>
-                            Search
-                        </button>
+                    </div>
+                    <button class="search-btn d-flex justify-content-end">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                        Search
+                    </button>
                 </div>
             </div>
         </div>
     </div>
 </section>
-<!--Categories-->
-<section class="categories-section d-flex flex-column" (mouseenter)="showCategory()" (mouseleave)="hideCategory()">
-    <div class="container">
-        <div class="categories-mask d-flex justify-content-center pt-3">
-            <h1 class="category-title " [ngClass]="categoriesAnimation">
-                Categories
-            </h1>
-        </div>
-        <div class="categories-heading-mask d-flex justify-content-center">
-            <h1 class="category-heading" [ngClass]="categoriesAnimation">
-                Most Demanding Categories
-            </h1>
-        </div>
-        <div class="categories-card-mask">
-            <div class="categories-card d-flex justify-content-center flex-row gap-4 align-items-center p-5">
-                @for(card of categoryCards; track card.id){
-                <div class="types card d-flex flex-column align-items-center justify-content-center gap-2">
-                    <img [src]="card.icon" class="icon" alt="category">
-                    <p class="card-title">
-                        {{ card.cardtitle }}
-                    </p>
-                    <p class="card-items">
-                        {{ card.categoryItem }}
-                    </p>
-                </div>
-                }
-            </div>
-        </div>
-        <!--pagination-->
-        <section class="pagination d-flex justify-content-center">
-            <div class="pagination-mask">
-                @if (totalPages > 1) {
-                <div class="pagination-dots d-flex gap-3">
-                    @for (page of pages; track page) {
-                    <span class="dot" [class.active]="currentPage === page" (click)="changePage(page)">
-                    </span>
-                    }
-                </div>
-                }
-            </div>
 
-        </section>
-    </div>
-</section>
-<!--Advertisements-->
-<section class="advertisement-section">
-<div class="container-fluid">
-    <div class="ad-contents pb-3">
-        <p class="ad-title text-center">Advertisements</p>
-    <div class="row py-5">
-        <div class="col-12 col-lg-4">
-            <div class="ad-wrapper">
-                 <div class="ad-banner">
-                 <img src="/home/ad1-img.png">
-            </div>
-            <div class="img-contents">
-                <p class="testTitle m-0">test</p>
-                <p class="subtitle m-0">live</p>
-                <div class="details-contents d-flex flex-row gap-3">
-                      <div class="ad-views d-flex flex-row align-items-center text-white gap-2">
-                    <i class="fa-solid fa-eye"></i> : 22
-                </div>
-                <div class="addetails-btn">
-                    <button class="ad-details-btn">Details ></button>
-                </div>
-                </div>
-            </div>
-            </div>
+<!--Categories-->
+<section #categoriesSection class="categories-section">
+  <div class="categoriescontainer">
+    <div class="title-wrapper">
+        <div class="category-title-mask">
+              <h1 class="category-title category-item">
+        Categories
+      </h1>
         </div>
-        <div class="col-12 col-lg-4">
-             <div class="ad-wrapper">
-                 <div class="ad-banner">
-                 <img src="/home/ad2-img.png">
-            </div>
-            <div class="img-contents">
-                <p class="testTitle m-0">test</p>
-                <p class="subtitle m-0">live</p>
-                <div class="details-contents d-flex flex-row gap-3 mt-2">
-                      <div class="ad-views d-flex flex-row align-items-center text-white gap-2">
-                    <i class="fa-solid fa-eye"></i> : 22
-                </div>
-                <div class="addetails-btn">
-                    <button class="ad-details-btn">Details ></button>
-                </div>
-                </div>
-            </div>
-            </div>
-        </div>
-        <div class="col-12 col-lg-4">
-             <div class="ad-wrapper">
-                 <div class="ad-banner">
-                 <img src="/home/ad3-img.png">
-            </div>
-            <div class="img-contents">
-                <p class="testTitle m-0">test</p>
-                <p class="subtitle m-0">live</p>
-                <div class="details-contents d-flex flex-row gap-3">
-                      <div class="ad-views d-flex flex-row align-items-center text-white gap-2">
-                    <i class="fa-solid fa-eye"></i> : 22
-                </div>
-                <div class="addetails-btn">
-                    <button class="ad-details-btn">Details ></button>
-                </div>
-                </div>
-            </div>
-            </div>
-        </div>
-    </div>
-    </div>
     
-</div>
+    </div>
+    <div class="heading-wrapper">
+        <div class="category-heading-mask">
+            <h1 class="category-heading category-item">
+        Most Demanding Categories
+      </h1>
+        </div>
+      
+    </div>
+    <swiper-container
+      class="categories-swiper"
+      slides-per-view="6"
+      space-between="25"
+      grab-cursor="true"
+      breakpoints='{
+        "320": { "slidesPerView": 2, "spaceBetween": 10 },
+        "768": { "slidesPerView": 3, "spaceBetween": 15 },
+        "1024": { "slidesPerView": 4, "spaceBetween": 20 },
+        "1400": { "slidesPerView": 6, "spaceBetween": 25 }
+      }'>
+      @for(card of categoryCards; track card.id){
+      <swiper-slide>
+        <div class="types-mask">
+             <div class="types category-card">
+          <img [src]="card.icon" class="icon" alt="category">
+          <p class="card-title">
+            {{ card.cardtitle }}
+          </p>
+          <p class="card-items">
+            {{ card.categoryItem }}
+          </p>
+        </div>
+        </div>
+       
+      </swiper-slide>
+      }
+    </swiper-container>
+  </div>
 </section>
+
+<!--Advertisements-->
+<section #advertismentSection class="advertisement-section">
+    <div class="container-fluid">
+        <div class="ad-contents pb-3">
+            <p class="ad-title text-center ad-title-anim">Advertisements</p>
+            <div class="row py-5">
+                <div class="col-12 col-lg-4 ad-col">
+                    <div class="ad-wrapper">
+                        <div class="ad-banner">
+                            <img src="/home/ad1-img.png">
+                        </div>
+                        <div class="img-contents ad-content">
+                            <p class="testTitle m-0">test</p>
+                            <p class="subtitle m-0">live</p>
+                            <div class="details-contents d-flex flex-row gap-3">
+                                <div class="ad-views d-flex flex-row align-items-center text-white gap-2">
+                                    <i class="fa-solid fa-eye"></i> : 22
+                                </div>
+                                <div class="addetails-btn">
+                                    <button class="ad-details-btn">Details ></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-lg-4 ad-col">
+                    <div class="ad-wrapper">
+                        <div class="ad-banner">
+                            <img src="/home/ad2-img.png">
+                        </div>
+                        <div class="img-contents">
+                            <p class="testTitle m-0">test</p>
+                            <p class="subtitle m-0">live</p>
+                            <div class="details-contents d-flex flex-row gap-3 mt-2">
+                                <div class="ad-views d-flex flex-row align-items-center text-white gap-2">
+                                    <i class="fa-solid fa-eye"></i> : 22
+                                </div>
+                                <div class="addetails-btn">
+                                    <button class="ad-details-btn">Details ></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-lg-4 ad-col">
+                    <div class="ad-wrapper">
+                        <div class="ad-banner">
+                            <img src="/home/ad3-img.png">
+                        </div>
+                        <div class="img-contents">
+                            <p class="testTitle m-0">test</p>
+                            <p class="subtitle m-0">live</p>
+                            <div class="details-contents d-flex flex-row gap-3">
+                                <div class="ad-views d-flex flex-row align-items-center text-white gap-2">
+                                    <i class="fa-solid fa-eye"></i> : 22
+                                </div>
+                                <div class="addetails-btn">
+                                    <button class="ad-details-btn">Details ></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
 <!--Offers Section -->
-<section class="offers-section py-5">
-    <div class="row" (mouseenter)="showCards()" (mouseleave)="hideCards()">
-        <div class="card-mask" [ngClass]="offersAnimation">
-            <div class="Dealscards d-flex flex-row gap-5 justify-content-center">
+<section #offersSection class="offers-section py-5">
+    
+        <div class="card-mask d-flex flex-row justify-content-center">
+            <div class="Dealscards d-flex flex-row gap-5 offerscard-item">
                 @for (offers of offersCard; track $index) {
                 <div class="offersCard card col-12 col-lg-4">
-                    <div class="offers" [ngClass]="offersAnimation">
+                    <div class="offers">
                         <div class="offerTitle-mask">
                             <p class="OfferTitle">{{offers.OfferTitle}}</p>
                         </div>
@@ -195,34 +205,42 @@
                 }
             </div>
         </div>
-    </div>
+   
 </section>
 
 <!--Featured section-->
-<section class="featured-section py-5">
+<section #featuredSection class="featured-section py-5">
     <div class="featured-contents">
-        <div class="FeaturedHotelsTitle">
-            Featured Hotels
+        <div class="FeaturedHotelsTitle-mask">
+            <p class="FeaturedHotelsTitle m-0 feature-item">
+                Featured Hotels
+            </p>
         </div>
-        <div class="d-flex flex-row justify-content-between">
-            <div class="FeaturedTitle">
-                See all the Featured Hotels
+
+        <div class="headers d-flex flex-row justify-content-between">
+            <div class="FeaturedTitle-mask">
+                <div class="FeaturedTitle feature-item">
+                    See all the Featured Hotels
+                </div>
             </div>
+
             <div class="FeatureDropdown">
                 <div class="Featured-header d-flex flex-row gap-5 justify-content-between"
                     (click)="toggleFeaturedBox()">
                     <div class="d-flex flex-row justify-content-between">
-                        <p class="m-0">Featured</p>
+                        <p class="m-0">{{selectedOption}}</p>
                     </div>
                     <i class="fa-solid fa-chevron-down text-black" [class.rotate]="isFeaturedBoxOpen"></i>
-
-
                 </div>
                 @if(isFeaturedBoxOpen){
-                <div class="FeaturedOptions">Featured</div>
-                <div class="FeaturedOptions">Recent</div>
-                <div class="FeaturedOptions">Popular</div>
-                <div class="FeaturedOptions">Recommended</div>
+                <div class="dropdownbody">
+                    @for (option of options; track option) {
+                    <div class="FeaturedOptions" (click)="selectOption(option)"
+                        [class.selected]="option === selectedOption">
+                        {{ option }}
+                    </div>
+                    }
+                </div>
                 }
             </div>
         </div>
@@ -231,7 +249,7 @@
             <div class="row">
                 @for (hotel of hotelcard; track hotel.id) {
                 <div class="col-12 col-md-4 col-lg-3 col-sm-6 mt-3 p-1">
-                    <div class="card">
+                    <div class="card featured-card">
                         <div class="card-img">
                             <img [src]="hotel.cardImg">
                             <div class="profileimg">
@@ -327,9 +345,10 @@
     </div>
 </section>
 
-<section class="details-section">
+<!--Promo-->
+<section #promoSection class="details-section">
     <div class="container">
-        <div class="promo-banner">
+        <div class="promo-banner promo-image">
             <img src="/home/promo-img.png" alt="villa">
             <div class="play-btn">
                 <i class="fa-solid fa-play"></i>
@@ -338,79 +357,79 @@
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit,
                 sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
             </div>
-
         </div>
-
     </div>
     <div class="stats-section">
         <div class="container">
-            <div class="row g-4">
-                <div class="col-md-3">
-                    <div class="stat-card d-flex flex-row justify-content-between ">
-                        <div class="d-flex flex-column">
-                            <div class="stat-number">0+</div>
-                            <p>Locations</p>
+            <div class="statscard-mask">
+                <div class="row g-4 stas-cards">
+                    <div class="col-md-3">
+                        <div class="stat-card d-flex flex-row justify-content-between ">
+                            <div class="d-flex flex-column">
+                                <div class="stat-number">0+</div>
+                                <p>Locations</p>
+                            </div>
+                            <div class="stats-imgs">
+                                <img src="/home/loaction-img.png" alt="location-img">
+                            </div>
                         </div>
-                        <div class="stats-imgs">
-                            <img src="/home/loaction-img.png" alt="location-img">
+                    </div>
+                    <div class="col-12 col-lg-3 col-md-3">
+                        <div class="stat-card d-flex flex-row justify-content-between ">
+                            <div class="d-flex flex-column">
+                                <div class="stat-number">0+</div>
+                                <p>Properties</p>
+                            </div>
+                            <div class="stats-imgs">
+                                <img src="/home/property-img.png" alt="Property-img">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-lg-3 col-md-3">
+                        <div class="stat-card d-flex flex-row justify-content-between ">
+                            <div class="d-flex flex-column">
+                                <div class="stat-number">0+</div>
+                                <p>Bookings</p>
+                            </div>
+                            <div class="stats-imgs">
+                                <img src="/home/booking-img.png" alt="Bookings-img">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-lg-3 col-md-3">
+                        <div class="stat-card d-flex flex-row justify-content-between ">
+                            <div class="d-flex flex-column">
+                                <div class="stat-number">0+</div>
+                                <p>Ratings</p>
+                            </div>
+                            <div class="stats-imgs">
+                                <img src="/home/rating-img.png" alt="Ratings-img">
+                            </div>
                         </div>
                     </div>
                 </div>
-                <div class="col-12 col-lg-3 col-md-3">
-                    <div class="stat-card d-flex flex-row justify-content-between ">
-                        <div class="d-flex flex-column">
-                            <div class="stat-number">0+</div>
-                            <p>Properties</p>
-                        </div>
-                        <div class="stats-imgs">
-                            <img src="/home/property-img.png" alt="Property-img">
-                        </div>
-                    </div>
-                </div>
-                <div class="col-12 col-lg-3 col-md-3">
-                    <div class="stat-card d-flex flex-row justify-content-between ">
-                        <div class="d-flex flex-column">
-                            <div class="stat-number">0+</div>
-                            <p>Bookings</p>
-                        </div>
-                        <div class="stats-imgs">
-                            <img src="/home/booking-img.png" alt="Bookings-img">
-                        </div>
-                    </div>
-                </div>
-                <div class="col-12 col-lg-3 col-md-3">
-                    <div class="stat-card d-flex flex-row justify-content-between ">
-                        <div class="d-flex flex-column">
-                            <div class="stat-number">0+</div>
-                            <p>Ratings</p>
-                        </div>
-                        <div class="stats-imgs">
-                            <img src="/home/rating-img.png" alt="Ratings-img">
-                        </div>
-                    </div>
-                </div>
-
             </div>
-
         </div>
-
     </div>
 </section>
-
-<section class="exclusiveoffer-section">
+<!--Exclusive Offer-->
+<section #exclusiveOfferSection class="exclusiveoffer-section">
     <div class="offerscontainer py-5">
         <div class="offer-banner">
-            <img src="/home/exculsiveoffer-img.jpg">
+            <div class="offerimg-banner exclusive-cards">
+                <img src="/home/exculsiveoffer-img.jpg">
 
-            <div class="offer-text">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-                sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                <div class="offer-text">
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit,
+                    sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                </div>
             </div>
-            <div class="exclusive-hotels">
+
+            <div class="exclusive-hotels hotel-cards-right">
                 <div class="row">
-                    @for (hotel of promotedHotels; track hotel.id) {
-                    <div class="col-6 mt-4">
-                        <div class="card">
+                    @for (hotel of exclusiveofferHotels; track hotel.id) {
+                    <div class="col-12 col-lg-6 mt-4">
+                        <div class="card hotel-card">
                             <div class="card-img">
                                 <img [src]="hotel.cardImg">
                                 <div class="profileimg">
@@ -501,6 +520,5 @@
                 </div>
             </div>
         </div>
-
     </div>
 </section>

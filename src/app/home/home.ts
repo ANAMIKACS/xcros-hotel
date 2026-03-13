@@ -1,26 +1,87 @@
-import { Component, OnInit, OnDestroy  } from '@angular/core';
+import { Component, OnInit, OnDestroy,  AfterViewInit, ElementRef, ViewChild, CUSTOM_ELEMENTS_SCHEMA  } from '@angular/core';
 import { AvatarModule } from 'primeng/avatar';
 import { CommonModule } from '@angular/common';
 // import { Hoteldiscount } from "../hoteldiscount/hoteldiscount";
 import { FormsModule } from '@angular/forms';
 import { DatePickerModule } from 'primeng/datepicker';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { register } from 'swiper/element/bundle';
+register();
 
-
-
+gsap.registerPlugin(ScrollTrigger);
 @Component({
   selector: 'app-home',
   imports: [CommonModule, AvatarModule, FormsModule, DatePickerModule],
   templateUrl: './home.html',
   styleUrl: './home.scss',
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
-export class Home {
+export class Home implements AfterViewInit {
 
-   isLocationOpen = true;
+@ViewChild('heroSection') heroSection!: ElementRef;
 
+ngAfterViewInit(): void {
+  this.initHeroAnimation();
+  this.initCategoryAnimation();
+  this.initOffersAnimation();
+  this.initFeaturedAnimation();
+  this.initPromoAnimation();
+  this.initExclusiveOfferAnimation();
+  this.initAdvertismentAnimation();
+}
+
+initHeroAnimation() {
+
+  const section = this.heroSection.nativeElement;
+
+  const titles = section.querySelectorAll('.hero-item');
+  const locationtitles = section.querySelectorAll('.card-item');
+
+  // initial positions
+  gsap.set(titles, { y: 50 , autoAlpha:0 } );
+  gsap.set(locationtitles, { x: -50 ,autoAlpha:0 });
+
+  section.addEventListener('mouseenter', () => {
+
+    gsap.to(titles, {
+      y: 0,
+      autoAlpha:1,
+      duration: 0.45,
+      ease: "back.out(1.6)"
+    });
+
+    gsap.to(locationtitles, {
+      x: 0,
+      autoAlpha:1,
+      duration: 0.45,
+      ease: "power3.out"
+    });
+
+  });
+
+  section.addEventListener('mouseleave', () => {
+
+    gsap.to(titles, {
+      y: 115,
+      autoAlpha:0,
+      duration: 0.35,
+      ease: "power2.in"
+    });
+
+    gsap.to(locationtitles, {
+      x: -1100,
+      autoAlpha:0,
+      duration: 0.35,
+      ease: "power2.in"
+    });
+
+  });
+
+}
+   isLocationOpen = false;
   locations = ['Dhaka','Noakhali','Cumilla'];
-
   selectedLocation = 'Dhaka';
-
   toggleLocation(){
     this.isLocationOpen = !this.isLocationOpen;
   }
@@ -33,21 +94,53 @@ export class Home {
   checkInDate:any;
   checkOutDate:any;
 
-//
-// islocationOpen= false;
-// toggleDropdown(){
-//   this.islocationOpen = !this.islocationOpen;
-// }
+//Categories
+@ViewChild('categoriesSection') categoriesSection!: ElementRef;
+initCategoryAnimation(){
 
-  categoriesAnimation ='';
-showCategory(){
-    this.categoriesAnimation = 'animate__slideInUp animate__faster';
-  }
+   const section = this.categoriesSection.nativeElement;
 
-  hideCategory(){
-    this.categoriesAnimation = 'animate__slideOutDown animate__faster';
-  }
-  villa='/home/villa-icon.png';
+   const titles = section.querySelectorAll('.category-item');
+   const cards = section.querySelectorAll('.category-card');
+   gsap.set(titles, { y: 50, autoAlpha:0 });
+  gsap.set(cards, { y: 50, autoAlpha:0 } );
+   section.addEventListener('mouseenter', () => {
+
+      gsap.to(titles, {
+        y: 0,
+        autoAlpha:1,
+        duration: 0.45,
+        ease: "back.out(1.6)"
+      });
+
+        gsap.to(cards, {
+        y: 0,
+        autoAlpha:1,
+        duration: 0.45,
+        ease: "back.out(1.6)"
+      });
+
+    });
+
+    section.addEventListener('mouseleave', () => {
+
+      gsap.to(titles, {
+        y: 220,
+        autoAlpha:0,
+        duration: 0.35,
+        ease: "power2.in"
+      });
+       gsap.to(cards, {
+        y: 220,
+        autoAlpha:0,
+        duration: 0.35,
+        ease: "power2.in"
+      });
+
+    });
+    
+}
+  // villa='/home/villa-icon.png';
   categoryCards =[
     {
      id:1,
@@ -99,13 +192,116 @@ changePage(page: number) {
     this.currentPage = page;
   }
 }
-//Offers
-offersAnimation ='';
-showCards(){
-  this.offersAnimation='animate__slideInUp animate__faster';
+//Advertisment
+@ViewChild('advertismentSection') advertismentSection!: ElementRef;
+initAdvertismentAnimation(){
+ const section = this.advertismentSection.nativeElement;
+  const title = section.querySelector('.ad-title-anim');
+  const contents = section.querySelectorAll('.ad-content');
+ const cards = section.querySelectorAll('.ad-col');
+  const images = section.querySelectorAll('.ad-img');
+
+   // initial state
+  gsap.set(title,{y:-80, opacity:0 , autoAlpha:0});
+  gsap.set(contents,{y:80, opacity:0, alignContent:0});
+
+  // section hover animation
+  section.addEventListener('mouseenter',()=>{
+
+    const tl = gsap.timeline();
+
+    tl.to(title,{
+      y:0,
+      opacity:1,
+      duration:0.6,
+      autoAlpha:1,
+      ease:"power3.out"
+    })
+
+    .to(contents,{
+      y:0,
+      opacity:1,
+      duration:0.6,
+      stagger:0.15,
+      autoAlpha:1,
+      ease:"power3.out"
+    },"-=0.3");
+
+  });
+
+  section.addEventListener('mouseleave',()=>{
+
+    gsap.to(title,{y:-80,opacity:0,duration:0.4, autoAlpha:0});
+    gsap.to(contents,{y:80,opacity:0,duration:0.4, autoAlpha:0});
+
+  });
+
+  // card expand animation
+  cards.forEach((card:any)=>{
+
+    card.addEventListener('mouseenter',()=>{
+
+      gsap.to(cards,{
+        flex:1,
+        duration:0.5,
+        autoAlpha:1,
+        ease:"power3.out"
+      });
+
+      gsap.to(card,{
+        flex:2.5,
+        duration:0.5,
+        autoAlpha:1,
+        ease:"power3.out"
+      });
+
+      gsap.to(card.querySelectorAll('.ad-img'),{
+        scale:1.1,
+        duration:0.6,
+        autoAlpha:1,
+        ease:"power3.out"
+      });
+
+    });
+
+    card.addEventListener('mouseleave',()=>{
+
+      gsap.to(card.querySelectorAll('.ad-img'),{
+        scale:1,
+        duration:0.6,
+        autoAlpha:0,
+      });
+
+    });
+
+  });
 }
-hideCards(){
-  this.offersAnimation='animate__slideOutDown animate__faster';
+//Offers
+@ViewChild('offersSection') offersSection!: ElementRef;
+initOffersAnimation(){
+  const section = this.offersSection.nativeElement;
+
+  const titles = section.querySelectorAll('.offerscard-item');
+
+   section.addEventListener('mouseenter', () => {
+
+      gsap.to(titles, {
+        y: 0,
+        duration: 0.45,
+        ease: "back.out(1.6)"
+      });
+
+    });
+
+    section.addEventListener('mouseleave', () => {
+
+      gsap.to(titles, {
+        y: 240,
+        duration: 0.45,
+        ease: "power2.in"
+      });
+
+    });
 }
 offersCard=[
   {
@@ -121,14 +317,85 @@ offersCard=[
     OfferTitle:'Exceptional Savings, exclusively for Members',
   },
 ]
+
   //Featured Section
+  @ViewChild('featuredSection') featuredSection!: ElementRef;
+  
+
+  initFeaturedAnimation(){
+     const section = this.featuredSection.nativeElement;
+
+     const titles = section.querySelectorAll('.feature-item');
+     const cards = section.querySelectorAll('.featured-card');
+     section.addEventListener('mouseenter', () => {
+
+      gsap.to(titles, {
+        y: 0,
+        duration: 0.45,
+        ease: "back.out(1.6)"
+      });
+
+    });
+
+    section.addEventListener('mouseleave', () => {
+
+      gsap.to(titles, {
+        y: 240,
+        duration: 0.45,
+        ease: "power2.in"
+      });
+
+    });
+
+ gsap.set(cards,{
+  x:-500,
+  opacity:0
+});
+
+section.addEventListener('mouseenter',()=>{
+
+  const tl = gsap.timeline();
+
+  // all cards slide in together
+  tl.to(cards,{
+    x:0,
+    opacity:1,
+    duration:0.5,
+    stagger:0.05,
+    ease:"power3.out"
+  })
+
+  // pause
+  .to({}, {duration:0.4})
+     .to(cards[0],{ x:0, duration:0.3 })
+  .to(cards[1],{ x:0, duration:0.3 })
+  .to(cards[2],{ x:0, duration:0.3 })
+  .to(cards[3],{ x:0, duration:0.3 });
+});
+
+section.addEventListener('mouseleave',()=>{
+
+  gsap.to(cards,{
+    x:-500,
+    opacity:0,
+    duration:0.4,
+    stagger:0.05
+  });
+
+});
+
+  }
   featuredbg='/home/Featuredsectionbg.png';
-  featuresAnimation='';
   isFeaturedBoxOpen=false;
+  options=['Featured', 'Recent', 'Popular', 'Recommended']
+  selectedOption:string='Featured';
   toggleFeaturedBox(){
     this.isFeaturedBoxOpen= !this.isFeaturedBoxOpen
   }
-  
+   selectOption(option: string) {
+    this.selectedOption = option; 
+    this.isFeaturedBoxOpen = false; 
+  }
   hotelcard = [
   {
     id:1,
@@ -213,8 +480,114 @@ togglePopup(id: number) {
     this.activeContactId = id;
   }
 }
-//PROMOTED HOTEL
-  promotedHotels=[
+//Promo Section
+@ViewChild('promoSection') promoSection!: ElementRef;
+
+initPromoAnimation(){
+   const section = this.promoSection.nativeElement;
+    const image = section.querySelector('.promo-image');
+    const cards = section.querySelectorAll('.stas-cards')
+gsap.set(image,{
+  scale:0.85
+});
+
+section.addEventListener('mouseenter',()=>{
+
+  gsap.to(image,{
+    scale:1,
+    duration:0.9,
+    ease:"back.out(1.6)"   
+  });
+
+});
+
+section.addEventListener('mouseleave',()=>{
+
+  gsap.to(image,{
+    scale:0.85,
+    duration:0.5,
+    ease:"power2.out"
+  });
+
+});
+
+section.addEventListener('mouseenter', () => {
+
+      gsap.to(cards, {
+        y: 0,
+        duration: 0.45,
+        ease: "back.out(1.6)"
+      });
+
+    });
+
+    section.addEventListener('mouseleave', () => {
+
+      gsap.to(cards, {
+        y: 240,
+        duration: 0.45,
+        ease: "power2.in"
+      });
+
+    });
+}
+
+//Exclusive Offer HOTEL
+@ViewChild('exclusiveOfferSection') exclusiveOfferSection!: ElementRef;
+initExclusiveOfferAnimation(){
+  const section = this.exclusiveOfferSection.nativeElement;
+  const image = section.querySelectorAll('.exclusive-cards')
+  const cards = section.querySelectorAll('.hotel-card');
+
+    gsap.set(cards,{ x:300, opacity:0, autoAlpha:0 });
+
+  section.addEventListener('mouseenter', () => {
+
+    const tl = gsap.timeline();
+
+    // image drops down
+    tl.to(image,{
+      y:0,
+      duration:0.45,
+      autoAlpha:1,
+      ease:"back.out(1.6)"
+    })
+
+    // cards slide from right
+    .to(cards,{
+      x:0,
+      opacity:1,
+      duration:0.6,
+      stagger:0.15,
+      autoAlpha:1,
+      ease:"power3.out"
+    },"-=0.2");
+
+  });
+
+  section.addEventListener('mouseleave', () => {
+
+    gsap.to(image,{
+      y:550,
+      duration:0.45,
+      autoAlpha:0,
+      ease:"power2.in"
+    });
+
+    gsap.to(cards,{
+      x:300,
+      opacity:0,
+      duration:0.45,
+      stagger:0.1,
+      autoAlpha:0,
+      ease:"power2.in"
+    });
+
+  });
+
+  
+}
+  exclusiveofferHotels=[
     {
       id:1,
     cardImg: '/listingpage/hotelimg.jpg',
@@ -250,4 +623,6 @@ togglePopup(id: number) {
     price: 105
   },
   ]
+
+
 }

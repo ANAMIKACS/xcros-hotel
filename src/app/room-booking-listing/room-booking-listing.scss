@@ -295,18 +295,18 @@
     }
 
     ::ng-deep .p-inputnumber-increment-button {
-        background-color: #eaeaea;
-        width: 40px;
-        height: 20px;
-        border-top-right-radius: 10px;
+        background-color: #eaeaea !important;
+        width: 40px !important;
+        height: 20px !important;
+        border-top-right-radius: 10px !important;
     }
 
     ::ng-deep .p-inputnumber-decrement-button {
-        background-color: #eaeaea;
-        width: 40px;
-        height: 20px;
-        border-bottom-right-radius: 10px;
-        padding: 0%;
+        background-color: #eaeaea !important;
+        width: 40px !important;
+        height: 20px !important;
+        border-bottom-right-radius: 10px !important;
+        padding: 0% !important;
     }
 
     ::ng-deep .p-icon {
@@ -458,8 +458,12 @@
         transform: translateX(0);
     }
 
-
-
+}
+@media (max-width: 768px) {
+.p-inputnumber{
+        width: 100px !important;
+        padding: 0px 0px 0px 35px !important;
+    }
 }
 
 .page-wrapper {
