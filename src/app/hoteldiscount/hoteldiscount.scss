@@ -3,6 +3,11 @@
         padding-inline: 20px !important;
     }
 
+    .signup, .subscribe-title, .follow, .social-media-icons{
+        text-align: left !important;
+        display: flex !important;
+        justify-content: flex-start !important;
+    }
     .search-panel {
         width: 400px !important;
     }
@@ -10,7 +15,32 @@
     .search-btn {
         width: fit-content !important;
     }
+    .mobile-view{
+        width: 100% !important;
+        object-fit: cover !important;
+        z-index: 0 !important;
+        display: block !important;
+    }
+    .desk-view{
+        display: none !important;
+    }
+    .testimonial-wrapper {
+        position: relative;
+        height: 800px !important;
+    }
+    
+    .subscribe-title{
+        font-size: 25px !important;
+    }
+    .signup{
+        font-size: 20px !important;
+    }
+}
 
+@media(max-width:1024px){
+    .discount {
+        padding-inline: 20px !important;
+    }
 }
 
 .discount {
@@ -22,12 +52,14 @@
         position: relative !important;
 
     }
-
-
-    .discount-details img {
+    .desk-view {
         width: 100%;
         object-fit: cover;
         z-index: 0;
+        display: block;
+    }
+    .mobile-view {
+        display: none;
     }
 
     .featurehotel-content {
@@ -273,6 +305,7 @@
         border-radius: 10px;
         padding: 25px;
         border: 1px solid #e2e2e2;
+        height: 100%;
     }
 
     .custom-support {
@@ -325,14 +358,14 @@
 
     .pincode {
         background-color: #fff;
-        border-radius: 15px;
-        width: 300px;
-        padding: 15px;
+        border-radius: 5px;
+        width: fit-content;
+        padding: 10px 20px;
     }
 
     .pincode-dropdown select {
-        width: 250px;
-        padding: 8px 16px;
+        width: fit-content;
+        padding: 8px 55px;
         border-radius: 12px;
         border: none;
         background-color: #e9e9e9;
@@ -427,15 +460,32 @@
     background-color: #EDF7F6;
 
     .sign-up {
-        background-image: url(/home/bg.png);
-        background-repeat: no-repeat;
-        background-size: contain;
-        background-position: center;
+        background: linear-gradient(0deg, #008080 0%, #00ABAB 100%);
         height: 100%;
         width: 100%;
         padding: 30px 10px;
         color: #fff;
+        border-radius: 30px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
     }
+    .signup-details{
+       display: flex;
+       flex-direction: column;
+        justify-content: center;
+        align-items: center; 
+    }
+    // .desk-view {
+    //     width: 100%;
+    //     object-fit: cover;
+    //     z-index: 0;
+    //     display: block;
+    // }
+    // .mobile-view {
+    //     display: none;
+    // }
+
 
     .subscribe-title {
         font-size: 45px;
@@ -452,9 +502,7 @@
         border: none;
         border-radius: 10px;
         color: #000;
-        height: 60px;
-        width: 550px;
-
+        width: 400px;
     }
 
     .search-btn {
@@ -462,7 +510,7 @@
         color: #fff;
         border-radius: 0px 10px 10px 0px;
         padding: 10px 20px;
-        width: 200px;
+        width: fit-content;
 
     }
 
@@ -491,5 +539,6 @@
 
     .follow {
         font-size: 20px;
+        text-align: center;
     }
 }

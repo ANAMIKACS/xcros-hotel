@@ -39,6 +39,7 @@ export class Hoteldiscount implements AfterViewInit {
   discounts = [
     {
       image: '/home/feature-hotel.png',
+      mobileImage : '/home/featured-hotel-mobileview.png',
       topTitle: 'See all the Featured Hotels',
       boldTitle: 'See all the Featured Hotels',
       buttonText: 'Experiences',
@@ -46,6 +47,7 @@ export class Hoteldiscount implements AfterViewInit {
     },
     {
       image: '/home/summer-deal.png',
+      mobileImage: '/home/summer-deal-mobile-view.png',
       topTitle: 'Enjoy summer Deals',
       boldTitle: 'Upto 70% Discount!',
       buttonText: 'Learn More',
@@ -57,7 +59,7 @@ export class Hoteldiscount implements AfterViewInit {
     const section = this.discountSection.nativeElement;
     const cards = section.querySelectorAll('.discount-card');
 
-    gsap.set(cards, { y: 550 });
+    gsap.set(cards, { y: 1370 });
 
     section.addEventListener('mouseenter', () => {
       gsap.to(cards, {
@@ -69,7 +71,7 @@ export class Hoteldiscount implements AfterViewInit {
 
     section.addEventListener('mouseleave', () => {
       gsap.to(cards, {
-        y: 550,
+        y: 1370,
         duration: 0.35,
         ease: "power2.in"
       });
@@ -137,7 +139,7 @@ export class Hoteldiscount implements AfterViewInit {
     const section = this.benefitsSection.nativeElement;
     const cards = section.querySelectorAll('.benefit-card');
 
-    gsap.set(cards, { y: 300 });
+    gsap.set(cards, { y: 800 });
 
     section.addEventListener('mouseenter', () => {
       gsap.to(cards, {
@@ -149,7 +151,7 @@ export class Hoteldiscount implements AfterViewInit {
 
     section.addEventListener('mouseleave', () => {
       gsap.to(cards, {
-        y: 300,
+        y: 800,
         duration: 0.35,
         ease: "power2.in"
       });
@@ -229,7 +231,7 @@ export class Hoteldiscount implements AfterViewInit {
     const section = this.testimonialTitleSection.nativeElement;
     const titles = section.querySelectorAll('.testimonial-item');
 
-    gsap.set(titles, { y: 50 });
+    gsap.set(titles, { y: 100 });
 
     section.addEventListener('mouseenter', () => {
 
@@ -244,7 +246,7 @@ export class Hoteldiscount implements AfterViewInit {
     section.addEventListener('mouseleave', () => {
 
       gsap.to(titles, {
-        y: 50,
+        y: 100,
         duration: 0.35,
         ease: "power2.in"
       });
@@ -265,7 +267,7 @@ export class Hoteldiscount implements AfterViewInit {
     const rightCard = section.querySelector('.app');
 
     
-    gsap.set([leftCard, rightCard], { y: 400 });
+    gsap.set([leftCard, rightCard], { y: 1000 });
     gsap.set(middleCard, { opacity: 0 });
 
    
@@ -289,7 +291,7 @@ export class Hoteldiscount implements AfterViewInit {
     section.addEventListener('mouseleave', () => {
 
       gsap.to([leftCard, rightCard], {
-        y: 400,
+        y: 1000,
         duration: 0.4,
         ease: "power2.in"
       });
@@ -306,6 +308,8 @@ export class Hoteldiscount implements AfterViewInit {
 
 
   //subscribe
+
+  
 
   @ViewChild('subscribeSection') subscribeSection!: ElementRef;
   items: MenuItem[] | undefined;

@@ -6,7 +6,8 @@
         <div class="col-12 col-lg-6 mb-2 discount-card">
 
             <div class="discount-details">
-                <img [src]="item.image" alt="">
+                <img [src]="item.image" alt="" class="desk-view">
+                <img [src]="item.mobileImage" alt="" class="mobile-view">
 
                 <div [ngClass]="item.contentClass" class="d-flex flex-column">
                     <p class="top-title m-0">{{item.topTitle}}</p>
@@ -82,7 +83,7 @@
                         </div>
 
                         <div class="col-lg-7">
-                            <div class="testimonial-content py-5">
+                            <div class="testimonial-content p-2">
                                 <img [src]="item.quotes" alt="">
 
                                 <div class="d-flex flex-row gap-3 mt-4">
@@ -129,19 +130,16 @@
 <section class="partners">
     <div class="container">
         <div class="row d-flex justify-content-center align-items-center">
-
             <div class="col-12 col-lg-2">
                 <p class="partner-title text-light">Our Partners</p>
             </div>
             <div class="col-12 col-lg-10">
                 <div class="logo d-flex gap-4 flex-row justify-content-center align-items-center">
-
                     <div class="prev-btn">
                         <i class="fa-solid fa-angle-left"></i>
                     </div>
 
                     <div #logosSection class="logos-container">
-
                         <div class="logos d-flex flex-row gap-3">
 
                             @for(item of logos; track $index){
@@ -151,13 +149,11 @@
                             }
 
                         </div>
-
                     </div>
 
                     <div class="next-btn">
                         <i class="fa-solid fa-angle-right"></i>
                     </div>
-
                 </div>
             </div>
         </div>
@@ -226,7 +222,8 @@
     <div class="container">
         <div class="row">
             <div class="col-12">
-                <div class="sign-up d-flex justify-content-center align-items-center flex-column">
+                <div class="sign-up">
+                    <div class="signup-details">
                     <p class="subscribe-title">Your Travel Journey Starts Here</p>
                     <p class="signup">Sign up and we'll send the best deals to you</p>
                     <div class="subscribe-now">
@@ -234,7 +231,7 @@
                             <input pInputText placeholder="Enter your email address" class="mail-input" />
                             <p-button label="Subscribe Now" class="search-btn  d-flex justify-content-center" />
                         </p-inputgroup>
-                        <p class="follow text-center mt-4">follow us at</p>
+                        <p class="follow mt-4">follow us at</p>
                         <div class="social-media-icons d-flex justify-content-center align-items-center">
                             <i class="fa-brands fa-facebook"></i>
                             <i class="fa-brands fa-twitter"></i>
@@ -243,6 +240,7 @@
                             <i class="fa-brands fa-instagram"></i>
                         </div>
                     </div>
+                </div>
                 </div>
 
             </div>
