@@ -1,0 +1,702 @@
+@media(max-width:768px){
+    .about, .main-section{
+        padding-inline: 10px !important;
+    }
+    .p-inputnumber{
+        width: 100px !important;
+        padding: 0px 0px 0px 35px !important;
+    }
+}
+@media(max-width:1024px){
+    .about, .main-section{
+        padding-inline: 30px !important;
+    }   
+}
+
+.about{
+    padding-inline: 14.5rem;
+    .aboutbtn{
+        width:fit-content;
+        padding: 10px 25px;
+        color: #fff;
+        background-color: #ff9809;
+        border: none;
+        border-radius: 5px;
+    }
+    .report-btn, .share-btn{
+        width: fit-content;
+        padding: 10px 20px;
+        color: #fff;
+        background-color: #008080;
+        border: none;
+        display: flex;
+        gap: 9px;
+    }
+}
+
+ .tab-header i.rotate {
+     transform: rotate(180deg);
+    }
+     .tab-header {
+        background:  #008080 !important;
+        color: #fff;
+        padding: 14px 18px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        cursor: pointer;
+        border-radius: 5px;
+    }
+.main-section{
+    padding-inline: 14.5rem;
+    background-color: #edf7f6;
+
+    //STATS
+    .gradient-bg{
+        background: linear-gradient(0deg, #008080 0%, #FF9800 100%);
+;
+    }
+   
+    
+    .inline-facts-wrap {
+    display: block;
+    padding: 20px 30px 30px;
+    position: relative;
+    border-radius: 4px;
+    overflow: hidden;
+}
+.inline-facts img{
+    height: 60px;
+    width: 60px;
+     position: absolute;
+    right: 30px;
+    top: 10px;
+}
+
+.inline-facts-wrap .num {
+    float: left;
+    font-size: 36px;
+    color: #fff;
+    font-weight: 700;
+}
+.inline-facts-wrap h5 {
+    width: 100%;
+    float: left;
+    font-size: 19px;
+    text-align: left;
+    color: #fff;
+    font-weight: 400;
+    margin-top: 6px;
+}
+.stat-wave {
+    position: absolute;
+    left: 0;
+    width: 100%;
+    height: 100px;
+    opacity: 0.2;
+    bottom: 0;
+}
+.stat-wave svg {
+    position: absolute;
+    right: 0;
+    width: 100%;
+    height: 100%;
+    bottom: -30px;
+}
+
+//available rooms
+
+.common-card{
+   width: 100%; 
+   border-radius: 10px;
+
+}
+.card-wrapper {
+    height: 700px;
+   overflow-y: auto;
+   scrollbar-width: thin;
+   scrollbar-color: #008080 #fff;
+   overflow-x: hidden;
+}
+.room-card{
+   border: 1px solid #EAEAEA;
+   box-shadow: 0px 0px 20px #0000001A;
+   
+}
+.card-title {
+    margin: 0;
+    font-weight: 600; 
+      font-size: 20px;
+}
+
+.image-on-left img{
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    border-radius: 20px;
+    padding: 10px;
+}
+.right-content{
+    padding: 10px;
+}
+.title p{
+    font-size: 22px;
+    font-weight: 600;
+}
+.room-name{
+color:black;
+}
+
+.price{
+color:#008080;
+}
+.guest{
+ color:#008080;   
+ font-size: 18px;
+}
+
+.per-person{
+color:grey;
+}
+.icons i{
+    color: #008080;
+    font-size: 24px;
+}
+.detail-btn{
+    padding: 7px 20px;
+    border: none;
+    background-color: #FF9800;
+    color: #fff;
+    border-radius: 5px;
+}
+
+//third-party services
+
+ .card-title i.rotate {
+     transform: rotate(180deg);
+    }
+ //dropdown
+.Catagorydropdown {
+  position: relative;
+  width: 200px;
+  z-index: 100;
+  border: 1px solid #afadad86;
+  border-radius: 10px;
+}
+
+.Catagory-header {
+  width: 100%;
+  border-radius: 8px 8px 1px 1px;
+  background: #ffffff;
+  border: none;
+  font-weight: 500;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  color: black;
+  padding: 8px 12px;
+}
+.dropdownbody{
+  position: absolute;
+   background: #ffffff;
+    z-index: 1000;
+    width: 100%;
+    cursor: pointer;
+    border-radius: 0px 0px 10px 10px;
+}
+.CatagoryOptions{
+  padding: 7px;
+  font-size: 20px;
+}
+.CatagoryOptions:hover{
+  background-color: #008080;
+  color:#fff;
+}
+
+.listing-card{
+background:#fff;
+border-radius:12px;
+overflow:hidden;
+box-shadow:0 3px 10px rgba(0,0,0,0.08);
+}
+
+.image-wrapper{
+position:relative;
+}
+
+.hero{
+width:100%;
+height:250px;
+object-fit:cover;
+}
+
+.logo{
+position:absolute;
+top:15px;
+left:15px;
+background:#fff;
+display:flex;
+align-items:center;
+justify-content:center;
+}
+.logo img{
+width:45px;
+height:45px;
+border-radius:50%;
+}
+
+.views{
+position:absolute;
+right:15px;
+top:15px;
+background:#0f766e;
+color:#fff;
+padding:6px 14px;
+border-radius:20px;
+font-size:13px;
+}
+
+.category-bar{
+background:#0f766e;
+color:#fff;
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:10px 15px;
+margin-top:-30px;
+width:80%;
+clip-path: polygon(0 0,100% 0,96% 100%,0% 100%);
+}
+.left i{
+    background-color: #FF9800;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    border: 1px solid #fff;
+}
+.status{
+background:#ff9800;
+padding:4px 10px;
+border-radius:4px;
+font-size:12px;
+}
+
+// .card-body{
+// padding:25px;
+// }
+
+.title-row{
+display:flex;
+justify-content:space-between;
+align-items:center;
+}
+
+.toggle{
+background:#ff9800;
+border:none;
+width:35px;
+height:35px;
+border-radius:6px;
+color:#fff;
+}
+
+.rating{
+display:flex;
+align-items:center;
+gap:8px;
+margin-top:10px;
+}
+
+.stars i{
+color:#f5b301;
+}
+
+.fav{
+margin-left:auto;
+background:#0f766e;
+border:none;
+color:#fff;
+width:35px;
+height:35px;
+border-radius:50%;
+}
+
+.desc{
+display:flex;
+gap:8px;
+margin-top:10px;
+color:#6b7280;
+}
+
+.footer{
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-top:10px;
+}
+
+.owner{
+display:flex;
+align-items:center;
+gap:8px;
+}
+
+.owner img{
+width:32px;
+height:32px;
+border-radius:50%;
+}
+
+.actions button{
+width:30px;
+height:30px;
+border:1px solid #e5e7eb;
+background:#edf7f6;
+border-radius:6px;
+margin-left:5px;
+}
+
+.shops-swiper {
+  padding-bottom: 40px;
+  position: relative;
+  z-index: 0;
+}
+
+.shops-swiper::part(pagination) {
+  bottom: 0;
+  position: relative;
+  text-align: center;
+  margin-top: 20px;
+}
+
+.shops-swiper::part(bullet) {
+  width: 10px;
+  height: 10px;
+  background: #ff9800;
+  opacity: 0.4;
+  margin: 0 6px;
+  border-radius: 50%;
+}
+
+.shops-swiper::part(bullet-active) {
+  background: #ff9800;
+  opacity: 1;
+}
+ //recommended attsrction
+ 
+ .card-wraper{
+    height:570px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    scrollbar-width: none;
+ }
+ .img-on-left img{
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    border-radius: 10px;
+    margin-left: 10px;
+
+ }
+ .place-card{
+    border: 1px solid #eee;
+    border-radius: 10px;
+ }
+ .place-title p{
+    font-size: 20px;
+    font-weight: 600;
+ }
+ .km i{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+ }
+ .km{
+    width: fit-content;
+    height: fit-content;
+    padding: 3px 10px;
+    background-color: #008080;
+    border-radius: 20px;
+    color: #fff;
+ }
+ .km p, .place-description p{
+    font-size: 14px;
+ }
+
+ //faq
+
+  .faq-card-title i.rotate {
+     transform: rotate(180deg);
+    }
+  .faq-card-wrapper{
+    height: 400px;
+     overflow-y: auto;
+    overflow-x: hidden;
+    scrollbar-width: none;
+  }
+  .faq-card{
+    width: 100%;
+    padding: 20px;
+    border: 1px solid #EAEAEA;
+    box-shadow: 0px 0px 20.2px -7px #0000001A;
+  }
+  .faq-card-title{
+    font-size: 20px;
+    font-weight: 500;
+    display: flex;
+    justify-content: center;
+   
+  }
+  .faq-card-body p{
+    padding-top: 10px;
+    color: #666565;
+;
+  }
+}
+
+
+//rightsection
+.Options, .dateTitle{
+    font-weight: 500;
+    font-size: 19px;
+}
+.roomTitle{
+    font-size: 18px;
+    font-size: 500;
+}
+.extra-services{
+    margin-inline: 40px;
+}
+.category-header {
+        border: 1px solid #eeee;
+        box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+        padding: 15px 20px;
+        width: 100%;
+        height: fit-content;
+        border-radius: 10px;
+        display: flex;
+        transition: transform 1s ease;
+    }
+
+    .category-header i {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: #008080;
+    }
+    
+    .category-header p {
+        font-size: 20px
+    }
+
+    .category-header i.rotate {
+        transform: rotate(180deg);
+    }
+    .search_container {
+    max-width: 420px;
+    margin: 5px 0px;
+    display: flex;
+    align-items: center;
+    background: #fff;
+    border-radius: 8px;
+    padding: 6px 8px;
+}
+
+.search_container input {
+    flex: 1;
+    border: none;
+    font-size: 20px;
+    outline: none;
+}
+
+// .input::placeholder{
+//     font-size: 30px !important;
+// }
+
+.search-btn i {
+    font-size: 25px;
+}
+
+    // .category-box-contents {
+    //     border-radius: 12px;
+    //     overflow: hidden;
+    //     border-radius: 0px 0px 10px 10px;
+    //     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+    // }
+
+    .categorynameTitle {
+        padding: 18px 18px;
+        font-size: 20px;
+        border-bottom: 1px solid #d5d5d5;
+        cursor: pointer;
+    }
+
+    .categorynameTitle:hover {
+        background: #2f7f7b;
+        color: white;
+        transition: background-color 0.3s ease;
+    }
+
+    .categoryTitle {
+        height: 250px;
+        overflow-y: auto;
+    }
+
+    .categoryTitle::-webkit-scrollbar {
+        display: none;
+    }
+
+    ::ng-deep .p-datepicker .p-datepicker-header {
+        font-size: 15px;
+    }
+
+    ::ng-deep .p-datepicker .p-datepicker-panel {
+        min-width: 160px;
+    }
+
+    ::ng-deep .p-datepicker-weekday {
+        font-size: 13px;
+    }
+
+    ::ng-deep .p-datepicker-day-view {
+        background-color: #fff;
+        padding: 5px;
+    }
+
+    ::ng-deep .p-datepicker .p-icon {
+        font-size: 1px;
+    }
+
+    ::ng-deep .p-inputtext {
+        font-size: 18px;
+
+    }
+
+    ::ng-deep .p-inputnumber {
+        width: 125px;
+        height: 60px;
+        border: 1px solid #eeee;
+        border-radius: 10px;
+        padding: 0px 0px 0px 45px;
+        box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    }
+
+    ::ng-deep .p-inputnumber-increment-button {
+        background-color: #eaeaea !important;
+        width: 40px !important;
+        height: 20px !important;
+        border-top-right-radius: 10px !important;
+    }
+
+    ::ng-deep .p-inputnumber-decrement-button {
+        background-color: #eaeaea !important;
+        width: 40px !important;
+        height: 20px !important;
+        border-bottom-right-radius: 10px !important;
+        padding: 0% !important;
+    }
+
+    ::ng-deep .p-icon {
+        width: 20px;
+        height: 20px
+    }
+    .line{
+        border-bottom: 1px solid #EAEAEA;
+        margin-top: 20px;
+    }
+    .total-cost p{
+        font-size: 22px;
+    }
+    .rupee{
+        display: flex;
+        flex-direction: row;
+        color: #008080;
+    }
+    .rupee i{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap:10px;
+    }
+    .booknow-btn, .viewmap-btn{
+        width: 100%;
+        padding: 15px 0px;
+        background-color: #ff9800;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
+    }
+    .viewmap-btn:hover{
+        background-color: #008080;
+    }
+    .imagetab{
+        background-color: #fff;
+    border-radius: 20px;
+    }
+    .main-image{
+        width: 100%;
+        height: 400px;
+        object-fit: cover;
+        border-radius: 10px;
+    }
+
+    //user-block
+
+    
+
+    .business-btn {
+    border: 1px solid #bdb9b9;
+    width: 200px;
+    border-radius: 5px;
+    background-color: #fff;
+    color: #000;
+}
+
+.active-btn {
+    background-color: #ff9800;
+    color: #fff;
+    border: none;
+}
+
+.profile-image img{
+    width: 80px;
+    height:80px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+.agent-icons{
+    background-color: #bbb9b9c5;
+    width:fit-content;
+    height: fit-content;
+    border-radius: 25px;
+}
+.profile-icon i, .message i, .messenger i{
+    
+    height: 30px;
+    width: 30px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #fff;
+}
+.profile-icon i{
+    background-color: #7BC467;
+}
+.message i{
+    background-color: #2095F2;
+
+}
+.messenger i{
+    background-color : #FF8F24;
+
+}
+.created-date p, .updated-date p{
+    font-size: 16px;
+    font-weight: 600;
+}

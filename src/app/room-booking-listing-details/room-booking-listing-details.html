@@ -1,0 +1,621 @@
+<!--about business-->
+
+<section class="about py-4">
+    <div class="d-flex justify-content-between">
+        <div class="about-btn">
+            <button class="button aboutbtn">About Business</button>
+        </div>
+        <div class="buttons d-flex gap-4">
+            <button class="button share-btn"><span><i class="fa-solid fa-share-nodes"></i></span>Share</button>
+            <button class="button report-btn"><span><i class="fa-solid fa-circle-exclamation"></i></span>report</button>
+        </div>
+    </div>
+</section>
+
+<!--main section-->
+
+<section class="main-section py-4">
+    <div class="row">
+
+        <!--left section-->
+
+<!--STATS-->
+
+        <div class="col-12 col-lg-8 col-md-9">
+               <div class="row mb-3">
+
+                @for (item of stats; track item.title) {
+                <div class="col-12 col-lg-4 mt-3">
+                    <div class="inline-facts-wrap gradient-bg">
+                    <div class="inline-facts">
+
+                        <img [src]="item.img" alt="building">
+
+                        <div class="milestone-counter">
+                        <div class="stats animaper">
+                            <div class="num" data-content="0" data-num="245">
+                            {{ item.value }}
+                            </div>
+                        </div>
+                        </div>
+
+                        <h5>{{ item.title }}</h5>
+
+                    </div>
+
+                    <div class="stat-wave">
+                        <svg viewBox="0 0 100 25">
+                        <path fill="#fff" [attr.d]="item.svg"></path>
+                        </svg>
+                    </div>
+
+                    </div>
+  </div>
+  }
+
+</div>
+
+<!--available rooms-->
+<div class="col-12">
+    <div class="common-card card">
+        <div class="tab-header">
+             <div class="card-title">
+            <p class="m-0">Available Rooms</p>
+        </div>
+        </div>
+       
+        <div class="card-body">
+            <div class="card-wrapper">
+                 @for (room of rooms; track room.name) {
+
+<div class="room-card card mb-2">
+    <div class="row">
+        <div class="col-lg-4">
+            <div class="d-flex justify-content-center align-items-center">
+                <div class="image-on-left">
+                    <img [src]="room.image" alt="">
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-8">
+            <div class="right-content">
+
+                <div class="title d-flex flex-row justify-content-between">
+                    <p class="room-name">{{room.name}}</p>
+
+                    <p>
+                        <span class="price">
+                            <i class="fa-solid fa-indian-rupee-sign"></i>
+                            <span>{{room.price}}</span>
+                        </span>
+                        <span class="per-person">/Person</span>
+                    </p>
+                </div>
+
+                <p class="guest">{{room.guest}}</p>
+
+                <p class="text-muted">
+                    {{room.description}}
+                </p>
+
+                <div class="icons-button d-flex flex-row justify-content-between">
+                    <div class="icons d-flex gap-2">
+                        <i class="pi pi-car"></i>
+                        <i class="pi pi-wifi"></i>
+                        <i class="fa-solid fa-tv"></i>
+                        <i class="fa-regular fa-snowflake"></i>
+                    </div>
+
+                    <div class="button">
+                        <button class="button detail-btn">Get Details</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+}
+            </div>
+           
+        </div>
+    </div>
+</div>
+
+<!--third party services-->
+
+<div class="common-card card mt-3">
+    <div class="tab-header" (click)="toggleThirdPartyOpen()">
+            <p class="card-title">Third Party Services</p>
+            <i class="fa-solid fa-chevron-down" [class.rotate]="isThirdPartyOpen"></i>
+    </div>
+    
+    @if (isThirdPartyOpen) {
+    <div class="card-body px-2">
+        
+    <!-- CATEGORY DROPDOWN -->
+     <div class="d-flex justify-content-end">
+        <div class="Catagorydropdown">
+                <div class="Catagory-header d-flex flex-row gap-5 justify-content-between"
+                    (click)="toggleCategoryBox()">
+                    <div class="d-flex flex-row justify-content-between">
+                        <p class="m-0">{{selectedOption}}</p>
+                    </div>
+                    <i class="fa-solid fa-chevron-down text-black" [class.rotate]="isCategoryBoxOpen"></i>
+                </div>
+               @if(isCategoryBoxOpen){
+    <div class="dropdownbody">
+      @for (option of options; track option) {
+        <div 
+          class="CatagoryOptions" 
+          (click)="selectOption(option)"
+          [class.selected]="option === selectedOption"
+        >
+          {{ option }}
+        </div>
+      }
+    </div>
+  }
+            </div></div>
+
+     
+    
+    <!--third party card-->
+    <swiper-container class="shops-swiper mt-2" slides-per-view="3" space-between="20" grab-cursor="true" pagination="true" 
+     breakpoints='{
+    "320": { "slidesPerView": 1 },
+    "768": { "slidesPerView": 2 },
+    "1024": { "slidesPerView": 2 },
+    "1400":{"slidesPerView": 3}
+  }'>
+        @for (shop of stores; track shop.id) {
+        <swiper-slide>
+            <article class="listing-card">
+                <!-- IMAGE -->
+                <div class="image-wrapper">
+                    <img class="hero" [src]="shop.banner">
+                    <div class="logo">
+                        <img [src]="shop.logo">
+                    </div>
+                    <div class="views">
+                        <i class="fa-regular fa-eye"></i>
+                        Views: {{shop.views}}
+                    </div>
+                </div>
+                <!-- CATEGORY BAR -->
+                <div class="category-bar">
+                    <div class="left d-flex gap-2">
+                        <i class="fa-solid fa-briefcase d-flex justify-content-center align-items-center"></i>
+                        <span>{{shop.category}}</span>
+                    </div>
+                    <span class="status">{{shop.status}}</span>
+                </div>
+                <!-- BODY -->
+                <div class="card-body">
+                    <div class="title-row">
+                        <h5>{{shop.name}}</h5>
+                        <button class="toggle" (click)="toggleCard(shop.id)">
+                            <i class="fa-solid" [ngClass]="expandedShopId === shop.id ? 'fa-minus':'fa-plus'"></i>
+                        </button>
+                    </div>
+                    @if(expandedShopId === shop.id){
+                    <div class="rating">
+                        <div class="stars">
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                        </div>
+                        <span>({{shop.rating}} stars)</span>
+                        <button class="fav">
+                            <i class="fa-solid fa-heart"></i>
+                        </button>
+    
+                    </div>
+
+<div class="desc">
+    <i class="fa-solid fa-location-dot"></i>
+    <p>{{shop.description}}</p>
+</div>
+<hr>
+<div class="footer">
+    <div class="owner">
+        <img [src]="shop.profile">
+        <span>By {{shop.owner}}</span>
+    </div>
+    <div class="actions">
+        <button><i class="fa-solid fa-diamond-turn-right"></i></button>
+        <button><i class="fa-solid fa-map-location-dot"></i></button>
+        <button><i class="fa-solid fa-phone"></i></button>
+        <button><i class="fa-solid fa-comment"></i></button>
+    </div>
+</div>
+
+}
+
+</div>
+
+</article>
+
+</swiper-slide>
+
+}
+
+</swiper-container>
+
+</div>
+}
+</div>
+
+<!--recommended attraction-->
+
+<div class="common-card card mt-3">
+    <div class="tab-header" (click)="toggleRecommendedAttractionOpen()">
+            <p class="card-title">Recommended Attraction</p>
+            <i class="fa-solid fa-chevron-down" [class.rotate]="isRecommendedAttractionOpen"></i>
+
+    </div>
+    
+    @if(isRecommendedAttractionOpen){
+    <div class="card-body">
+        <div class="card-wraper">
+
+            <div class="row">
+                @for (item of places; track $index) {
+                <div class="col-lg-6 mb-3">
+
+                    <div class="place-card">
+                        <div class="row">
+                            <div class="col-12 col-lg-6 d-flex justify-content-center align-items-center">
+                                <div class="img-on-left py-2">
+                                    <img [src]="item.image" alt="">
+                                </div>
+                            </div>
+                            <div class="col-12 col-lg-6 mt-2">
+                                <div class="place-title">
+                                    <p>{{item.placeTitle}}</p>
+                                </div>
+                                <div class="km d-flex flex-row gap-2">
+                                    <i class="fa-solid fa-location-dot"></i>
+                                    <p class="m-0">{{item.km}}</p>
+                                </div>
+                                <div class="place-description">
+                                    <p>{{item.placeDescription}}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                }
+            </div>
+        </div>
+
+    </div>
+    }
+</div>
+
+<!--FAQ-->
+<div class="comman-card card mt-3">
+    <div class="tab-header" (click)="toggleFaqOpen()">
+       
+            <p class="card-title">Frequently Asked Function</p>
+            <i class="fa-solid fa-chevron-down" [class.rotate]="isFaqOpen"></i>
+       
+ 
+    </div>
+      
+    @if(isFaqOpen){
+        <div class="card-body">
+            <div class="faq-card-wrapper">
+                @for (questions of faqQuestions; track $index) {
+                <div class="faq-card card mb-3">
+            <div class="faq-card-title d-flex justify-content-between" (click)="toggleFaqQuestionOpen(questions.id)">
+                <p class="m-0">{{questions.question}}</p>
+                <i class="fa-solid" [ngClass]="expandedQuestionId === questions.id ? 'fa-chevron-down':'fa-chevron-up'"></i>
+            </div>
+            @if (expandedQuestionId === questions.id) {
+                <div class="faq-card-body">
+                    <p>{{questions.answer}}</p>
+                </div>
+            }
+        </div>
+         
+            
+        }
+            </div>
+ 
+        
+        </div>
+    }
+</div>
+
+</div>
+
+<!--right-section-->
+
+<div class="col-12 col-md-4 col-lg-4 mt-3">
+    <!--book now-->
+    <div class="common-card card">
+      
+        <div class="tab-header" (click)="toggleBookHotelOpen()">
+            <p class="card-title">Book This Hotel</p>
+            <i class="fa-solid fa-chevron-down" [class.rotate]="isBookHotelOpen"></i>
+        
+        </div>
+        
+     @if(isBookHotelOpen){
+        <div class="card-body p-0">
+            
+             <div class="extra-services">
+                <p class="Options mt-2">Extra Services</p>
+                                        <div class="category">
+                                            <div class="category-header d-flex flex-row justify-content-between"
+                                                (click)="toggleRoomBoxOpen()">
+                                                <div class="d-flex gap-3">
+                                                    <i class="fa-solid fa-bars"></i>
+                                                    <p class="m-0 fw">Extra Services</p>
+                                                </div>
+                                                <i class="fa-solid fa-chevron-down text-black"
+                                                    [class.rotate]="isRoomBoxOpen"></i>
+                                            </div>
+                                            @if (isRoomBoxOpen) {
+                                            <div class="category-box-contents py-3">
+                                                <div class="search_container">
+                                                    <p class="search-btn m-0"><i
+                                                            class="fa-solid fa-magnifying-glass"></i>
+                                                    </p>
+                                                    <input type="text" pInputText [(ngModel)]="value"
+                                                        placeholder="Search" />
+                                                </div>
+                                                <div class="greenline"> </div>
+                                                <div class="categoryTitle">
+                                                    <div class="categorynameTitle">Budget</div>
+                                                    <div class="categorynameTitle">Mid-range</div>
+                                                    <div class="categorynameTitle">Luxury</div>
+                                                    <div class="categorynameTitle">Family-friendly</div>
+                                                    <div class="categorynameTitle">Business</div>
+
+                                                </div>
+                                            </div>
+                                            }
+                                        </div>
+
+                                <div class="dates">
+                                        <div class="row">
+                                            <div class="col-12 col-lg-6">
+                                                <p class="dateTitle mt-2">Check-in Date</p>
+                                                <div class="chechinDate">
+                                                    <div class="category-header d-flex flex-row "
+                                                        (click)="toggleCheckinBoxOpen()">
+                                                        <div class="d-flex gap-3">
+                                                            <i class="fa-solid fa-bars"></i>
+                                                            <p class="m-0"><p-datepicker [(ngModel)]="indate"
+                                                                    [inputStyle]="{'width': '97px' }" /></p>
+                                                        </div>
+                                                        <!-- <i class="fa-solid fa-chevron-down" [class.rotate]="isCheckinBoxOpen"></i> -->
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-12 col-lg-6">
+                                                <p class="dateTitle mt-2">Check-Out Date</p>
+                                                <div class="chechoutDate">
+                                                    <div class="category-header d-flex flex-row "
+                                                        (click)="toggleCheckoutBoxOpen()">
+                                                        <div class="d-flex gap-3">
+                                                            <i class="fa-solid fa-bars"></i>
+                                                            <p class="m-0"><p-datepicker [(ngModel)]="outdate"
+                                                                    [inputStyle]="{'width': '97px' }" /></p>
+                                                        </div>
+                                                        <!-- <i class="fa-solid fa-chevron-down" [class.rotate]="isCheckinBoxOpen"></i> -->
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                        <div class="count mt-2">
+                                        <div class="row">
+                                            <div class="col-4 col-lg-4 col-md-4">
+                                                <!-- <p class="roomTitle pt-4">Rooms</p> -->
+                                                <div class="flex-auto">
+                                                    <label class="roomTitle pt-2" for="minmax-buttons">Rooms</label>
+                                                    <p-inputnumber [(ngModel)]="room" mode="decimal"
+                                                        [showButtons]="true" inputId="minmax-buttons" [min]="0"
+                                                        [max]="100" [inputStyle]="{'width': '10px' }" />
+                                                </div>
+                                            </div>
+                                            <div class="col-4 col-lg-4 col-md-4 col-sm-4">
+                                                <!-- <p class="roomTitle pt-4">Rooms</p> -->
+                                                <div class="flex-auto">
+                                                    <label class="roomTitle pt-2" for="minmax-buttons">Aduts</label>
+                                                    <p-inputnumber [(ngModel)]="adult" mode="decimal"
+                                                        [showButtons]="true" inputId="minmax-buttons" [min]="0"
+                                                        [max]="100" [inputStyle]="{'width': '10px' }" />
+                                                </div>
+                                            </div>
+                                            <div class="col-4 col-lg-4 col-md-4 col-sm-4">
+                                                <!-- <p class="roomTitle pt-4">Rooms</p> -->
+                                                <div class="flex-auto">
+                                                    <label class="roomTitle pt-2" for="minmax-buttons">Children</label>
+                                                    <p-inputnumber [(ngModel)]="children" mode="decimal"
+                                                        [showButtons]="true" inputId="minmax-buttons" [min]="0"
+                                                        [max]="100" [inputStyle]="{'width': '10px' }" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <p class="Options mt-2">Extra Services</p>
+                                        <div class="category">
+                                            <div class="category-header d-flex flex-row justify-content-between"
+                                                (click)="toggleExtraServiceOpen()">
+                                                <div class="d-flex gap-3">
+                                                    <i class="fa-solid fa-bars"></i>
+                                                    <p class="m-0 fw">Extra Services</p>
+                                                </div>
+                                                <i class="fa-solid fa-chevron-down text-black"
+                                                    [class.rotate]="isExtraService"></i>
+                                            </div>
+                                            @if (isExtraService) {
+                                            <!-- content-->
+                                            }
+                                        </div>
+
+             </div>
+             <div class="line"></div>
+             <div class="total-cost px-4 d-flex justify-content-between mt-3">
+                <p class="m-0">Total Cost</p>
+                <div class="rupee">
+                    <i class="fa-solid fa-indian-rupee-sign"></i>
+                    <p class="m-0">10,000</p>
+                </div>
+             </div>
+             <div class="line"></div>
+             <div class="button px-4 m-3">
+                <button class="button booknow-btn">Book Now
+                    <i class="fa-regular fa-paper-plane"></i>
+                </button>
+             </div>
+        </div>
+    }
+    </div>
+
+    <!--view map buton-->
+
+    <div class="button mt-3">
+         <button class="button viewmap-btn"><i class="pi pi-sliders-h"></i>View On Map</button>
+    </div>
+       
+   <!--special offers-->
+
+   <div class="common-card card mt-3">
+   
+                            <div class="tab-header">
+                                <div class="card-title">
+                                    <p class="m-0">Special Offer</p>
+                                </div>
+                            </div>
+     
+     <div class="card-body">
+        <div class="imagetab p-3 mb-3">
+          <p-galleria 
+            [value]="images" 
+            [responsiveOptions]="responsiveOptions"
+            [numVisible]="5" loop="true">
+
+            <ng-template #item let-item>
+              <img [src]="item.itemImageSrc" class="main-image" />
+            </ng-template>
+
+          </p-galleria>
+        </div>
+     </div>
+   </div>
+
+   <!--representatives-->
+    
+    <div class="common-card card mt-3">
+                            <div class="tab-header" (click)="toggleUserAgentBlock()">
+                                <p class="card-title">User Agent</p>
+                                <i class="fa-solid fa-chevron-down" [class.rotate]="isUserAgentBlockOpen"></i> 
+                            </div>
+                             @if (isUserAgentBlockOpen) {
+                                <div class="card-body d-flex flex-column flex-grow-1">
+                                    <div class="d-flex flex-row gap-2">
+                                        <button class="business-btn py-1" [ngClass]="{ 'active-btn': activeTab === 0 }" (click)="setActiveTab(0)">
+                                            Business
+                                        </button>
+                                    
+                                        <button class="business-btn py-1" [ngClass]="{ 'active-btn': activeTab === 1 }" (click)="setActiveTab(1)">
+                                            Agent
+                                        </button>
+                                    </div>
+
+                                    @if (activeTab === 0) {
+                                        <div class="contact-details mt-3">
+                                            <div class="profile-details d-flex justify-content-between">
+                                                <div class="profile-image d-flex gap-2">
+                                                    <img [src]="businessProfile" alt="">
+                                                    <div class="details">
+                                                    <p class="fw-bold m-1">{{title}}</p>
+                                                    <p class="m-1">{{mailDetails}}</p>
+                                                    </div>
+                                                    
+                                                </div>
+                                                <div class="agent-icons px-3 py-2">
+                                                    <div class="d-flex flex-row gap-2">
+                                                        <div class="profile-icon"><i class="fa-solid fa-user"></i></div>
+                                                        <div class="message"><i class="pi pi-comment"></i></div>
+                                                        <div class="messenger"><i class="pi pi-comments"></i></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="created-date d-flex justify-content-between mt-2">
+                                                <p>Created date:</p>
+                                                <p>10/01/2026</p>
+                                            </div>
+                                            <div class="updated-date d-flex justify-content-between">
+                                                 <p>Updated date:</p>
+                                                <p>10/01/2026</p>
+                                            </div>
+                                    </div>
+                                    } @else() {
+                                        <div class="contact-details mt-3">
+                                            <div class="profile-details d-flex justify-content-between">
+                                                <div class="profile-image d-flex gap-2">
+                                                    <img [src]="AgentProfile" alt="">
+                                                    <div class="details">
+                                                    <p class="fw-bold m-1">{{Agenttitle}}</p>
+                                                    <p class="m-1">{{AgentmailDetails}}</p>
+                                                    </div>
+                                                    
+                                                </div>
+                                                 <div class="agent-icons px-3 py-2">
+                                                    <div class="d-flex flex-row gap-2">
+                                                        <div class="profile-icon"><i class="fa-solid fa-user"></i></div>
+                                                        <div class="message"><i class="pi pi-comment"></i></div>
+                                                        <div class="messenger"><i class="pi pi-comments"></i></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="created-date d-flex justify-content-between mt-2">
+                                                <p>Created date:</p>
+                                                <p>10/01/2026</p>
+                                            </div>
+                                            <div class="updated-date d-flex justify-content-between">
+                                                 <p>Updated date:</p>
+                                                <p>10/01/2026</p>
+                                            </div>
+                                    </div>
+                                    }
+                                    
+                                </div>
+                             }
+                        </div>
+
+    <!--Reviews-->
+
+       <div class="common-card card mt-3">
+            <div class="tab-header" (click)="toggleReviews()">
+                <p class="card-title">User Agent</p>
+                <i class="fa-solid fa-chevron-down" [class.rotate]="isReviewsOpen"></i> 
+            </div>
+                @if (isReviewsOpen) {
+                    <div class="card-body">
+                        <div class="hotel-name">
+                            
+                        </div>
+                    </div>
+                } 
+        </div>
+
+
+
+
+
+
+</div>
+</div>
+</section>
