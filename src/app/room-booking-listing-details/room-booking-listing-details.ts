@@ -345,5 +345,23 @@ isReviewsOpen = false;
 toggleReviews(){
   this.isReviewsOpen=!this.isReviewsOpen
 }
+viewReviews(){
+  
+}
 
+//Socials
+
+isSocialsOpen = false;
+toggleSocials(){
+  this.isSocialsOpen=!this.isSocialsOpen
+}
+
+Bannertitle = 'ADVERTISEMENT BY XCROS'
+
+  firstBanner ='/room-booking_details-page/firstBanner.png'
+
+  secondBanner= '/room-booking_details-page/secondBanner.png'
+
+  thirdBanner = '/room-booking_details-page/thirdBanner.png'
+  
 }
