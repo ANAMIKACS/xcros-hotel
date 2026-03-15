@@ -3,25 +3,25 @@
     <div class="hero-container">
         <!-- <img src="/home/heroimg.jpg" alt="hero"> -->
         <div class="hero-content">
-            <div class="hero-tagline-mask">
+            <div class="hero-tagline-mask mask">
                 <h1 class="hero-tagline hero-item">
                     ⭐ Enjoy Your Beautiful Moment
                 </h1>
             </div>
-            <div class="hero-title-mask">
+            <div class="hero-title-mask mask">
                 <h1 class="hero-title hero-item">
                     Unlock Your Next Adventure <br>
                     Book Your Hotel Stay
                 </h1>
             </div>
-            <div class="hero-desc-mask">
+            <div class="hero-desc-mask mask">
                 <h1 class="hero-desc hero-item">
                     Discover Your Ideal Getaway Find the Perfect Hotel,
                     Villa, or Cottage by Name, Category, or Location!
                 </h1>
             </div>
-            <div class="choose-hotel-mask">
-                <div class="choose-hotel d-flex flex-row justify-content-between card-item ">
+            <div class="choose-hotel-mask mask">
+                <div class="choose-hotel d-flex flex-row gap-2 justify-content-between card-item ">
                     <div class="choose-contents d-flex">
                         <div class="locationdropdown">
                             <h6 class="loaction-title">Select Location</h6>
@@ -41,18 +41,19 @@
                             </div>
                             }
                         </div>
+                        <div class="v-line"></div>
                         <div class="item">
                             <h6>Check-in Date</h6>
-                            <p-datepicker [(ngModel)]="checkInDate" appendTo="body" [showIcon]="true"
-                                [inputStyle]="{'width': '150px' }">
+                            <p-datepicker [(ngModel)]="checkInDate"  [showIcon]="true" >
                             </p-datepicker>
                         </div>
+                       <div class="v-line"></div>
                         <div class="item">
                             <h6>Check-out Date</h6>
-                            <p-datepicker [(ngModel)]="checkOutDate" appendTo="body" [showIcon]="true"
-                                [inputStyle]="{'width': '150px' }">
+                            <p-datepicker [(ngModel)]="checkOutDate" [showIcon]="true">
                             </p-datepicker>
                         </div>
+                        <div class="v-line"></div>
                         <div class="item">
                             <h6>Guests</h6>
                             <h5> 2 adults, 2 children. 1 room</h5>
@@ -70,66 +71,73 @@
 
 <!--Categories-->
 <section #categoriesSection class="categories-section">
-  <div class="categoriescontainer">
-    <div class="title-wrapper">
-        <div class="category-title-mask">
-              <h1 class="category-title category-item">
-        Categories
-      </h1>
+    <div class="categoriescontainer">
+        <div class="title-wrapper">
+            <div class="category-title-mask mask">
+                <h1 class="category-title category-item">
+                    Categories
+                </h1>
+            </div>
+
         </div>
-    
-    </div>
-    <div class="heading-wrapper">
-        <div class="category-heading-mask">
-            <h1 class="category-heading category-item">
-        Most Demanding Categories
-      </h1>
+        <div class="heading-wrapper">
+            <div class="category-heading-mask mask">
+                <h1 class="category-heading category-item">
+                    Most Demanding Categories
+                </h1>
+            </div>
+
         </div>
-      
-    </div>
-    <swiper-container
-      class="categories-swiper"
-      slides-per-view="6"
-      space-between="25"
-      grab-cursor="true"
-      breakpoints='{
+        <swiper-container class="categories-swiper" slides-per-view="6" space-between="25" grab-cursor="true" pagination="true" style="--swiper-pagination-color: #FF9800;"
+            breakpoints='{
         "320": { "slidesPerView": 2, "spaceBetween": 10 },
         "768": { "slidesPerView": 3, "spaceBetween": 15 },
         "1024": { "slidesPerView": 4, "spaceBetween": 20 },
         "1400": { "slidesPerView": 6, "spaceBetween": 25 }
       }'>
-      @for(card of categoryCards; track card.id){
-      <swiper-slide>
-        <div class="types-mask">
-             <div class="types category-card">
-          <img [src]="card.icon" class="icon" alt="category">
-          <p class="card-title">
-            {{ card.cardtitle }}
-          </p>
-          <p class="card-items">
-            {{ card.categoryItem }}
-          </p>
-        </div>
-        </div>
-       
-      </swiper-slide>
-      }
-    </swiper-container>
-  </div>
+            @for(card of categoryCards; track card.id){
+            <swiper-slide>
+                <div class="types-mask mask">
+                    <div class="types category-card">
+                        <img [src]="card.icon" class="icon" alt="category">
+                        <p class="card-title">
+                            {{ card.cardtitle }}
+                        </p>
+                        <p class="card-items">
+                            {{ card.categoryItem }}
+                        </p>
+                    </div>
+                </div>
+
+            </swiper-slide>
+            }
+        </swiper-container>
+        
+    </div>
 </section>
 
 <!--Advertisements-->
 <section #advertismentSection class="advertisement-section">
     <div class="container-fluid">
         <div class="ad-contents pb-3">
-            <p class="ad-title text-center ad-title-anim">Advertisements</p>
+           <div class="ad-title-wrapper ad-title-anim">
+    <span class="diamond"></span>
+
+    <div class="line"></div>
+
+    <p class="ad-title m-0">Advertisements</p>
+
+    <div class="line"></div>
+
+    <span class="diamond"></span>
+</div>
             <div class="row py-5">
-                <div class="col-12 col-lg-4 ad-col">
+                <div class="col-12 col-lg-4 col-md-4 ad-col">
                     <div class="ad-wrapper">
                         <div class="ad-banner">
                             <img src="/home/ad1-img.png">
                         </div>
-                        <div class="img-contents ad-content">
+                        <div class="img-contents">
                             <p class="testTitle m-0">test</p>
                             <p class="subtitle m-0">live</p>
                             <div class="details-contents d-flex flex-row gap-3">
@@ -137,13 +145,13 @@
                                     <i class="fa-solid fa-eye"></i> : 22
                                 </div>
                                 <div class="addetails-btn">
-                                    <button class="ad-details-btn">Details ></button>
+                                    <button class="ad-details-btn">Details <span><i class="fa-solid fa-chevron-right"></i></span></button>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="col-12 col-lg-4 ad-col">
+                <div class="col-12 col-lg-4 col-md-4 ad-col">
                     <div class="ad-wrapper">
                         <div class="ad-banner">
                             <img src="/home/ad2-img.png">
@@ -156,13 +164,13 @@
                                     <i class="fa-solid fa-eye"></i> : 22
                                 </div>
                                 <div class="addetails-btn">
-                                    <button class="ad-details-btn">Details ></button>
+                                    <button class="ad-details-btn">Details <span><i class="fa-solid fa-chevron-right"></i></span></button>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="col-12 col-lg-4 ad-col">
+                <div class="col-12 col-lg-4 col-md-4 ad-col">
                     <div class="ad-wrapper">
                         <div class="ad-banner">
                             <img src="/home/ad3-img.png">
@@ -175,7 +183,7 @@
                                     <i class="fa-solid fa-eye"></i> : 22
                                 </div>
                                 <div class="addetails-btn">
-                                    <button class="ad-details-btn">Details ></button>
+                                    <button class="ad-details-btn">Details <span><i class="fa-solid fa-chevron-right"></i></span></button>
                                 </div>
                             </div>
                         </div>
@@ -188,37 +196,35 @@
 
 <!--Offers Section -->
 <section #offersSection class="offers-section py-5">
-    
-        <div class="card-mask d-flex flex-row justify-content-center">
-            <div class="Dealscards d-flex flex-row gap-5 offerscard-item">
-                @for (offers of offersCard; track $index) {
-                <div class="offersCard card col-12 col-lg-4">
-                    <div class="offers">
-                        <div class="offerTitle-mask">
-                            <p class="OfferTitle">{{offers.OfferTitle}}</p>
-                        </div>
-                        <div class="button-mask">
-                            <button class="discover-btn mt-3">Discover</button>
-                        </div>
+    <div class="card-mask mask d-flex flex-row justify-content-center">
+        <div class="Dealscards row offerscard-item">
+            @for (offers of offersCard; track $index) {
+            <div class="col-12 col-lg-4">
+                <div class="offers card">
+                    <div class="offerTitle-mask mask">
+                        <p class="OfferTitle">{{offers.OfferTitle}}</p>
+                    </div>
+                    <div class="button-mask mask">
+                        <button class="discover-btn">Discover</button>
                     </div>
                 </div>
-                }
             </div>
+            }
         </div>
-   
+    </div>
 </section>
 
 <!--Featured section-->
 <section #featuredSection class="featured-section py-5">
     <div class="featured-contents">
-        <div class="FeaturedHotelsTitle-mask">
+        <div class="FeaturedHotelsTitle-mask mask">
             <p class="FeaturedHotelsTitle m-0 feature-item">
                 Featured Hotels
             </p>
         </div>
 
         <div class="headers d-flex flex-row justify-content-between">
-            <div class="FeaturedTitle-mask">
+            <div class="FeaturedTitle-mask mask">
                 <div class="FeaturedTitle feature-item">
                     See all the Featured Hotels
                 </div>
@@ -338,7 +344,7 @@
                 }
             </div>
             <div class="viewbutton d-flex justify-content-center pt-3">
-                <button class="viewmore-btn">View More ></button>
+                <button class="viewmore-btn">View More <span><i class="fa-solid fa-chevron-right"></i></span></button>
             </div>
 
         </div>
@@ -347,8 +353,8 @@
 
 <!--Promo-->
 <section #promoSection class="details-section">
-    <div class="container">
-        <div class="promo-banner promo-image">
+    <div class="promo-conatiner">
+        <div class="promo-banner mx-auto promo-image">
             <img src="/home/promo-img.png" alt="villa">
             <div class="play-btn">
                 <i class="fa-solid fa-play"></i>
@@ -360,8 +366,8 @@
         </div>
     </div>
     <div class="stats-section">
-        <div class="container">
-            <div class="statscard-mask">
+        <div class="statscards">
+            <div class="statscard-mask mask">
                 <div class="row g-4 stas-cards">
                     <div class="col-md-3">
                         <div class="stat-card d-flex flex-row justify-content-between ">
@@ -412,113 +418,136 @@
         </div>
     </div>
 </section>
+
 <!--Exclusive Offer-->
 <section #exclusiveOfferSection class="exclusiveoffer-section">
-    <div class="offerscontainer py-5">
-        <div class="offer-banner">
-            <div class="offerimg-banner exclusive-cards">
-                <img src="/home/exculsiveoffer-img.jpg">
+  <div class="offerscontainer py-5">
 
-                <div class="offer-text">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-                    sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+    <div class="offer-banner">
+      <img src="/home/exculsiveoffer-img.jpg" class="desktop-bg" alt="exclusive offer">
+
+      <img src="/home/offermobilebg.png" class="mobile-bg" alt="exclusive offer mobile">
+
+      <!-- Text Bubble -->
+      <div class="offer-text">
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit,
+        sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+      </div>
+
+      <!-- Hotel Cards -->
+      <div class="exclusive-hotels">
+        <div class="row">
+
+          @for (hotel of exclusiveofferHotels; track hotel.id) {
+
+          <div class="col-12 col-lg-6 mt-4">
+
+            <div class="card hotel-card">
+
+              <div class="card-img">
+                <img [src]="hotel.cardImg">
+
+                <div class="profileimg">
+                  <img [src]="hotel.profileimg">
                 </div>
+
+                <div class="stars d-flex">
+                  @for (star of hotel.starArray; track $index) {
+                  <i class="fa-solid fa-star"></i>
+                  }
+                </div>
+
+                <div class="views d-flex gap-1">
+                  <i class="fa-solid fa-eye"></i>
+                  <p class="m-0">Views: {{ hotel.views }}</p>
+                </div>
+
+                <div class="review-container">
+                  <div class="review-text">
+                    <h5>{{ hotel.reviewText }}</h5>
+                    <h6>{{ hotel.reviews }} Reviews</h6>
+                  </div>
+
+                  <div class="rating-box">
+                    {{ hotel.rating }}
+                  </div>
+                </div>
+
+              </div>
+
+              <div class="card-body">
+
+                <div class="hotel">{{ hotel.hotelType }}</div>
+
+                <h3 class="hotel-title">{{ hotel.hotelTitle }}</h3>
+
+                <hr>
+
+                <div class="facilities">
+
+                  <div class="facility-item">
+                    <i class="fa-solid fa-bed"></i>
+                    <span>{{ hotel.rooms }} Room</span>
+                  </div>
+
+                  <div class="facility-item">
+                    <i class="fa-solid fa-bath"></i>
+                    <span>{{ hotel.bathrooms }} Bathroom</span>
+                  </div>
+
+                  <div class="facility-item">
+                    <i class="fa-solid fa-cube"></i>
+                    <span>{{ hotel.size }}</span>
+                  </div>
+
+                </div>
+
+                <div class="amenities">
+                  <i class="fa-solid fa-wifi"></i>
+                  <i class="fa-solid fa-square-parking"></i>
+                  <i class="fa-solid fa-ban-smoking"></i>
+                  <i class="fa-solid fa-utensils"></i>
+                </div>
+
+                <hr>
+
+                <div class="bottom-section">
+
+                  <div class="price-box">
+                    <span class="avg">AVG/NIGHT</span>
+                    <span class="price">$ {{ hotel.price }}</span>
+                  </div>
+
+                  <div class="action-buttons">
+
+                    <button class="contact-btn">
+                      Contact Info
+                    </button>
+
+                    <button class="icon-btn">
+                      <i class="fa-regular fa-heart"></i>
+                    </button>
+
+                    <button class="icon-btn">
+                      <i class="fa-solid fa-location-dot"></i>
+                    </button>
+
+                  </div>
+
+                </div>
+
+              </div>
+
             </div>
 
-            <div class="exclusive-hotels hotel-cards-right">
-                <div class="row">
-                    @for (hotel of exclusiveofferHotels; track hotel.id) {
-                    <div class="col-12 col-lg-6 mt-4">
-                        <div class="card hotel-card">
-                            <div class="card-img">
-                                <img [src]="hotel.cardImg">
-                                <div class="profileimg">
-                                    <img [src]="hotel.profileimg">
-                                </div>
-                                <div class="stars d-flex flex-row">
-                                    @for (star of hotel.starArray; track $index) {
-                                    <i class="fa-solid fa-star"></i>
-                                    }
-                                </div>
-                                <div class="views d-flex flex-row gap-1">
-                                    <i class="fa-solid fa-eye"></i>
-                                    <p class="m-0">Views: {{ hotel.views }}</p>
-                                </div>
-                                <div class="review-container">
-                                    <div class="review-text">
-                                        <h5>{{ hotel.reviewText }}</h5>
-                                        <h6>{{ hotel.reviews }} Reviews</h6>
-                                    </div>
-                                    <div class="rating-box">
-                                        {{ hotel.rating }}
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="card-body">
-                                <div class="hotel">{{ hotel.hotelType }}</div>
-                                <h3 class="hotel-title">{{ hotel.hotelTitle }}</h3>
-                                <hr class="divider">
-                                <div class="facilities">
-                                    <div class="facility-item">
-                                        <i class="fa-solid fa-bed"></i>
-                                        <span>{{ hotel.rooms }} Room</span>
-                                    </div>
-                                    <div class="facility-item">
-                                        <i class="fa-solid fa-bath"></i>
-                                        <span>{{ hotel.bathrooms }} Bathroom</span>
-                                    </div>
-                                    <div class="facility-item">
-                                        <i class="fa-solid fa-cube"></i>
-                                        <span>{{ hotel.size }}</span>
-                                    </div>
-                                </div>
-                                <div class="amenities gap-2">
-                                    <i class="fa-solid fa-wifi"></i>
-                                    <i class="fa-solid fa-square-parking"></i>
-                                    <i class="fa-solid fa-ban-smoking"></i>
-                                    <i class="fa-solid fa-utensils"></i>
-                                </div>
-                                <hr class="divider">
-                                <div class="bottom-section">
-                                    <div class="price-box">
-                                        <span class="avg">AVG/NIGHT</span>
-                                        <span class="price">$ {{ hotel.price }}</span>
-                                    </div>
-                                    <div class="action-buttons">
-                                        <button class="contact-btn" (click)="togglePopup(hotel.id)">Contact
-                                            Info</button>
-                                        @if(activeContactId===hotel.id)
-                                        {
-                                        <div class="popup card gap-3">
-                                            <div class="d-flex justify-content-between gap-3">
-                                                <div class="phone gap-2 align-items-center">
-                                                    <i class="pi pi-phone"></i>Phone: +7(111)123456789
-                                                </div>
-                                                <div class="close-btn" (click)="closePopup()">
-                                                    <i class="pi pi-times"></i>
-                                                </div>
-                                            </div>
+          </div>
 
-                                            <div class="email gap-2 align-items-center">
-                                                <i class="pi pi-envelope"></i> Mail: yourmail@domain.com
-                                            </div>
+          }
 
-                                        </div>
-                                        }
-                                        <button class="icon-btn">
-                                            <i class="fa-regular fa-heart"></i>
-                                        </button>
-                                        <button class="icon-btn">
-                                            <i class="fa-solid fa-location-dot"></i>
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    }
-                </div>
-            </div>
         </div>
+      </div>
+
     </div>
+
+  </div>
 </section>

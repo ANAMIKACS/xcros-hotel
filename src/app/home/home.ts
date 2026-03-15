@@ -179,102 +179,93 @@ initCategoryAnimation(){
     categoryItem: '4 Items',
     }
   ]
-  //pagenation
- currentPage: number = 1;
-totalPages: number = 4;
 
-get pages(): number[] {
-  return Array.from({ length: this.totalPages }, (_, i) => i + 1);
-}
-
-changePage(page: number) {
-  if (page >= 1 && page <= this.totalPages) {
-    this.currentPage = page;
-  }
-}
 //Advertisment
 @ViewChild('advertismentSection') advertismentSection!: ElementRef;
 initAdvertismentAnimation(){
- const section = this.advertismentSection.nativeElement;
-  const title = section.querySelector('.ad-title-anim');
-  const contents = section.querySelectorAll('.ad-content');
- const cards = section.querySelectorAll('.ad-col');
-  const images = section.querySelectorAll('.ad-img');
 
-   // initial state
-  gsap.set(title,{y:-80, opacity:0 , autoAlpha:0});
-  gsap.set(contents,{y:80, opacity:0, alignContent:0});
+const section = this.advertismentSection.nativeElement;
 
-  // section hover animation
-  section.addEventListener('mouseenter',()=>{
+const title = section.querySelector('.ad-title-anim');
+const contents = section.querySelectorAll('.img-contents');
+const cards = section.querySelectorAll('.ad-col');
 
-    const tl = gsap.timeline();
+gsap.set(title,{y:-80,autoAlpha:0});
+gsap.set(contents,{y:80,autoAlpha:0});
 
-    tl.to(title,{
-      y:0,
-      opacity:1,
-      duration:0.6,
-      autoAlpha:1,
-      ease:"power3.out"
-    })
+section.addEventListener('mouseenter',()=>{
 
-    .to(contents,{
-      y:0,
-      opacity:1,
-      duration:0.6,
-      stagger:0.15,
-      autoAlpha:1,
-      ease:"power3.out"
-    },"-=0.3");
+const tl = gsap.timeline();
 
-  });
+tl.to(title,{
+y:0,
+duration:0.6,
+autoAlpha:1,
+ease:"power3.out"
+})
 
-  section.addEventListener('mouseleave',()=>{
+.to(contents,{
+y:0,
+duration:0.6,
+stagger:0.2,
+autoAlpha:1,
+ease:"power3.out"
+},"-=0.3");
 
-    gsap.to(title,{y:-80,opacity:0,duration:0.4, autoAlpha:0});
-    gsap.to(contents,{y:80,opacity:0,duration:0.4, autoAlpha:0});
+});
 
-  });
+section.addEventListener('mouseleave',()=>{
 
-  // card expand animation
-  cards.forEach((card:any)=>{
+gsap.to(title,{
+y:-80,
+duration:0.4,
+autoAlpha:0
+});
 
-    card.addEventListener('mouseenter',()=>{
+});
 
-      gsap.to(cards,{
-        flex:1,
-        duration:0.5,
-        autoAlpha:1,
-        ease:"power3.out"
-      });
+cards.forEach((card:any)=>{
 
-      gsap.to(card,{
-        flex:2.5,
-        duration:0.5,
-        autoAlpha:1,
-        ease:"power3.out"
-      });
+card.addEventListener('mouseenter',()=>{
 
-      gsap.to(card.querySelectorAll('.ad-img'),{
-        scale:1.1,
-        duration:0.6,
-        autoAlpha:1,
-        ease:"power3.out"
-      });
+gsap.to(cards,{
+flex:1,
+duration:0.5,
+ease:"power3.out"
+});
 
-    });
+gsap.to(card,{
+flex:2.5,
+duration:0.5,
+ease:"power3.out"
+});
 
-    card.addEventListener('mouseleave',()=>{
+gsap.to(card.querySelector('.ad-banner img'),{
+scale:1.1,
+duration:0.6,
+ease:"power3.out"
+});
 
-      gsap.to(card.querySelectorAll('.ad-img'),{
-        scale:1,
-        duration:0.6,
-        autoAlpha:0,
-      });
+});
 
-    });
+card.addEventListener('mouseleave',()=>{
 
-  });
+gsap.to(cards,{
+flex:1,
+duration:0.5,
+ease:"power3.out"
+});
+
+gsap.to(card.querySelector('.ad-banner img'),{
+scale:1,
+duration:0.6,
+ease:"power3.out"
+});
+
+});
+
+});
+
 }
 //Offers
 @ViewChild('offersSection') offersSection!: ElementRef;
@@ -282,22 +273,25 @@ initOffersAnimation(){
   const section = this.offersSection.nativeElement;
 
   const titles = section.querySelectorAll('.offerscard-item');
-
+ gsap.to(titles, {y: 240,autoAlpha:0});
    section.addEventListener('mouseenter', () => {
+   
 
       gsap.to(titles, {
         y: 0,
         duration: 0.45,
+        autoAlpha:1,
         ease: "back.out(1.6)"
       });
 
     });
 
     section.addEventListener('mouseleave', () => {
-
+      
       gsap.to(titles, {
         y: 240,
         duration: 0.45,
+        autoAlpha:0,
         ease: "power2.in"
       });
 
@@ -306,32 +300,32 @@ initOffersAnimation(){
 offersCard=[
   {
     id:1,
-    OfferTitle:'Take Advantage of our Seasonal Specials',
+    OfferTitle:'Take Advantage of our \nSeasonal Specials',
   },
    {
     id:2,
-    OfferTitle:'Offers on room rates, restaurants and spas',
+    OfferTitle:'Offers on room rates, \nrestaurants and spas',
   },
    {
     id:3,
-    OfferTitle:'Exceptional Savings, exclusively for Members',
+    OfferTitle:'Exceptional Savings, \nexclusively for Members',
   },
 ]
 
   //Featured Section
   @ViewChild('featuredSection') featuredSection!: ElementRef;
-  
-
   initFeaturedAnimation(){
      const section = this.featuredSection.nativeElement;
 
      const titles = section.querySelectorAll('.feature-item');
      const cards = section.querySelectorAll('.featured-card');
+       gsap.set(titles, { y: 50 , autoAlpha:0 } );
      section.addEventListener('mouseenter', () => {
 
       gsap.to(titles, {
         y: 0,
         duration: 0.45,
+        autoAlpha:1,
         ease: "back.out(1.6)"
       });
 
@@ -341,6 +335,7 @@ offersCard=[
 
       gsap.to(titles, {
         y: 240,
+        autoAlpha:0,
         duration: 0.45,
         ease: "power2.in"
       });
@@ -487,10 +482,12 @@ initPromoAnimation(){
    const section = this.promoSection.nativeElement;
     const image = section.querySelector('.promo-image');
     const cards = section.querySelectorAll('.stas-cards')
-gsap.set(image,{
-  scale:0.85
-});
 
+    gsap.set(image,{
+  scale:0.85
+  });
+
+gsap.set(cards,{ y:50, autoAlpha:0 });
 section.addEventListener('mouseenter',()=>{
 
   gsap.to(image,{
@@ -516,6 +513,7 @@ section.addEventListener('mouseenter', () => {
       gsap.to(cards, {
         y: 0,
         duration: 0.45,
+        autoAlpha:1,
         ease: "back.out(1.6)"
       });
 
@@ -525,6 +523,7 @@ section.addEventListener('mouseenter', () => {
 
       gsap.to(cards, {
         y: 240,
+        autoAlpha:0,
         duration: 0.45,
         ease: "power2.in"
       });
@@ -536,9 +535,10 @@ section.addEventListener('mouseenter', () => {
 @ViewChild('exclusiveOfferSection') exclusiveOfferSection!: ElementRef;
 initExclusiveOfferAnimation(){
   const section = this.exclusiveOfferSection.nativeElement;
-  const image = section.querySelectorAll('.exclusive-cards')
+  const banner = section.querySelector('.offer-banner');
   const cards = section.querySelectorAll('.hotel-card');
 
+gsap.set(banner,{ y:300, autoAlpha:0 });
     gsap.set(cards,{ x:300, opacity:0, autoAlpha:0 });
 
   section.addEventListener('mouseenter', () => {
@@ -546,7 +546,7 @@ initExclusiveOfferAnimation(){
     const tl = gsap.timeline();
 
     // image drops down
-    tl.to(image,{
+    tl.to(banner,{
       y:0,
       duration:0.45,
       autoAlpha:1,
@@ -567,7 +567,7 @@ initExclusiveOfferAnimation(){
 
   section.addEventListener('mouseleave', () => {
 
-    gsap.to(image,{
+    gsap.to(banner,{
       y:550,
       duration:0.45,
       autoAlpha:0,
