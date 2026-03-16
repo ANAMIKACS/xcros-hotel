@@ -7,7 +7,39 @@
         </div>
         <div class="buttons d-flex gap-4">
             <button class="button share-btn"><span><i class="fa-solid fa-share-nodes"></i></span>Share</button>
-            <button class="button report-btn"><span><i class="fa-solid fa-circle-exclamation"></i></span>report</button>
+            <div class="report-button py-2">
+                            <p-button (click)="showDialog()" label="Report" styleClass="px-4"/>
+                            <p-dialog header="Report Form" [modal]="true" [(visible)]="visible" [style]="{ width: '30rem' }" styleClass="custom-edit-profile-dialog d-flex flex-column">
+                                <div class="report-bg mt-2 px-3 py-2">
+                                     <button type="button" class="center-btn">Business Name</button>
+                                     <p class="mt-3 d-flex gap-2"><span>Category :</span> {{category}}</p>
+                                     <p class="m-0 d-flex gap-2"><span>Address :</span>{{address}}</p>
+                                </div>
+                               
+                                
+                                <div class="mt-2 px-3">
+                                    <textarea type="text" placeholder="What Do You Want To Report About ..." class="muted" style="height: 130px;"></textarea>
+                                </div>
+                                <div class="mb-3 px-3">
+                                    <label class="form-label">Attachments (Optional)</label>
+                                    <label for="fileToUpload" class="border rounded p-4 text-center d-flex gap-3 justify-content-center"
+                                        style="cursor: pointer; background-color: #f8f9fa;">
+                                        <i class="pi pi-cloud-upload" style="font-size: 55px; color: #000000;"></i>
+                                        <p class="mb-0 mt-2">Upload Photos/videos</p>
+                                    </label>    
+                                    <input type="file" name="fileToUpload" id="fileToUpload" accept="image/*,video/*" multiple class="d-none">
+                                    <p class="mt-2">
+                                        No File Chosen
+                                    </p>
+                                </div>
+                                <div class="d-flex justify-content-end gap-3 p-3">
+                                    <button class="button cancel" (click)="visible = false">Cancel</button>
+                                    <button class="button submit" (click)="visible = false">Submit <span><i class="fa-regular fa-paper-plane"></i></span>
+
+                                    </button>
+                                </div> 
+                            </p-dialog>
+                        </div>
         </div>
     </div>
 </section>
@@ -26,17 +58,16 @@
 
                 @for (item of stats; track item.title) {
                 <div class="col-12 col-lg-4 mt-3">
-                    <div class="inline-facts-wrap gradient-bg">
+                    <div class="inline-facts-wrap gradient-bg d-flex flex-wrap">
                     <div class="inline-facts">
-
-                        <img [src]="item.img" alt="building">
-
-                        <div class="milestone-counter">
-                        <div class="stats animaper">
+                        <div class="d-flex">
                             <div class="num" data-content="0" data-num="245">
                             {{ item.value }}
                             </div>
-                        </div>
+                            <div class="stats-icon">
+                                 <i class="fa-solid {{item.icon}}"></i>
+                            </div>
+                           
                         </div>
 
                         <h5>{{ item.title }}</h5>
@@ -68,9 +99,9 @@
             <div class="card-wrapper">
                  @for (room of rooms; track room.name) {
 
-<div class="room-card card mb-2">
+<div class="room-card card mb-3">
     <div class="row">
-        <div class="col-lg-4">
+        <div class="col-lg-5">
             <div class="d-flex justify-content-center align-items-center">
                 <div class="image-on-left">
                     <img [src]="room.image" alt="">
@@ -78,7 +109,7 @@
             </div>
         </div>
 
-        <div class="col-lg-8">
+        <div class="col-lg-7">
             <div class="right-content">
 
                 <div class="title d-flex flex-row justify-content-between">
@@ -95,11 +126,11 @@
 
                 <p class="guest">{{room.guest}}</p>
 
-                <p class="text-muted">
+                <p class="text-muted" style="font-size: 14px;">
                     {{room.description}}
                 </p>
 
-                <div class="icons-button d-flex flex-row justify-content-between">
+                <div class="icons-button d-flex flex-row justify-content-between mt-4">
                     <div class="icons d-flex gap-2">
                         <i class="pi pi-car"></i>
                         <i class="pi pi-wifi"></i>
@@ -108,8 +139,320 @@
                     </div>
 
                     <div class="button">
-                        <button class="button detail-btn">Get Details</button>
+                        <button class="button detail-btn" (click)="overlay()">Get Details</button>
                     </div>
+                    @if (isGetDetailsOpen) {
+                        <div class="custom-backdrop" (click)="closeFilter()"></div>
+                        <div class="get-details-slider mb-3" [class.open]="isGetDetailsOpen">
+                            <div class="get-details">
+                                <div class="image-viewer">
+                                     <div class="get-details-content">
+                                <img [src]="getDetailsImage" alt="">
+                            </div>
+                            <div class="close-btn">
+                                <i class="fa-solid fa-xmark" (click)="closeFilter()"></i>
+                            </div>
+                                </div>
+                           
+                            <div class="facilities d-flex justify-content-evenly">
+                                <div class="facilities-icon d-flex flex-column align-items-center justify-content-center">
+                                    <i class="pi pi-car"></i>
+                                    <p class="m-0 pt-2">Parking</p>
+                                </div>
+                                <div class="v-line"></div>
+                                <div class="facilities-icon d-flex flex-column align-items-center justify-content-center">
+                                    <i class="pi pi-wifi"></i>
+                                    <p class="m-0 pt-2">Free Wifi</p>
+                                </div>
+                                <div class="v-line"></div>
+                                <div class="facilities-icon d-flex flex-column align-items-center justify-content-center">
+                                     <i class="fa-solid fa-tv"></i>
+                                    <p class="m-0 pt-2">Television</p>
+                                </div>
+                                <div class="v-line"></div>
+                                <div class="facilities-icon d-flex flex-column align-items-center justify-content-center">
+                                     <i class="fa-solid fa-snowflake"></i>
+                                    <p class="m-0 pt-2">Air Conditioner</p>
+                                </div>
+                            </div>
+                            <div class="all-details px-3">
+                                <div class="selected-room mt-3">
+                                    <div class="row align-items-center p-2">
+                                        <div class="col-6">
+                                            <h4 class="fw-bold">Standard Room</h4>
+                                            <p class="price fw-semibold">Max Guest: <span class="text-dark">3 person</span></p>
+                                            <p class="price fw-semibold">Inclusion</p>
+                                            <ul class="list text-muted">
+                                                <li>Complimentary Food or Beverages </li>
+                                                <li>Complimentary Laundry service </li>
+                                                <li>Free Access to Holiday Activity Centre </li>
+                                                <li>Breakfast  & Lunch Or Dinner included</li>
+                                                <li>Late Check-Out upto 2 hours (subject to availability)</li>
+                                            </ul>
+                                        </div>
+                                        <div class="col-6">
+                                            <div class="d-flex flex-column">
+                                                <div class="d-flex flex-row gap-2 justify-content-end">
+                                            <span class="text-danger text-decoration-line-through fw-semibold fs-5"><i class="pi pi-indian-rupee"></i>10,000</span>
+                                            <span class="price fs-4"><i class="pi pi-indian-rupee"></i>9500</span>
+                                            <span class="text-muted fw-semibold fs-4">INR/Night</span>
+                                        </div>
+
+                                            <p class="text-end text-warning">Plus ₹148.71 In Taxes and Fees/Night</p>
+                                            <button class="button book-now-btn px-4 py-2 d-flex align-self-end">Book Now <span><i class="pi pi-angle-right"></i></span></button>
+                                            <p class="mt-3 text-muted text-end" style="font-size: 13px;">Total ₹9,648.71 for 1 Night Includes Taxes and Fees</p>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                 <!--about room-->
+
+                                 <div class="common-card card mt-3">
+                                    <div class="tab-header" (click)="toggleAboutRoom()">
+                                        <p class="card-title">About Room</p>
+                                        <i class="fa-solid fa-chevron-down" [class.rotate]="isAboutRoom"></i>
+                                    </div>
+                                    @if (isAboutRoom) {
+                                        <div class="card-body">
+                                            <p class="text-muted">{{aboutRoomDescription}}</p>
+                                        </div>
+                                    }
+                                 </div>
+
+                                 <!--gallery-->
+
+                                 <div class="common-card card mt-3">
+                                    <div class="tab-header" (click)="toggleGallery()">
+                                        <p class="card-title">Gallery</p>
+                                        <i class="fa-solid fa-chevron-down" [class.rotate]="isGalleryOpen"></i>
+                                    </div>
+                                    @if (isGalleryOpen) {
+                                        <div class="gallery-imagetab p-3 mb-3">
+                                            <p-galleria 
+                                                [value]="Gallery" 
+                                                [responsiveOptions]="responsiveOptions"
+                                                [numVisible]="5" loop="true">
+
+                                                <ng-template #item let-item>
+                                                <img [src]="item.GalleryImageSrc" class="gallery-main-image" />
+                                                </ng-template>
+
+                                                <ng-template #thumbnail let-item>
+                                                <img [src]="item.GalleryThambnailImageSrc" class="thumnailimages m-1" />
+                                                </ng-template>
+
+                                            </p-galleria>
+                                            </div>
+                                                                        }
+                                    </div>
+
+                                    <!--complimentary-->
+                                    <div class="common-card card mt-3">
+
+                                        <div class="tab-header d-flex justify-content-between align-items-center" (click)="toggleComplimentary()">
+                                            <p class="m-0 card-title">Complimentary</p>
+                                            <i class="fa-solid fa-chevron-down" [class.rotate]="isComplementaryOpen"></i>
+                                        </div>
+                                        @if (isComplementaryOpen) {
+                                            <div class="card-body">
+
+                                            <div class="row">
+
+                                            @for (item of amenities; track item.name) {
+                                                <div class="col-4 amenity-item">
+
+                                                <div class="amenity-box">
+                                                    <div class="icon-box">
+                                                    <i class="fa-solid {{item.icon}}"></i>
+                                                    </div>
+
+                                                    <span>{{item.name}}</span>
+                                                </div>
+
+                                                </div>
+                                            }
+
+                                            </div>
+
+                                        </div>
+                                        }
+                                        
+
+                                        </div>
+
+                                        <!--room features-->
+                                         <div class="common-card card mt-3">
+
+                                        <div class="tab-header d-flex justify-content-between align-items-center" (click)="toggleRoomFeature()">
+                                            <p class="m-0 card-title">Room Features</p>
+                                            <i class="fa-solid fa-chevron-down" [class.rotate]="isRoomFeatureOpen"></i>
+                                        </div>
+                                        @if (isRoomFeatureOpen) {
+                                            <div class="card-body">
+
+                                            <div class="row">
+
+                                            @for (item of roomFeature; track item.name) {
+                                                <div class="col-4 amenity-item">
+
+                                                <div class="amenity-box">
+                                                    <div class="icon-box">
+                                                    <i class="fa-solid {{item.icon}}"></i>
+                                                    </div>
+
+                                                    <span>{{item.name}}</span>
+                                                </div>
+
+                                                </div>
+                                            }
+
+                                            </div>
+
+                                        </div>
+                                        }
+                                        
+
+                                        </div>
+
+                                        <!--Service amentities-->
+
+                                         <div class="common-card card mt-3">
+
+                                        <div class="tab-header d-flex justify-content-between align-items-center" (click)="toggleServicesAmenities()">
+                                            <p class="m-0 card-title">Services & Amenities</p>
+                                            <i class="fa-solid fa-chevron-down" [class.rotate]="isServicesAmenities"></i>
+                                        </div>
+                                        @if (isServicesAmenities) {
+                                            <div class="card-body">
+
+                                            <div class="row">
+
+                                            @for (item of ServicesAmenities; track item.name) {
+                                                <div class="col-4 amenity-item">
+
+                                                <div class="amenity-box">
+                                                    <div class="icon-box">
+                                                    <i class="fa-solid {{item.icon}}"></i>
+                                                    </div>
+
+                                                    <span>{{item.name}}</span>
+                                                </div>
+
+                                                </div>
+                                            }
+
+                                            </div>
+
+                                        </div>
+                                        }
+                                        
+
+                                        </div>
+
+                                        <!--Cancellation rules-->
+
+                                        <div class="cancellation-card card mt-3">
+                                            <p class="header">Cancellation Rules</p>
+                                            <p class="m-0">{{CancelationRules}}</p>
+                                        </div>
+
+                                        <!--Extra Service Tariff-->
+
+                                        <div class="common-card card mt-3">
+                                            <div class="tab-header d-flex justify-content-between align-items-center" (click)="toggleTariff()">
+                                                <p class="card-title">Extra Service Tariff</p>
+                                                <i class="fa-solid fa-chevron-down" [class.rotate]="isTariff"></i>
+                                            </div>
+                                            @if (isTariff) {
+                                                <div class="card-body p-0">
+
+                                                    @for (service of services; track service.name) {
+
+                                                    <div class="service-row d-flex justify-content-between align-items-center">
+
+                                                        <span class="service-name">
+                                                        {{ service.name }}
+                                                        </span>
+
+                                                        <span class="service-price">
+                                                        ₹ {{ service.price | number }} +Price/Night
+                                                        </span>
+
+                                                    </div>
+
+                                                    }
+
+                                                </div>
+                                            }
+                                        </div>
+
+                                        <!--House Rules-->
+
+                                         <div class="common-card card mt-3">
+                                            <div class="tab-header d-flex justify-content-between align-items-center" (click)="toggleHouseRules()">
+                                                <p class="card-title">House Rules</p>
+                                                <i class="fa-solid fa-chevron-down" [class.rotate]="isHouseRules"></i>
+                                            </div>
+                                            @if (isHouseRules) {
+                                                 <div class="card-body">
+
+    <div class="row">
+
+      <!-- LEFT COLUMN -->
+      <div class="col-md-6">
+
+        @for (section of houseRulesLeft; track section.title) {
+
+          <div class="rule-section">
+            <h5>{{ section.title }}</h5>
+
+            <ul>
+              @for (item of section.items; track item) {
+                <li>{{ item }}</li>
+              }
+            </ul>
+          </div>
+
+        }
+
+      </div>
+
+      <!-- RIGHT COLUMN -->
+      <div class="col-md-6">
+
+        @for (section of houseRulesRight; track section.title) {
+
+          <div class="rule-section">
+            <h5>{{ section.title }}</h5>
+
+            <ul>
+              @for (item of section.items; track item) {
+                <li>{{ item }}</li>
+              }
+            </ul>
+          </div>
+
+        }
+
+      </div>
+
+    </div>
+
+  </div>
+                                                }
+                                                </div>
+
+                                </div>
+
+                           
+
+                        </div>
+                        </div>
+                        
+                    }
                 </div>
 
             </div>
@@ -491,28 +834,22 @@
    <!--special offers-->
 
    <div class="common-card card mt-3">
-   
-                            <div class="tab-header">
-                                <div class="card-title">
-                                    <p class="m-0">Special Offer</p>
-                                </div>
-                            </div>
-     
-     <div class="card-body">
-        <div class="imagetab p-3 mb-3">
-          <p-galleria 
-            [value]="images" 
-            [responsiveOptions]="responsiveOptions"
-            [numVisible]="5" loop="true">
-
-            <ng-template #item let-item>
-              <img [src]="item.itemImageSrc" class="main-image" />
-            </ng-template>
-
-          </p-galleria>
+    <div class="tab-header">
+        <div class="card-title text-center">
+        <p class="m-0">SPECIAL OFFERS</p>
         </div>
-     </div>
-   </div>
+    </div>
+    <div class="card-body p-0">
+        <swiper-container class="offer-swiper" navigation="true" slides-per-view="1" loop="true">
+    @for (offer of offers; track offer) {
+            <swiper-slide>
+            <img [src]="offer" class="offer-img">
+            </swiper-slide>
+        }
+
+        </swiper-container>
+    </div>
+    </div>
 
    <!--representatives-->
     
@@ -535,8 +872,8 @@
 
                                     @if (activeTab === 0) {
                                         <div class="contact-details mt-3">
-                                            <div class="profile-details d-flex justify-content-between">
-                                                <div class="profile-image d-flex gap-2">
+                                            <div class="profile-details d-flex justify-content-between flex-wrap">
+                                                <div class="profile-image d-flex gap-2 justify-content-evenly flex-wrap">
                                                     <img [src]="businessProfile" alt="">
                                                     <div class="details">
                                                     <p class="fw-bold m-1">{{title}}</p>
@@ -640,7 +977,7 @@
                                     <p class="m-0">(10 Reviews)</p>
                                 </div>
                                 <div class="reviewbtn">
-                                    <button (click)="viewReviews">View Reviews</button>
+                                    <button (click)="viewReviews()">View Reviews</button>
                                 </div>
                             </div>
                        </div>
@@ -745,6 +1082,7 @@
 </div>
 </div>
 </section>
+
 
 <!--Ad Banner-->
 <section class="banner py-4">
