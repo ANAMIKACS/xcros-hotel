@@ -64,7 +64,7 @@ export class Hoteldiscount implements AfterViewInit {
     section.addEventListener('mouseenter', () => {
       gsap.to(cards, {
         y: 0,
-        duration: 0.45,
+        duration: 0.5,
         ease: "back.out(1.6)"
       });
     });
@@ -72,7 +72,7 @@ export class Hoteldiscount implements AfterViewInit {
     section.addEventListener('mouseleave', () => {
       gsap.to(cards, {
         y: 1370,
-        duration: 0.35,
+        duration: 0.5,
         ease: "power2.in"
       });
     });
@@ -105,7 +105,7 @@ export class Hoteldiscount implements AfterViewInit {
 
     gsap.to(logos, {
       x: -width / 2,
-      duration: 5,
+      duration: 1,
       ease: "none",
       repeat: -1
     });
@@ -144,7 +144,7 @@ export class Hoteldiscount implements AfterViewInit {
     section.addEventListener('mouseenter', () => {
       gsap.to(cards, {
         y: 0,
-        duration: 0.45,
+        duration: 0.5,
         ease: "back.out(1.8)"
       });
     });
@@ -152,7 +152,7 @@ export class Hoteldiscount implements AfterViewInit {
     section.addEventListener('mouseleave', () => {
       gsap.to(cards, {
         y: 800,
-        duration: 0.35,
+        duration: 0.5,
         ease: "power2.in"
       });
     });
@@ -207,7 +207,7 @@ export class Hoteldiscount implements AfterViewInit {
 
       gsap.to(cards, {
         opacity: 1,
-        duration: 0.6,
+        duration: 0.5,
         ease: "power2.out",
         stagger: 0.2
       });
@@ -237,7 +237,7 @@ export class Hoteldiscount implements AfterViewInit {
 
       gsap.to(titles, {
         y: 0,
-        duration: 0.45,
+        duration: 0.5,
         ease: "back.out(1.6)"
       });
 
@@ -247,7 +247,7 @@ export class Hoteldiscount implements AfterViewInit {
 
       gsap.to(titles, {
         y: 100,
-        duration: 0.35,
+        duration: 0.5,
         ease: "power2.in"
       });
 
@@ -328,7 +328,7 @@ export class Hoteldiscount implements AfterViewInit {
     section.addEventListener('mouseenter', () => {
       gsap.to(cards, {
         y: 0,
-        duration: 0.45,
+        duration: 0.5,
         ease: "back.out(1.9)"
       });
     });
@@ -336,7 +336,7 @@ export class Hoteldiscount implements AfterViewInit {
     section.addEventListener('mouseleave', () => {
       gsap.to(cards, {
         y: 410,
-        duration: 0.35,
+        duration: 0.5,
         ease: "power2.in"
       });
     });

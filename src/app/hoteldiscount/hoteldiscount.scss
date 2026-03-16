@@ -458,7 +458,10 @@
 
 .subscribe {
     background-color: #EDF7F6;
-
+    .sign-up-mask{
+        overflow: hidden;
+        display: block;
+    }
     .sign-up {
         background: linear-gradient(0deg, #008080 0%, #00ABAB 100%);
         height: 100%;
