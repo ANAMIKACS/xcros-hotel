@@ -1191,6 +1191,10 @@
   overflow: hidden;
   width: 100%;
   }
+  .offercontainer-mask{
+  overflow: hidden;
+  display: block;
+  }
   .desktop-bg{
   display:block;
       width: 100%;
@@ -1525,6 +1529,7 @@
 
   .exclusiveoffer-section{
     padding-inline:1rem;
+    
   .desktop-bg{
     display:none !important;
   }
@@ -1540,6 +1545,7 @@
   .offer-banner{
     position:relative;
     overflow:visible;
+    height:750px !important;
   }
   .offer-text{
     position:absolute;
