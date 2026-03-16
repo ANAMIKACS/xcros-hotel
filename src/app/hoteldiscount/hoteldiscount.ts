@@ -105,7 +105,7 @@ export class Hoteldiscount implements AfterViewInit {
 
     gsap.to(logos, {
       x: -width / 2,
-      duration: 1,
+      duration: 5,
       ease: "none",
       repeat: -1
     });
