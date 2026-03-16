@@ -5,13 +5,20 @@ import { FormsModule } from '@angular/forms';
 import { DatePickerModule } from 'primeng/datepicker';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { GalleriaModule } from 'primeng/galleria';
+import { DialogModule } from 'primeng/dialog';
+import { ButtonModule } from 'primeng/button';
+import { InputTextModule } from 'primeng/inputtext';
+import { Carousel } from 'primeng/carousel';
+import { CarouselModule } from 'primeng/carousel';
+import { IconField } from "primeng/iconfield";
+import { InputIcon } from "primeng/inputicon";
 
 register();
 
 @Component({
   standalone: true,
   selector: 'app-room-booking-listing-details',
-  imports: [CommonModule, FormsModule, InputNumberModule, DatePickerModule, GalleriaModule],
+  imports: [CommonModule, FormsModule, InputNumberModule, DatePickerModule, GalleriaModule, DialogModule, ButtonModule, InputTextModule, CarouselModule],
   templateUrl: './room-booking-listing-details.html',
   styleUrl: './room-booking-listing-details.scss',
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
@@ -25,19 +32,20 @@ export class RoomBookingListingDetails{
 
   stats = [
     {
-      img: '/room-booking_details-page/building.png',
+        icon: 'fa-building', name: 'building' ,
+
       value: '54',
       title: 'Rooms',
       svg: 'M 0 30 V 28 Q 20 17 55 5 T 100 17 V 60 Z'
     },
     {
-      img: '/room-booking_details-page/guarantee.png',
+      icon: 'fa-tag', name: 'tag',
       value: '100 +',
       title: 'Bookings',
       svg: 'M0 30 V12 Q30 12 55 5 T100 11 V30z'
     },
     {
-      img: '/room-booking_details-page/money.png',
+      icon: 'fa-hand-holding-dollar', name: 'hand-holding-dollar',
       value: '₹10,000',
       title: 'Leads',
       svg: 'M0 30 V12 Q30 12 55 5 T100 11 V30z'
@@ -48,11 +56,11 @@ export class RoomBookingListingDetails{
   // AVAILABLE ROOMS
 
 rooms = [ 
-  { name: 'Standard Family Room', price: 10000, guest: 'Max Guest: 4', description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.', image: '/room-booking_details-page/room.jpg' }, 
-  { name: 'Standard Family Room', price: 10000, guest: 'Max Guest: 4', description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.', image: '/room-booking_details-page/room.jpg' },
-{ name: 'Standard Family Room', price: 10000, guest: 'Max Guest: 4', description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.', image: '/room-booking_details-page/room.jpg' },
-{ name: 'Standard Family Room', price: 10000, guest: 'Max Guest: 4', description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.', image: '/room-booking_details-page/room.jpg' },
-{ name: 'Standard Family Room', price: 10000, guest: 'Max Guest: 4', description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.', image: '/room-booking_details-page/room.jpg' },
+  { name: 'Standard Family Room', price: 10000, guest: 'Max Guest: 4', description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.', image: '/room-booking_details-page/room.jpg' }, 
+  { name: 'Standard Family Room', price: 10000, guest: 'Max Guest: 4', description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.', image: '/room-booking_details-page/room.jpg' },
+{ name: 'Standard Family Room', price: 10000, guest: 'Max Guest: 4', description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.', image: '/room-booking_details-page/room.jpg' },
+{ name: 'Standard Family Room', price: 10000, guest: 'Max Guest: 4', description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.', image: '/room-booking_details-page/room.jpg' },
+{ name: 'Standard Family Room', price: 10000, guest: 'Max Guest: 4', description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.', image: '/room-booking_details-page/room.jpg' },
  ];
 
 
@@ -65,8 +73,22 @@ rooms = [
     this.isThirdPartyOpen = !this.isThirdPartyOpen;
   }
 
+//repert
 
+ visible: boolean = false;
 
+    showDialog() {
+        this.visible = true;
+    }
+    category = 'Business'
+    address = 'D-106 22 cross street'
+
+    onFileSelected(){
+
+    }
+    onUpload(){
+
+    }
 
   // STORES DATA
   
@@ -242,32 +264,32 @@ rooms = [
     {
       id: 1,
       question:'What Amenities Are Included In The Hotel Room?',
-      answer:'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'
+      answer:'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'
     },
     {
       id: 2,
       question:'Is There A Check-In/Check-Out Time?',
-      answer:'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'
+      answer:'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'
     },
     {
       id: 3,
       question:'Can I Request A Specific Room Type Or View?',
-      answer:'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'
+      answer:'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'
     },
     {
       id: 4,
       question:'Are Pets Allowed In The Hotel Rooms?',
-      answer:'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'
+      answer:'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'
     },
     {
       id: 5,
       question:'What Amenities Are Included In The Hotel Room?',
-      answer:'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'
+      answer:'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'
     },
     {
       id:6,
       question:'Do You Offer Housekeeping During My Stay?',
-      answer:'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'
+      answer:'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'
     }
   ]
 
@@ -312,13 +334,12 @@ toggleExtraServiceOpen(){
 
 //special offer
 
- images: any = [
-  { itemImageSrc:'/room-booking_details-page/special-offers.png'},
- { itemImageSrc:'/room-booking_details-page/special-offers.png'},
- { itemImageSrc:'/room-booking_details-page/special-offers.png'},
- { itemImageSrc:'/room-booking_details-page/special-offers.png'}
- ];
-    responsiveOptions: any[] | undefined;
+ offers = [
+  '/room-booking_details-page/special-offers.png',
+  '/room-booking_details-page/special-offers.png',
+  '/room-booking_details-page/special-offers.png'
+];
+
 
 //user block
   isUserAgentBlockOpen = true
@@ -363,5 +384,165 @@ Bannertitle = 'ADVERTISEMENT BY XCROS'
   secondBanner= '/room-booking_details-page/secondBanner.png'
 
   thirdBanner = '/room-booking_details-page/thirdBanner.png'
+
+
+  //get details
+
+  isGetDetailsOpen = false
+  overlay(){
+    this.isGetDetailsOpen =! this.isGetDetailsOpen
+  }
+  closeFilter() {
+  this.isGetDetailsOpen = false;
+}
+  getDetailsImage = '/room-booking_details-page/Rectangle 89.png'
+
+  //aboutroom
+
+  isAboutRoom = false
+  toggleAboutRoom(){
+    this.isAboutRoom=!this.isAboutRoom
+  }
+  aboutRoomDescription = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'
+
+  //gallery
+
+  isGalleryOpen = false
+  toggleGallery(){
+    this.isGalleryOpen =! this.isGalleryOpen
+  }
+
   
+  responsiveOptions: any[] = [
+    { breakpoint: '1024px', numVisible: 3 },
+    { breakpoint: '768px', numVisible: 3 },
+    { breakpoint: '560px', numVisible: 2 }
+  ];
+  
+
+  Gallery : any = [
+     { GalleryImageSrc:'/room-booking_details-page/room.jpg',
+      GalleryThambnailImageSrc: '/room-booking_details-page/room.jpg'
+     },
+       { GalleryImageSrc:'/room-booking_details-page/gallery1.png',
+      GalleryThambnailImageSrc: '/room-booking_details-page/gallery1.png'
+     },
+       { GalleryImageSrc:'/room-booking_details-page/gallery2.png',
+      GalleryThambnailImageSrc: '/room-booking_details-page/gallery2.png'
+     },
+       { GalleryImageSrc:'/room-booking_details-page/gallery3.png',
+      GalleryThambnailImageSrc: '/room-booking_details-page/gallery3.png'
+     },
+       { GalleryImageSrc:'/room-booking_details-page/gallery4.png',
+      GalleryThambnailImageSrc: '/room-booking_details-page/gallery4.png'
+     },
+       { GalleryImageSrc:'/room-booking_details-page/gallery5.png',
+      GalleryThambnailImageSrc: '/room-booking_details-page/gallery5.png'
+     }
+  ]
+
+
+  isComplementaryOpen = false
+  toggleComplimentary(){
+    this.isComplementaryOpen=!this.isComplementaryOpen
+  }
+
+  amenities = [
+  { icon: 'fa-shower', name: 'Shower' },
+  { icon: 'fa-socks', name: 'Slippers' },
+  { icon: 'fa-table-cells', name: 'Robes' },
+  { icon: 'fa-wind', name: 'Air Dryer' },
+  { icon: 'fa-tv', name: 'Showers' },
+  { icon: 'fa-wifi', name: 'Shampoo' }
+];
+
+isRoomFeatureOpen = false;
+toggleRoomFeature(){
+  this.isRoomFeatureOpen=!this.isRoomFeatureOpen
+}
+roomFeature = [
+  { icon: 'fa-shower', name: 'Shower' },
+  { icon: 'fa-socks', name: 'Slippers' },
+  { icon: 'fa-table-cells', name: 'Robes' },
+  { icon: 'fa-wind', name: 'Air Dryer' },
+  { icon: 'fa-tv', name: 'Showers' },
+  { icon: 'fa-wifi', name: 'Shampoo' },
+  { icon: 'fa-shower', name: 'Shower' },
+  { icon: 'fa-socks', name: 'Slippers' },
+  { icon: 'fa-table-cells', name: 'Robes' },
+  { icon: 'fa-wind', name: 'Air Dryer' },
+  { icon: 'fa-tv', name: 'Showers' },
+  { icon: 'fa-wifi', name: 'Shampoo' }
+]
+
+isServicesAmenities = false;
+toggleServicesAmenities(){
+  this.isServicesAmenities=!this.isServicesAmenities
+}
+
+ServicesAmenities = [
+  { icon: 'fa-shower', name: 'Shower' },
+  { icon: 'fa-socks', name: 'Slippers' },
+  { icon: 'fa-table-cells', name: 'Robes' },
+  { icon: 'fa-wind', name: 'Air Dryer' },
+  { icon: 'fa-tv', name: 'Showers' },
+  { icon: 'fa-wifi', name: 'Shampoo' },
+]
+
+CancelationRules = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'
+
+//tariff
+
+isTariff = false;
+toggleTariff(){
+  this.isTariff=!this.isTariff
+}
+
+services = [
+  { name: 'Air Conditioner', price: 1000 },
+  { name: 'Free Internet', price: 1000 },
+  { name: 'LED Television', price: 1000 },
+  { name: 'Microwave', price: 1000 }
+];
+
+//house rules
+
+isHouseRules = false;
+toggleHouseRules(){
+  this.isHouseRules=!this.isHouseRules
+}
+
+houseRulesLeft = [
+  {
+    title: 'Check-in/Check-out',
+    items: [
+      'Check-in from 13:00 PM',
+      'Check-out until 11:00 AM'
+    ]
+  },
+  {
+    title: 'Get Around',
+    items: [
+      'Distance from city center: 0 km'
+    ]
+  },
+  {
+    title: 'The property',
+    items: [
+      'Number of floors: 8',
+      'Number of rooms : 998',
+      'Most recent renovation: 2019'
+    ]
+  }
+];
+
+houseRulesRight = [
+  {
+    title: 'Extras',
+    items: [
+      'Breakfast charge (unless included in room price): 20 GBP',
+      'Still Water Horse Head Statue - 70 m'
+    ]
+  }
+];
 }
