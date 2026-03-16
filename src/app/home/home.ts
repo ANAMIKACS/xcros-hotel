@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy,  AfterViewInit, ElementRef, ViewChild, CUSTOM_ELEMENTS_SCHEMA  } from '@angular/core';
 import { AvatarModule } from 'primeng/avatar';
 import { CommonModule } from '@angular/common';
-// import { Hoteldiscount } from "../hoteldiscount/hoteldiscount";
+import { Hoteldiscount } from "../hoteldiscount/hoteldiscount";
 import { FormsModule } from '@angular/forms';
 import { DatePickerModule } from 'primeng/datepicker';
 import gsap from 'gsap';
@@ -12,7 +12,7 @@ register();
 gsap.registerPlugin(ScrollTrigger);
 @Component({
   selector: 'app-home',
-  imports: [CommonModule, AvatarModule, FormsModule, DatePickerModule],
+  imports: [CommonModule, AvatarModule, FormsModule, DatePickerModule, Hoteldiscount],
   templateUrl: './home.html',
   styleUrl: './home.scss',
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
