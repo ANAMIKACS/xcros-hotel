@@ -1482,12 +1482,12 @@
 
 }
 @media(max-width:1024px){
- /* hide second card */
+
   .exclusive-hotels .row > div:nth-child(n+2){
     display:none;
   }
 
-  /* reduce card size */
+
   .exclusiveoffer-section .hotel-card{
     width:450px;
     height:auto;
@@ -1496,12 +1496,11 @@
   .exclusiveoffer-section .card{
     width:450px;
   }
-   /* hide second card */
+   
   .exclusive-hotels .row > div:nth-child(n+2){
     display:none;
   }
 
-  /* reduce card size */
   .exclusiveoffer-section .hotel-card{
     width:300px !important;
     height:auto;
@@ -1512,7 +1511,7 @@
   height:auto;
 }
    .exclusive-hotels{
-    width:300px;     // reduce container width
+    width:300px;    
     right:20px;
      transform:translate(50%, -50%) !important;
   }

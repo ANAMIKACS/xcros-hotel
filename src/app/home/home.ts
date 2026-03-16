@@ -37,8 +37,6 @@ initHeroAnimation() {
 
   const titles = section.querySelectorAll('.hero-item');
   const locationtitles = section.querySelectorAll('.card-item');
-
-  // initial positions
   gsap.set(titles, { y: 50 , autoAlpha:0 } );
   gsap.set(locationtitles, { x: -50 ,autoAlpha:0 });
 
@@ -350,8 +348,6 @@ offersCard=[
 section.addEventListener('mouseenter',()=>{
 
   const tl = gsap.timeline();
-
-  // all cards slide in together
   tl.to(cards,{
     x:0,
     opacity:1,
@@ -360,7 +356,6 @@ section.addEventListener('mouseenter',()=>{
     ease:"power3.out"
   })
 
-  // pause
   .to({}, {duration:0.4})
      .to(cards[0],{ x:0, duration:0.3 })
   .to(cards[1],{ x:0, duration:0.3 })
@@ -544,8 +539,6 @@ gsap.set(banner,{ y:300, autoAlpha:0 });
   section.addEventListener('mouseenter', () => {
 
     const tl = gsap.timeline();
-
-    // image drops down
     tl.to(banner,{
       y:0,
       duration:0.45,
@@ -553,7 +546,6 @@ gsap.set(banner,{ y:300, autoAlpha:0 });
       ease:"back.out(1.6)"
     })
 
-    // cards slide from right
     .to(cards,{
       x:0,
       opacity:1,
@@ -575,10 +567,10 @@ gsap.set(banner,{ y:300, autoAlpha:0 });
     });
 
     gsap.to(cards,{
-      x:300,
+      y:500,
       opacity:0,
       duration:0.45,
-      stagger:0.1,
+      // stagger:0.1,
       autoAlpha:0,
       ease:"power2.in"
     });
