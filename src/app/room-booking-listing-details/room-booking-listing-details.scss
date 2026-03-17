@@ -530,7 +530,7 @@ font-size:12px;
 }
 
 .card-body, .gallery-imagetab{
-    animation: dropdownSlide 0.35s ease;
+    animation: dropdownSlide 1s ease;
 }
 
 @keyframes dropdownSlide {
@@ -542,7 +542,7 @@ font-size:12px;
   to {
     opacity: 1;
     transform: translateY(0);
-    max-height: 300px;
+    max-height: 700px;
   }
 }
 
