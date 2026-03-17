@@ -59,23 +59,13 @@ export class Hoteldiscount implements AfterViewInit {
     const section = this.discountSection.nativeElement;
     const cards = section.querySelectorAll('.discount-card');
 
-    gsap.set(cards, { y: 1370 });
-
-    section.addEventListener('mouseenter', () => {
-      gsap.to(cards, {
-        y: 0,
-        duration: 0.5,
-        ease: "back.out(1.6)"
-      });
-    });
-
-    section.addEventListener('mouseleave', () => {
-      gsap.to(cards, {
-        y: 1370,
-        duration: 0.5,
-        ease: "power2.in"
-      });
-    });
+    gsap.fromTo(cards,
+      { y: 80, autoAlpha: 0 },
+      {
+        y: 0, autoAlpha: 1, duration: 0.6, stagger: 0.15, ease: "back.out(1.6)",
+        scrollTrigger: { trigger: section, start: 'top 80%' }
+      }
+    );
 
   }
 
@@ -139,23 +129,13 @@ export class Hoteldiscount implements AfterViewInit {
     const section = this.benefitsSection.nativeElement;
     const cards = section.querySelectorAll('.benefit-card');
 
-    gsap.set(cards, { y: 800 });
-
-    section.addEventListener('mouseenter', () => {
-      gsap.to(cards, {
-        y: 0,
-        duration: 0.5,
-        ease: "back.out(1.8)"
-      });
-    });
-
-    section.addEventListener('mouseleave', () => {
-      gsap.to(cards, {
-        y: 800,
-        duration: 0.5,
-        ease: "power2.in"
-      });
-    });
+    gsap.fromTo(cards,
+      { y: 80, autoAlpha: 0 },
+      {
+        y: 0, autoAlpha: 1, duration: 0.6, stagger: 0.15, ease: "back.out(1.8)",
+        scrollTrigger: { trigger: section, start: 'top 80%' }
+      }
+    );
 
   }
 
@@ -195,35 +175,14 @@ export class Hoteldiscount implements AfterViewInit {
   initTestimonialHoverAnimation() {
 
     const wrapper = this.testimonialWrapper.nativeElement;
-    const cards = wrapper.querySelectorAll('.testimonial-card-container');
 
-   
-    gsap.set(cards, {
-      opacity: 0
-    });
-
-
-    wrapper.addEventListener('mouseenter', () => {
-
-      gsap.to(cards, {
-        opacity: 1,
-        duration: 0.5,
-        ease: "power2.out",
-        stagger: 0.2
-      });
-
-    });
-
-
-    wrapper.addEventListener('mouseleave', () => {
-
-      gsap.to(cards, {
-        opacity: 0,
-        duration: 0.4,
-        ease: "power2.in"
-      });
-
-    });
+    gsap.fromTo(wrapper,
+      { autoAlpha: 0, y: 40 },
+      {
+        autoAlpha: 1, y: 0, duration: 0.7, ease: "power3.out",
+        scrollTrigger: { trigger: wrapper, start: 'top 80%' }
+      }
+    );
 
   }
   initTestimonialTitleAnimation() {
@@ -231,27 +190,13 @@ export class Hoteldiscount implements AfterViewInit {
     const section = this.testimonialTitleSection.nativeElement;
     const titles = section.querySelectorAll('.testimonial-item');
 
-    gsap.set(titles, { y: 100 });
-
-    section.addEventListener('mouseenter', () => {
-
-      gsap.to(titles, {
-        y: 0,
-        duration: 0.5,
-        ease: "back.out(1.6)"
-      });
-
-    });
-
-    section.addEventListener('mouseleave', () => {
-
-      gsap.to(titles, {
-        y: 100,
-        duration: 0.5,
-        ease: "power2.in"
-      });
-
-    });
+    gsap.fromTo(titles,
+      { y: 60, autoAlpha: 0 },
+      {
+        y: 0, autoAlpha: 1, duration: 0.6, stagger: 0.15, ease: "back.out(1.6)",
+        scrollTrigger: { trigger: section, start: 'top 80%' }
+      }
+    );
 
   }
 
@@ -267,42 +212,21 @@ export class Hoteldiscount implements AfterViewInit {
     const rightCard = section.querySelector('.app');
 
     
-    gsap.set([leftCard, rightCard], { y: 1000 });
-    gsap.set(middleCard, { opacity: 0 });
+    gsap.fromTo([leftCard, rightCard],
+      { y: 80, autoAlpha: 0 },
+      {
+        y: 0, autoAlpha: 1, duration: 0.6, ease: "back.out(1.7)",
+        scrollTrigger: { trigger: section, start: 'top 80%' }
+      }
+    );
 
-   
-    section.addEventListener('mouseenter', () => {
-
-      gsap.to([leftCard, rightCard], {
-        y: 0,
-        duration: 0.5,
-        ease: "back.out(1.7)"
-      });
-
-      gsap.to(middleCard, {
-        opacity: 1,
-        duration: 0.5,
-        ease: "power2.out"
-      });
-
-    });
-
-  
-    section.addEventListener('mouseleave', () => {
-
-      gsap.to([leftCard, rightCard], {
-        y: 1000,
-        duration: 0.4,
-        ease: "power2.in"
-      });
-
-      gsap.to(middleCard, {
-        opacity: 0,
-        duration: 0.4,
-        ease: "power2.in"
-      });
-
-    });
+    gsap.fromTo(middleCard,
+      { y: 40, autoAlpha: 0 },
+      {
+        y: 0, autoAlpha: 1, duration: 0.6, ease: "power3.out", delay: 0.2,
+        scrollTrigger: { trigger: section, start: 'top 80%' }
+      }
+    );
 
   }
 
@@ -323,23 +247,13 @@ export class Hoteldiscount implements AfterViewInit {
     const section = this.subscribeSection.nativeElement;
     const cards = section.querySelectorAll('.sign-up');
 
-    gsap.set(cards, { y: 410 });
-
-    section.addEventListener('mouseenter', () => {
-      gsap.to(cards, {
-        y: 0,
-        duration: 0.5,
-        ease: "back.out(1.9)"
-      });
-    });
-
-    section.addEventListener('mouseleave', () => {
-      gsap.to(cards, {
-        y: 410,
-        duration: 0.5,
-        ease: "power2.in"
-      });
-    });
+    gsap.fromTo(cards,
+      { y: 80, autoAlpha: 0 },
+      {
+        y: 0, autoAlpha: 1, duration: 0.6, ease: "back.out(1.9)",
+        scrollTrigger: { trigger: section, start: 'top 80%' }
+      }
+    );
 
   }
 }

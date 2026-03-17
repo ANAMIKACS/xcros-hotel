@@ -34,47 +34,24 @@ export class Home implements AfterViewInit {
   initHeroAnimation() {
 
     const section = this.heroSection.nativeElement;
-
     const titles = section.querySelectorAll('.hero-item');
     const locationtitles = section.querySelectorAll('.card-item');
-    gsap.set(titles, { y: 50, autoAlpha: 0 });
-    gsap.set(locationtitles, { x: -50, autoAlpha: 0 });
 
-    section.addEventListener('mouseenter', () => {
+    gsap.fromTo(titles,
+      { y: 50, autoAlpha: 0 },
+      {
+        y: 0, autoAlpha: 1, duration: 0.6, stagger: 0.1, ease: "back.out(1.6)",
+        scrollTrigger: { trigger: section, start: 'top 85%' }
+      }
+    );
 
-      gsap.to(titles, {
-        y: 0,
-        autoAlpha: 1,
-        duration: 0.45,
-        ease: "back.out(1.6)"
-      });
-
-      gsap.to(locationtitles, {
-        x: 0,
-        autoAlpha: 1,
-        duration: 0.45,
-        ease: "power3.out"
-      });
-
-    });
-
-    section.addEventListener('mouseleave', () => {
-
-      gsap.to(titles, {
-        y: 115,
-        autoAlpha: 0,
-        duration: 0.35,
-        ease: "power2.in"
-      });
-
-      gsap.to(locationtitles, {
-        x: -1100,
-        autoAlpha: 0,
-        duration: 0.35,
-        ease: "power2.in"
-      });
-
-    });
+    gsap.fromTo(locationtitles,
+      { x: -50, autoAlpha: 0 },
+      {
+        x: 0, autoAlpha: 1, duration: 0.6, ease: "power3.out",
+        scrollTrigger: { trigger: section, start: 'top 85%' }
+      }
+    );
 
   }
   isLocationOpen = false;
@@ -97,45 +74,24 @@ export class Home implements AfterViewInit {
   initCategoryAnimation() {
 
     const section = this.categoriesSection.nativeElement;
-
     const titles = section.querySelectorAll('.category-item');
     const cards = section.querySelectorAll('.category-card');
-    gsap.set(titles, { y: 50, autoAlpha: 0 });
-    gsap.set(cards, { y: 50, autoAlpha: 0 });
-    section.addEventListener('mouseenter', () => {
 
-      gsap.to(titles, {
-        y: 0,
-        autoAlpha: 1,
-        duration: 0.45,
-        ease: "back.out(1.6)"
-      });
+    gsap.fromTo(titles,
+      { y: 50, autoAlpha: 0 },
+      {
+        y: 0, autoAlpha: 1, duration: 0.6, stagger: 0.1, ease: "back.out(1.6)",
+        scrollTrigger: { trigger: section, start: 'top 80%' }
+      }
+    );
 
-      gsap.to(cards, {
-        y: 0,
-        autoAlpha: 1,
-        duration: 0.45,
-        ease: "back.out(1.6)"
-      });
-
-    });
-
-    section.addEventListener('mouseleave', () => {
-
-      gsap.to(titles, {
-        y: 220,
-        autoAlpha: 0,
-        duration: 0.35,
-        ease: "power2.in"
-      });
-      gsap.to(cards, {
-        y: 220,
-        autoAlpha: 0,
-        duration: 0.35,
-        ease: "power2.in"
-      });
-
-    });
+    gsap.fromTo(cards,
+      { y: 50, autoAlpha: 0 },
+      {
+        y: 0, autoAlpha: 1, duration: 0.6, stagger: 0.1, ease: "back.out(1.6)",
+        scrollTrigger: { trigger: section, start: 'top 80%' }
+      }
+    );
 
   }
   // villa='/home/villa-icon.png';
@@ -183,44 +139,25 @@ export class Home implements AfterViewInit {
   initAdvertismentAnimation() {
 
     const section = this.advertismentSection.nativeElement;
-
     const title = section.querySelector('.ad-title-anim');
     const contents = section.querySelectorAll('.img-contents');
     const cards = section.querySelectorAll('.ad-col');
 
-    gsap.set(title, { y: -80, autoAlpha: 0 });
-    gsap.set(contents, { y: 80, autoAlpha: 0 });
+    gsap.fromTo(title,
+      { y: -80, autoAlpha: 0 },
+      {
+        y: 0, autoAlpha: 1, duration: 0.6, ease: "power3.out",
+        scrollTrigger: { trigger: section, start: 'top 80%' }
+      }
+    );
 
-    section.addEventListener('mouseenter', () => {
-
-      const tl = gsap.timeline();
-
-      tl.to(title, {
-        y: 0,
-        duration: 0.6,
-        autoAlpha: 1,
-        ease: "power3.out"
-      })
-
-        .to(contents, {
-          y: 0,
-          duration: 0.6,
-          stagger: 0.2,
-          autoAlpha: 1,
-          ease: "power3.out"
-        }, "-=0.3");
-
-    });
-
-    section.addEventListener('mouseleave', () => {
-
-      gsap.to(title, {
-        y: -80,
-        duration: 0.4,
-        autoAlpha: 0
-      });
-
-    });
+    gsap.fromTo(contents,
+      { y: 80, autoAlpha: 0 },
+      {
+        y: 0, autoAlpha: 1, duration: 0.6, stagger: 0.2, ease: "power3.out",
+        scrollTrigger: { trigger: section, start: 'top 80%' }
+      }
+    );
 
     cards.forEach((card: any) => {
 
@@ -269,31 +206,15 @@ export class Home implements AfterViewInit {
   @ViewChild('offersSection') offersSection!: ElementRef;
   initOffersAnimation() {
     const section = this.offersSection.nativeElement;
-
     const titles = section.querySelectorAll('.offerscard-item');
-    gsap.to(titles, { y: 240, autoAlpha: 0 });
-    section.addEventListener('mouseenter', () => {
 
-
-      gsap.to(titles, {
-        y: 0,
-        duration: 0.45,
-        autoAlpha: 1,
-        ease: "back.out(1.6)"
-      });
-
-    });
-
-    section.addEventListener('mouseleave', () => {
-
-      gsap.to(titles, {
-        y: 240,
-        duration: 0.45,
-        autoAlpha: 0,
-        ease: "power2.in"
-      });
-
-    });
+    gsap.fromTo(titles,
+      { y: 60, autoAlpha: 0 },
+      {
+        y: 0, autoAlpha: 1, duration: 0.6, stagger: 0.15, ease: "back.out(1.6)",
+        scrollTrigger: { trigger: section, start: 'top 80%' }
+      }
+    );
   }
   offersCard = [
     {
@@ -314,65 +235,24 @@ export class Home implements AfterViewInit {
   @ViewChild('featuredSection') featuredSection!: ElementRef;
   initFeaturedAnimation() {
     const section = this.featuredSection.nativeElement;
-
     const titles = section.querySelectorAll('.feature-item');
     const cards = section.querySelectorAll('.featured-card');
-    gsap.set(titles, { y: 50, autoAlpha: 0 });
-    section.addEventListener('mouseenter', () => {
 
-      gsap.to(titles, {
-        y: 0,
-        duration: 0.45,
-        autoAlpha: 1,
-        ease: "back.out(1.6)"
-      });
+    gsap.fromTo(titles,
+      { y: 50, autoAlpha: 0 },
+      {
+        y: 0, autoAlpha: 1, duration: 0.6, stagger: 0.1, ease: "back.out(1.6)",
+        scrollTrigger: { trigger: section, start: 'top 80%' }
+      }
+    );
 
-    });
-
-    section.addEventListener('mouseleave', () => {
-
-      gsap.to(titles, {
-        y: 240,
-        autoAlpha: 0,
-        duration: 0.45,
-        ease: "power2.in"
-      });
-
-    });
-
-    gsap.set(cards, {
-      x: -500,
-      opacity: 0
-    });
-
-    section.addEventListener('mouseenter', () => {
-
-      const tl = gsap.timeline();
-      tl.to(cards, {
-        x: 0,
-        opacity: 1,
-        duration: 0.5,
-        stagger: 0.05,
-        ease: "power3.out"
-      })
-
-        .to({}, { duration: 0.4 })
-        .to(cards[0], { x: 0, duration: 0.3 })
-        .to(cards[1], { x: 0, duration: 0.3 })
-        .to(cards[2], { x: 0, duration: 0.3 })
-        .to(cards[3], { x: 0, duration: 0.3 });
-    });
-
-    section.addEventListener('mouseleave', () => {
-
-      gsap.to(cards, {
-        x: -500,
-        opacity: 0,
-        duration: 0.4,
-        stagger: 0.05
-      });
-
-    });
+    gsap.fromTo(cards,
+      { x: -80, opacity: 0 },
+      {
+        x: 0, opacity: 1, duration: 0.6, stagger: 0.1, ease: "power3.out",
+        scrollTrigger: { trigger: section, start: 'top 80%' }
+      }
+    );
 
   }
   featuredbg = '/home/Featuredsectionbg.png';
@@ -476,54 +356,23 @@ export class Home implements AfterViewInit {
   initPromoAnimation() {
     const section = this.promoSection.nativeElement;
     const image = section.querySelector('.promo-image');
-    const cards = section.querySelectorAll('.stas-cards')
+    const cards = section.querySelectorAll('.stas-cards');
 
-    gsap.set(image, {
-      scale: 0.85
-    });
+    gsap.fromTo(image,
+      { scale: 0.85, autoAlpha: 0 },
+      {
+        scale: 1, autoAlpha: 1, duration: 0.9, ease: "back.out(1.6)",
+        scrollTrigger: { trigger: section, start: 'top 80%' }
+      }
+    );
 
-    gsap.set(cards, { y: 50, autoAlpha: 0 });
-    section.addEventListener('mouseenter', () => {
-
-      gsap.to(image, {
-        scale: 1,
-        duration: 0.9,
-        ease: "back.out(1.6)"
-      });
-
-    });
-
-    section.addEventListener('mouseleave', () => {
-
-      gsap.to(image, {
-        scale: 0.85,
-        duration: 0.5,
-        ease: "power2.out"
-      });
-
-    });
-
-    section.addEventListener('mouseenter', () => {
-
-      gsap.to(cards, {
-        y: 0,
-        duration: 0.45,
-        autoAlpha: 1,
-        ease: "back.out(1.6)"
-      });
-
-    });
-
-    section.addEventListener('mouseleave', () => {
-
-      gsap.to(cards, {
-        y: 240,
-        autoAlpha: 0,
-        duration: 0.45,
-        ease: "power2.in"
-      });
-
-    });
+    gsap.fromTo(cards,
+      { y: 50, autoAlpha: 0 },
+      {
+        y: 0, autoAlpha: 1, duration: 0.6, stagger: 0.15, ease: "back.out(1.6)",
+        scrollTrigger: { trigger: section, start: 'top 70%' }
+      }
+    );
   }
 
   //Exclusive Offer HOTEL
@@ -533,50 +382,21 @@ export class Home implements AfterViewInit {
     const banner = section.querySelector('.offer-banner');
     const cards = section.querySelectorAll('.hotel-card');
 
-    gsap.set(banner, { y: 300, autoAlpha: 0 });
-    gsap.set(cards, { x: 300, opacity: 0, autoAlpha: 0 });
+    gsap.fromTo(banner,
+      { y: 80, autoAlpha: 0 },
+      {
+        y: 0, autoAlpha: 1, duration: 0.7, ease: "back.out(1.6)",
+        scrollTrigger: { trigger: section, start: 'top 80%' }
+      }
+    );
 
-    section.addEventListener('mouseenter', () => {
-
-      const tl = gsap.timeline();
-      tl.to(banner, {
-        y: 0,
-        duration: 0.45,
-        autoAlpha: 1,
-        ease: "back.out(1.6)"
-      })
-
-        .to(cards, {
-          x: 0,
-          opacity: 1,
-          duration: 0.6,
-          stagger: 0.15,
-          autoAlpha: 1,
-          ease: "power3.out"
-        }, "-=0.2");
-
-    });
-
-    section.addEventListener('mouseleave', () => {
-
-      gsap.to(banner, {
-        y: 550,
-        duration: 0.45,
-        autoAlpha: 0,
-        ease: "power2.in"
-      });
-
-      gsap.to(cards, {
-        x:50,
-        opacity: 0,
-        duration: 0.45,
-        // stagger:0.1,
-        autoAlpha: 0,
-        ease: "power2.in"
-      });
-
-    });
-
+    gsap.fromTo(cards,
+      { x: 80, opacity: 0 },
+      {
+        x: 0, opacity: 1, duration: 0.6, stagger: 0.15, ease: "power3.out",
+        scrollTrigger: { trigger: section, start: 'top 75%' }
+      }
+    );
 
   }
   exclusiveofferHotels = [
