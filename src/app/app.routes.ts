@@ -10,5 +10,6 @@ export const routes: Routes = [
     {path:'roomBookingListing', component:RoomBookingListing},
     {path:'toursTravelsListing', component:ToursTravelsListing},
     {path:'hoteldiscount', component:Hoteldiscount},
-    {path: 'roomBookingListingDetails', component: RoomBookingListingDetails}
+    {path: 'roomBookingListingDetails', component: RoomBookingListingDetails},
+    {path: 'roomBookingListingDetails/:id', component: RoomBookingListingDetails}
 ];

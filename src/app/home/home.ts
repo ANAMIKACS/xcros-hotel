@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, AfterViewInit, ElementRef, ViewChild, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ElementRef, ViewChild, CUSTOM_ELEMENTS_SCHEMA, inject } from '@angular/core';
 import { AvatarModule } from 'primeng/avatar';
 import { CommonModule } from '@angular/common';
 import { Hoteldiscount } from "../hoteldiscount/hoteldiscount";
@@ -7,6 +7,7 @@ import { DatePickerModule } from 'primeng/datepicker';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { register } from 'swiper/element/bundle';
+import { HotelService, FALLBACK_CATEGORIES, FALLBACK_HOTELS, FALLBACK_ADVERTISEMENTS, FALLBACK_LOCATIONS, FALLBACK_STATS } from '../services/hotel.service';
 register();
 
 gsap.registerPlugin(ScrollTrigger);
@@ -17,7 +18,38 @@ gsap.registerPlugin(ScrollTrigger);
   styleUrl: './home.scss',
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
-export class Home implements AfterViewInit {
+export class Home implements OnInit, AfterViewInit {
+
+  private hotelService = inject(HotelService);
+
+  ngOnInit(): void {
+    this.hotelService.getLocations().subscribe(data => {
+      this.locations = data;
+      if (!this.locations.includes(this.selectedLocation)) {
+        this.selectedLocation = this.locations[0] ?? '';
+      }
+    });
+
+    this.hotelService.getCategories().subscribe(data => {
+      this.categoryCards = data;
+    });
+
+    this.hotelService.getFeaturedHotels().subscribe(data => {
+      this.hotelcard = data;
+    });
+
+    this.hotelService.getExclusiveOfferHotels().subscribe(data => {
+      this.exclusiveofferHotels = data;
+    });
+
+    this.hotelService.getAdvertisements().subscribe(data => {
+      this.advertisements = data;
+    });
+
+    this.hotelService.getDashboardStats().subscribe(data => {
+      this.dashboardStats = data;
+    });
+  }
 
   @ViewChild('heroSection') heroSection!: ElementRef;
 
@@ -55,8 +87,10 @@ export class Home implements AfterViewInit {
 
   }
   isLocationOpen = false;
-  locations = ['Dhaka', 'Noakhali', 'Cumilla'];
-  selectedLocation = 'Dhaka';
+  locations: string[] = FALLBACK_LOCATIONS;
+  selectedLocation = FALLBACK_LOCATIONS[0];
+  advertisements: any[] = FALLBACK_ADVERTISEMENTS;
+  dashboardStats = FALLBACK_STATS;
   toggleLocation() {
     this.isLocationOpen = !this.isLocationOpen;
   }
@@ -94,45 +128,7 @@ export class Home implements AfterViewInit {
     );
 
   }
-  // villa='/home/villa-icon.png';
-  categoryCards = [
-    {
-      id: 1,
-      icon: '/home/villa-icon.png',
-      cardtitle: 'Villa',
-      categoryItem: '2 Items',
-    },
-    {
-      id: 2,
-      icon: '/home/hotel-icon.png',
-      cardtitle: 'Hotel',
-      categoryItem: '4 Items',
-    },
-    {
-      id: 3,
-      icon: '/home/resort-icon.png',
-      cardtitle: 'Resort  ',
-      categoryItem: '12 Items',
-    },
-    {
-      id: 4,
-      icon: '/home/cottage-icon.png',
-      cardtitle: 'Cottage',
-      categoryItem: '8 Items',
-    },
-    {
-      id: 5,
-      icon: '/home/villa-icon.png',
-      cardtitle: 'Bungalow',
-      categoryItem: '6 Items',
-    },
-    {
-      id: 6,
-      icon: '/home/apartment.png',
-      cardtitle: 'Apartment',
-      categoryItem: '4 Items',
-    }
-  ]
+  categoryCards: any[] = FALLBACK_CATEGORIES;
 
   //Advertisment
   @ViewChild('advertismentSection') advertismentSection!: ElementRef;
@@ -266,76 +262,7 @@ export class Home implements AfterViewInit {
     this.selectedOption = option;
     this.isFeaturedBoxOpen = false;
   }
-  hotelcard = [
-    {
-      id: 1,
-      cardImg: '/listingpage/hotelimg.jpg',
-      profileimg: '/listingpage/profileimg.jpg',
-      stars: 4,
-      starArray: Array(4),
-      views: 0,
-      reviewText: 'Good',
-      reviews: 8,
-      rating: 4.1,
-      hotelType: 'Hotel',
-      hotelTitle: 'Moonlight Hotel',
-      rooms: 4,
-      bathrooms: 3,
-      size: '8×9 m2',
-      price: 105
-    },
-    {
-      id: 2,
-      cardImg: '/listingpage/hotelimg.jpg',
-      profileimg: '/listingpage/profileimg.jpg',
-      stars: 4,
-      starArray: Array(4),
-      views: 0,
-      reviewText: 'Good',
-      reviews: 8,
-      rating: 4.1,
-      hotelType: 'Hotel',
-      hotelTitle: 'Moonlight Hotel',
-      rooms: 4,
-      bathrooms: 3,
-      size: '8×9 m2',
-      price: 105
-    },
-    {
-      id: 3,
-      cardImg: '/listingpage/hotelimg.jpg',
-      profileimg: '/listingpage/profileimg.jpg',
-      stars: 4,
-      starArray: Array(4),
-      views: 0,
-      reviewText: 'Good',
-      reviews: 8,
-      rating: 4.1,
-      hotelType: 'Hotel',
-      hotelTitle: 'Moonlight Hotel',
-      rooms: 4,
-      bathrooms: 3,
-      size: '8×9 m2',
-      price: 105
-    },
-    {
-      id: 4,
-      cardImg: '/listingpage/hotelimg.jpg',
-      profileimg: '/listingpage/profileimg.jpg',
-      stars: 4,
-      starArray: Array(4),
-      views: 0,
-      reviewText: 'Good',
-      reviews: 8,
-      rating: 4.1,
-      hotelType: 'Hotel',
-      hotelTitle: 'Moonlight Hotel',
-      rooms: 4,
-      bathrooms: 3,
-      size: '8×9 m2',
-      price: 105
-    },
-  ];
+  hotelcard: any[] = FALLBACK_HOTELS;
 
   //Contact Popup
   closePopup() {
@@ -399,42 +326,10 @@ export class Home implements AfterViewInit {
     );
 
   }
-  exclusiveofferHotels = [
-    {
-      id: 1,
-      cardImg: '/listingpage/hotelimg.jpg',
-      profileimg: '/listingpage/profileimg.jpg',
-      stars: 4,
-      starArray: Array(4),
-      views: 0,
-      reviewText: 'Good',
-      reviews: 8,
-      rating: 4.1,
-      hotelType: 'Hotel',
-      hotelTitle: 'Moonlight Hotel',
-      rooms: 4,
-      bathrooms: 3,
-      size: '8×9 m2',
-      price: 105
-    },
-    {
-      id: 2,
-      cardImg: '/listingpage/hotelimg.jpg',
-      profileimg: '/listingpage/profileimg.jpg',
-      stars: 4,
-      starArray: Array(4),
-      views: 0,
-      reviewText: 'Good',
-      reviews: 8,
-      rating: 4.1,
-      hotelType: 'Hotel',
-      hotelTitle: 'Moonlight Hotel',
-      rooms: 4,
-      bathrooms: 3,
-      size: '8×9 m2',
-      price: 105
-    },
-  ]
+  exclusiveofferHotels: any[] = FALLBACK_HOTELS.slice(0, 2);
 
+  onAdClick(adId: string): void {
+    this.hotelService.registerAdClick(adId).subscribe();
+  }
 
 }

@@ -1,4 +1,4 @@
-import { Component, ViewChild, OnInit } from '@angular/core';
+import { Component, ViewChild, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Carousel } from 'primeng/carousel';
 import { CarouselModule } from 'primeng/carousel';
@@ -8,6 +8,7 @@ import { DatePickerModule } from 'primeng/datepicker';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { SliderModule } from 'primeng/slider';
 import { Popover, PopoverModule } from 'primeng/popover';
+import { HotelService, FALLBACK_HOTELS } from '../services/hotel.service';
 
 @Component({
   selector: 'app-room-booking-listing',
@@ -17,6 +18,8 @@ import { Popover, PopoverModule } from 'primeng/popover';
   styleUrl: './room-booking-listing.scss',
 })
 export class RoomBookingListing {
+
+  private hotelService = inject(HotelService);
 @ViewChild('image') carousel!: Carousel
   position: 'left' = "left";
 prev() {
@@ -73,6 +76,14 @@ getTotalPages(): number {
       { itemImageSrc: '/listingpage/imagegrid.jpg' },
       { itemImageSrc: '/listingpage/imagegrid.jpg' }
     ];
+
+    this.hotelService.getHotels().subscribe(data => {
+      this.hotelcard = data;
+    });
+
+    this.hotelService.getPromotedHotels().subscribe(data => {
+      this.promotedHotels = data;
+    });
   }
 
 //
@@ -107,212 +118,7 @@ toggleViewMap() {
   //HOTEL CARD
   // cardImg="/listingpage/hotelimg.jpg";
   // profileimg='/listingpage/profileimg.jpg';
-  hotelcard = [
-  {
-    id:1,
-    cardImg: '/listingpage/hotelimg.jpg',
-    profileimg: '/listingpage/profileimg.jpg',
-    stars: 4,
-    starArray: Array(4),
-    views: 0,
-    reviewText: 'Good',
-    reviews: 8,
-    rating: 4.1,
-    hotelType: 'Hotel',
-    hotelTitle: 'Moonlight Hotel',
-    rooms: 4,
-    bathrooms: 3,
-    size: '8×9 m2',
-    price: 105
-  },
-  {
-    id:2,
-    cardImg: '/listingpage/hotelimg.jpg',
-    profileimg: '/listingpage/profileimg.jpg',
-    stars: 4,
-    starArray: Array(4),
-    views: 0,
-    reviewText: 'Good',
-    reviews: 8,
-    rating: 4.1,
-    hotelType: 'Hotel',
-    hotelTitle: 'Moonlight Hotel',
-    rooms: 4,
-    bathrooms: 3,
-    size: '8×9 m2',
-    price: 105
-  },
-  {
-    id:3,
-    cardImg: '/listingpage/hotelimg.jpg',
-    profileimg: '/listingpage/profileimg.jpg',
-    stars: 4,
-    starArray: Array(4),
-    views: 0,
-    reviewText: 'Good',
-    reviews: 8,
-    rating: 4.1,
-    hotelType: 'Hotel',
-    hotelTitle: 'Moonlight Hotel',
-    rooms: 4,
-    bathrooms: 3,
-    size: '8×9 m2',
-    price: 105
-  },
-  {
-    id:4,
-    cardImg: '/listingpage/hotelimg.jpg',
-    profileimg: '/listingpage/profileimg.jpg',
-    stars: 4,
-    starArray: Array(4),
-    views: 0,
-    reviewText: 'Good',
-    reviews: 8,
-    rating: 4.1,
-    hotelType: 'Hotel',
-    hotelTitle: 'Moonlight Hotel',
-    rooms: 4,
-    bathrooms: 3,
-    size: '8×9 m2',
-    price: 105
-  },
-  {
-    id:5,
-    cardImg: '/listingpage/hotelimg.jpg',
-    profileimg: '/listingpage/profileimg.jpg',
-    stars: 4,
-    starArray: Array(4),
-    views: 0,
-    reviewText: 'Good',
-    reviews: 8,
-    rating: 4.1,
-    hotelType: 'Hotel',
-    hotelTitle: 'Moonlight Hotel',
-    rooms: 4,
-    bathrooms: 3,
-    size: '8×9 m2',
-    price: 105
-  },
-  {
-    id:6,
-    cardImg: '/listingpage/hotelimg.jpg',
-    profileimg: '/listingpage/profileimg.jpg',
-    stars: 4,
-    starArray: Array(4),
-    views: 0,
-    reviewText: 'Good',
-    reviews: 8,
-    rating: 4.1,
-    hotelType: 'Hotel',
-    hotelTitle: 'Moonlight Hotel',
-    rooms: 4,
-    bathrooms: 3,
-    size: '8×9 m2',
-    price: 105
-  },
-  {
-    id:7,
-    cardImg: '/listingpage/hotelimg.jpg',
-    profileimg: '/listingpage/profileimg.jpg',
-    stars: 4,
-    starArray: Array(4),
-    views: 0,
-    reviewText: 'Good',
-    reviews: 8,
-    rating: 4.1,
-    hotelType: 'Hotel',
-    hotelTitle: 'Moonlight Hotel',
-    rooms: 4,
-    bathrooms: 3,
-    size: '8×9 m2',
-    price: 105
-  },
-  {
-    id:8,
-    cardImg: '/listingpage/hotelimg.jpg',
-    profileimg: '/listingpage/profileimg.jpg',
-    stars: 4,
-    starArray: Array(4),
-    views: 0,
-    reviewText: 'Good',
-    reviews: 8,
-    rating: 4.1,
-    hotelType: 'Hotel',
-    hotelTitle: 'Moonlight Hotel',
-    rooms: 4,
-    bathrooms: 3,
-    size: '8×9 m2',
-    price: 105
-  },
-  {
-    id:9,
-    cardImg: '/listingpage/hotelimg.jpg',
-    profileimg: '/listingpage/profileimg.jpg',
-    stars: 4,
-    starArray: Array(4),
-    views: 0,
-    reviewText: 'Good',
-    reviews: 8,
-    rating: 4.1,
-    hotelType: 'Hotel',
-    hotelTitle: 'Moonlight Hotel',
-    rooms: 4,
-    bathrooms: 3,
-    size: '8×9 m2',
-    price: 105
-  },
-  {
-    id:10,
-    cardImg: '/listingpage/hotelimg.jpg',
-    profileimg: '/listingpage/profileimg.jpg',
-    stars: 4,
-    starArray: Array(4),
-    views: 0,
-    reviewText: 'Good',
-    reviews: 8,
-    rating: 4.1,
-    hotelType: 'Hotel',
-    hotelTitle: 'Moonlight Hotel',
-    rooms: 4,
-    bathrooms: 3,
-    size: '8×9 m2',
-    price: 105
-  },
-  {
-    id:11,
-    cardImg: '/listingpage/hotelimg.jpg',
-    profileimg: '/listingpage/profileimg.jpg',
-    stars: 4,
-    starArray: Array(4),
-    views: 0,
-    reviewText: 'Good',
-    reviews: 8,
-    rating: 4.1,
-    hotelType: 'Hotel',
-    hotelTitle: 'Moonlight Hotel',
-    rooms: 4,
-    bathrooms: 3,
-    size: '8×9 m2',
-    price: 105
-  },
-  {
-    id:12,
-    cardImg: '/listingpage/hotelimg.jpg',
-    profileimg: '/listingpage/profileimg.jpg',
-    stars: 4,
-    starArray: Array(4),
-    views: 0,
-    reviewText: 'Good',
-    reviews: 8,
-    rating: 4.1,
-    hotelType: 'Hotel',
-    hotelTitle: 'Moonlight Hotel',
-    rooms: 4,
-    bathrooms: 3,
-    size: '8×9 m2',
-    price: 105
-  }
-];
+  hotelcard: any[] = FALLBACK_HOTELS;
 
 //pagenation
   currentPage: number = 1;
@@ -329,76 +135,7 @@ toggleViewMap() {
   }
 
   //PROMOTED HOTEL
-  promotedHotels=[
-    {
-      id:1,
-    cardImg: '/listingpage/hotelimg.jpg',
-    profileimg: '/listingpage/profileimg.jpg',
-    stars: 4,
-    starArray: Array(4),
-    views: 0,
-    reviewText: 'Good',
-    reviews: 8,
-    rating: 4.1,
-    hotelType: 'Hotel',
-    hotelTitle: 'Moonlight Hotel',
-    rooms: 4,
-    bathrooms: 3,
-    size: '8×9 m2',
-    price: 105
-  },
-  {
-    id:2,
-    cardImg: '/listingpage/hotelimg.jpg',
-    profileimg: '/listingpage/profileimg.jpg',
-    stars: 4,
-    starArray: Array(4),
-    views: 0,
-    reviewText: 'Good',
-    reviews: 8,
-    rating: 4.1,
-    hotelType: 'Hotel',
-    hotelTitle: 'Moonlight Hotel',
-    rooms: 4,
-    bathrooms: 3,
-    size: '8×9 m2',
-    price: 105
-  },
-  {
-    id:3,
-    cardImg: '/listingpage/hotelimg.jpg',
-    profileimg: '/listingpage/profileimg.jpg',
-    stars: 4,
-    starArray: Array(4),
-    views: 0,
-    reviewText: 'Good',
-    reviews: 8,
-    rating: 4.1,
-    hotelType: 'Hotel',
-    hotelTitle: 'Moonlight Hotel',
-    rooms: 4,
-    bathrooms: 3,
-    size: '8×9 m2',
-    price: 105
-  },
-  {
-    id:4,
-    cardImg: '/listingpage/hotelimg.jpg',
-    profileimg: '/listingpage/profileimg.jpg',
-    stars: 4,
-    starArray: Array(4),
-    views: 0,
-    reviewText: 'Good',
-    reviews: 8,
-    rating: 4.1,
-    hotelType: 'Hotel',
-    hotelTitle: 'Moonlight Hotel',
-    rooms: 4,
-    bathrooms: 3,
-    size: '8×9 m2',
-    price: 105
-  },
-  ]
+  promotedHotels: any[] = FALLBACK_HOTELS;
 //Page Wrapper
 isFilterOpen = false;
 

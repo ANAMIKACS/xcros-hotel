@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, AfterViewInit, ElementRef, ViewChild } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ElementRef, ViewChild, inject } from '@angular/core';
 import { AvatarModule } from 'primeng/avatar';
 import { CommonModule } from '@angular/common';
 import { InputGroupModule } from 'primeng/inputgroup';
@@ -8,7 +8,7 @@ import { MenuItem } from 'primeng/api';
 import { Button } from "primeng/button";
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-
+import { HotelService, FALLBACK_TESTIMONIALS } from '../services/hotel.service';
 
 gsap.registerPlugin(ScrollTrigger);
 @Component({
@@ -17,7 +17,7 @@ gsap.registerPlugin(ScrollTrigger);
   templateUrl: './hoteldiscount.html',
   styleUrl: './hoteldiscount.scss',
 })
-export class Hoteldiscount implements AfterViewInit {
+export class Hoteldiscount implements OnInit, AfterViewInit {
 
   @ViewChild('discountSection') discountSection!: ElementRef;
   @ViewChild('benefitsSection') benefitsSection!: ElementRef;
@@ -142,12 +142,10 @@ export class Hoteldiscount implements AfterViewInit {
   // Testimonial
 
   @ViewChild('testimonialWrapper') testimonialWrapper!: ElementRef;
-  testimonials = [
-    { roomImage: '/home/room1.png', quotes: '/home/SVG.png', title: 'Quality Service', description: 'In this everi evolving digital understand the significance of staying ahead as through our blog invite explore the dynamic our world of IT with us decoding algorithms to unraveling It is a long established.', profileImg: '/home/profile.png', name: 'Matthew C. Lansberry', designation: 'CEO & Founder' },
-    { roomImage: '/home/room2.png', quotes: '/home/SVG.png', title: 'Excellent Support', description: 'In this everi evolving digital understand the significance of staying ahead as through our blog invite explore the dynamic our world of IT with us decoding algorithms to unraveling It is a long established.', profileImg: '/home/profile.png', name: 'Matthew C. Lansberry', designation: 'CEO & Founder' },
-    { roomImage: '/home/room3.png', quotes: '/home/SVG.png', title: 'Trusted Experience', description: 'In this everi evolving digital understand the significance of staying ahead as through our blog invite explore the dynamic our world of IT with us decoding algorithms to unraveling It is a long established.', profileImg: '/home/profile.png', name: 'Matthew C. Lansberry', designation: 'CEO & Founder' }
+  private hotelService = inject(HotelService);
 
-  ];
+  testimonials: any[] = FALLBACK_TESTIMONIALS;
+
   initTestimonialAnimation() {
 
     const wrapper = this.testimonialWrapper.nativeElement;
@@ -240,6 +238,9 @@ export class Hoteldiscount implements AfterViewInit {
 
   ngOnInit() {
     this.items = [{ label: 'Web Search' }, { label: 'AI Assistant' }, { label: 'History' }];
+    this.hotelService.getTestimonials().subscribe(data => {
+      this.testimonials = data;
+    });
   }
 
   initSubscribeAnimation() {

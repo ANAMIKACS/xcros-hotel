@@ -1,4 +1,4 @@
-<!--Hero section-->
+ <!--Hero section-->
 <section #heroSection class="hero-section">
     <div class="hero-container">
         <!-- <img src="/home/heroimg.jpg" alt="hero"> -->
@@ -132,63 +132,27 @@
     <span class="diamond"></span>
 </div>
             <div class="row py-5">
+                @for (ad of advertisements; track ad._id) {
                 <div class="col-12 col-lg-4 col-md-4 ad-col">
                     <div class="ad-wrapper">
                         <div class="ad-banner">
-                            <img src="/home/ad1-img.png">
+                            <img [src]="ad.desktop_image" [alt]="ad.title">
                         </div>
                         <div class="img-contents">
-                            <p class="testTitle m-0">test</p>
-                            <p class="subtitle m-0">live</p>
+                            <p class="testTitle m-0">{{ ad.title }}</p>
+                            <p class="subtitle m-0">{{ ad.description }}</p>
                             <div class="details-contents d-flex flex-row gap-3">
                                 <div class="ad-views d-flex flex-row align-items-center text-white gap-2">
-                                    <i class="fa-solid fa-eye"></i> : 22
+                                    <i class="fa-solid fa-eye"></i> : {{ ad.view_count }}
                                 </div>
                                 <div class="addetails-btn">
-                                    <button class="ad-details-btn">Details <span><i class="fa-solid fa-chevron-right"></i></span></button>
+                                    <button class="ad-details-btn" (click)="onAdClick(ad._id)">Details <span><i class="fa-solid fa-chevron-right"></i></span></button>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="col-12 col-lg-4 col-md-4 ad-col">
-                    <div class="ad-wrapper">
-                        <div class="ad-banner">
-                            <img src="/home/ad2-img.png">
-                        </div>
-                        <div class="img-contents">
-                            <p class="testTitle m-0">test</p>
-                            <p class="subtitle m-0">live</p>
-                            <div class="details-contents d-flex flex-row gap-3 mt-2">
-                                <div class="ad-views d-flex flex-row align-items-center text-white gap-2">
-                                    <i class="fa-solid fa-eye"></i> : 22
-                                </div>
-                                <div class="addetails-btn">
-                                    <button class="ad-details-btn">Details <span><i class="fa-solid fa-chevron-right"></i></span></button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-12 col-lg-4 col-md-4 ad-col">
-                    <div class="ad-wrapper">
-                        <div class="ad-banner">
-                            <img src="/home/ad3-img.png">
-                        </div>
-                        <div class="img-contents">
-                            <p class="testTitle m-0">test</p>
-                            <p class="subtitle m-0">live</p>
-                            <div class="details-contents d-flex flex-row gap-3">
-                                <div class="ad-views d-flex flex-row align-items-center text-white gap-2">
-                                    <i class="fa-solid fa-eye"></i> : 22
-                                </div>
-                                <div class="addetails-btn">
-                                    <button class="ad-details-btn">Details <span><i class="fa-solid fa-chevron-right"></i></span></button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                }
             </div>
         </div>
     </div>
@@ -372,7 +336,7 @@
                     <div class="col-md-3">
                         <div class="stat-card d-flex flex-row justify-content-between ">
                             <div class="d-flex flex-column">
-                                <div class="stat-number">0+</div>
+                                <div class="stat-number">{{ dashboardStats.locations }}+</div>
                                 <p>Locations</p>
                             </div>
                             <div class="stats-imgs">
@@ -383,7 +347,7 @@
                     <div class="col-12 col-lg-3 col-md-3">
                         <div class="stat-card d-flex flex-row justify-content-between ">
                             <div class="d-flex flex-column">
-                                <div class="stat-number">0+</div>
+                                <div class="stat-number">{{ dashboardStats.properties }}+</div>
                                 <p>Properties</p>
                             </div>
                             <div class="stats-imgs">
@@ -394,7 +358,7 @@
                     <div class="col-12 col-lg-3 col-md-3">
                         <div class="stat-card d-flex flex-row justify-content-between ">
                             <div class="d-flex flex-column">
-                                <div class="stat-number">0+</div>
+                                <div class="stat-number">{{ dashboardStats.bookings }}+</div>
                                 <p>Bookings</p>
                             </div>
                             <div class="stats-imgs">
@@ -405,7 +369,7 @@
                     <div class="col-12 col-lg-3 col-md-3">
                         <div class="stat-card d-flex flex-row justify-content-between ">
                             <div class="d-flex flex-column">
-                                <div class="stat-number">0+</div>
+                                <div class="stat-number">{{ dashboardStats.ratings }}+</div>
                                 <p>Ratings</p>
                             </div>
                             <div class="stats-imgs">

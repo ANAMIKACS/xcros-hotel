@@ -1,4 +1,4 @@
-import { Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { Component, CUSTOM_ELEMENTS_SCHEMA, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { register } from 'swiper/element/bundle';
 import { FormsModule } from '@angular/forms';
@@ -12,6 +12,8 @@ import { Carousel } from 'primeng/carousel';
 import { CarouselModule } from 'primeng/carousel';
 import { IconField } from "primeng/iconfield";
 import { InputIcon } from "primeng/inputicon";
+import { ActivatedRoute } from '@angular/router';
+import { HotelService } from '../services/hotel.service';
 
 register();
 
@@ -23,8 +25,49 @@ register();
   styleUrl: './room-booking-listing-details.scss',
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
-export class RoomBookingListingDetails{
- 
+export class RoomBookingListingDetails implements OnInit {
+
+  private hotelService = inject(HotelService);
+  private route = inject(ActivatedRoute);
+
+  ngOnInit(): void {
+    const hotelId = this.route.snapshot.paramMap.get('id')
+      ?? this.route.snapshot.queryParamMap.get('id');
+    if (hotelId) {
+      this.hotelService.getHotelById(hotelId).subscribe(hotel => {
+        if (hotel) {
+          this.populateFromHotel(hotel);
+        }
+      });
+    }
+  }
+
+  private populateFromHotel(hotel: any): void {
+    this.title = hotel.hotelTitle || this.title;
+    this.category = hotel.hotelType || this.category;
+    this.address = hotel.location?.address || this.address;
+    if (hotel.rooms) {
+      this.stats[0] = { ...this.stats[0], value: String(hotel.rooms) };
+    }
+    if (hotel.price) {
+      this.stats[2] = { ...this.stats[2], value: '\u20b9' + hotel.price.toLocaleString() };
+    }
+    if (hotel.cancelationRules) {
+      this.CancelationRules = hotel.cancelationRules;
+    }
+    if (hotel.galleryImages?.length) {
+      this.Gallery = hotel.galleryImages.map((src: string) => ({
+        GalleryImageSrc: src,
+        GalleryThambnailImageSrc: src
+      }));
+    }
+    if (hotel.amenities?.length) {
+      this.amenities = hotel.amenities.map((a: string) => ({ icon: 'fa-check', name: a }));
+    }
+    if (hotel.description) {
+      this.aboutRoomDescription = hotel.description;
+    }
+  }
 
 
   // STATS
