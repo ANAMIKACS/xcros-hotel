@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit, ElementRef, ViewChild, CUSTOM_ELEMENTS_SCHEMA, inject } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ElementRef, ViewChild, CUSTOM_ELEMENTS_SCHEMA, inject, } from '@angular/core';
 import { AvatarModule } from 'primeng/avatar';
 import { CommonModule } from '@angular/common';
 import { Hoteldiscount } from "../hoteldiscount/hoteldiscount";
@@ -8,27 +8,41 @@ import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { register } from 'swiper/element/bundle';
 import { HotelService, FALLBACK_CATEGORIES, FALLBACK_HOTELS, FALLBACK_ADVERTISEMENTS, FALLBACK_LOCATIONS, FALLBACK_STATS } from '../services/hotel.service';
+import { DateAdapter, provideCalendar, CalendarPreviousViewDirective, CalendarTodayDirective, CalendarNextViewDirective, CalendarMonthViewComponent, CalendarWeekViewComponent, CalendarDayViewComponent, CalendarView, CalendarDatePipe } from 'angular-calendar';
+import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
+import type { CalendarEvent } from 'angular-calendar';
+import { HostListener } from '@angular/core';
+import { RouterLink } from '@angular/router';
+
+
 register();
 
 gsap.registerPlugin(ScrollTrigger);
 @Component({
   selector: 'app-home',
-  imports: [CommonModule, AvatarModule, FormsModule, DatePickerModule, Hoteldiscount],
+  imports: [CommonModule, AvatarModule, FormsModule, DatePickerModule, Hoteldiscount, CalendarMonthViewComponent, RouterLink],
   templateUrl: './home.html',
   styleUrl: './home.scss',
-  schemas: [CUSTOM_ELEMENTS_SCHEMA]
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
+  providers: [
+    provideCalendar({
+      provide: DateAdapter,
+      useFactory: adapterFactory,
+    }),
+  ],
 })
 export class Home implements OnInit, AfterViewInit {
 
   private hotelService = inject(HotelService);
+// view: CalendarView = CalendarView.Month;
 
   ngOnInit(): void {
-    this.hotelService.getLocations().subscribe(data => {
-      this.locations = data;
-      if (!this.locations.includes(this.selectedLocation)) {
-        this.selectedLocation = this.locations[0] ?? '';
-      }
-    });
+    // this.hotelService.getLocations().subscribe(data => {
+    //   this.locations = data;
+    //   if (!this.locations.includes(this.selectedLocation)) {
+    //     this.selectedLocation = this.locations[0] ?? '';
+    //   }
+    // });
 
     this.hotelService.getCategories().subscribe(data => {
       this.categoryCards = data;
@@ -86,23 +100,141 @@ export class Home implements OnInit, AfterViewInit {
     );
 
   }
+  /////
   isLocationOpen = false;
-  locations: string[] = FALLBACK_LOCATIONS;
-  selectedLocation = FALLBACK_LOCATIONS[0];
-  advertisements: any[] = FALLBACK_ADVERTISEMENTS;
-  dashboardStats = FALLBACK_STATS;
-  toggleLocation() {
-    this.isLocationOpen = !this.isLocationOpen;
+
+locations: any[] = FALLBACK_LOCATIONS; 
+
+selectedLocation: any = FALLBACK_LOCATIONS[0];
+
+locationSearch: string = '';
+
+toggleLocation() {
+  this.isLocationOpen = !this.isLocationOpen;
+}
+
+selectLocation(city: any) {
+  this.selectedLocation = city;
+  this.isLocationOpen = false;
+  this.locationSearch = ''; 
+}
+
+get filteredLocations() {
+  return this.locations.filter(city =>
+    (city?.name || city)
+      .toLowerCase()
+      .includes(this.locationSearch.toLowerCase())
+  );
+}
+
+isSelected(city: any): boolean {
+  return (city?.name || city) === (this.selectedLocation?.name || this.selectedLocation);
+}
+  ///
+//   isLocationOpen = false;
+//   locations: string[] = FALLBACK_LOCATIONS;
+//   selectedLocation = FALLBACK_LOCATIONS[0];
+//   advertisements: any[] = FALLBACK_ADVERTISEMENTS;
+//   dashboardStats = FALLBACK_STATS;
+//   toggleLocation() {
+//     this.isLocationOpen = !this.isLocationOpen;
+//   }
+
+//   selectLocation(city: string) {
+//     this.selectedLocation = city;
+//     this.isLocationOpen = false;
+//   }
+  
+//   locationSearch: string = '';
+
+// get filteredLocations() {
+//   return this.locations.filter(city =>
+//     city.toLowerCase().includes(this.locationSearch.toLowerCase())
+//   );
+// }
+ // calendar
+CalendarView = CalendarView;
+view: CalendarView = CalendarView.Month;
+viewDate: Date = new Date();
+
+checkInDate: Date | null = null;
+checkOutDate: Date | null = null;
+
+activeCalendar: 'checkin' | 'checkout' | null = null;
+
+openCalendar(type: 'checkin' | 'checkout', event: Event) {
+  event.stopPropagation();
+  this.activeCalendar = type;
+}
+
+selectDate(date: Date, type: 'checkin' | 'checkout') {
+  if (type === 'checkin') {
+    this.checkInDate = date;
+    this.activeCalendar = 'checkout'; 
+  } else {
+    this.checkOutDate = date;
+    this.activeCalendar = null;
   }
+}
 
-  selectLocation(city: string) {
-    this.selectedLocation = city;
-    this.isLocationOpen = false;
+prevMonth(event: Event) {
+  event.stopPropagation();
+  this.viewDate = new Date(
+    this.viewDate.getFullYear(),
+    this.viewDate.getMonth() - 1,
+    1
+  );
+}
+
+nextMonth(event: Event) {
+  event.stopPropagation();
+  this.viewDate = new Date(
+    this.viewDate.getFullYear(),
+    this.viewDate.getMonth() + 1,
+    1
+  );
+}
+
+@HostListener('document:click')
+closeAll() {
+  this.activeCalendar = null;
+  this.isGuestPopupOpen = false;
+}
+  // //guests
+  // checkInDate: any;
+  // checkOutDate: any;
+isGuestPopupOpen = false;
+
+rooms = 1;
+adults = 2;
+children = 0;
+childrenAges: number[] = [];
+
+toggleGuestPopup() {
+  this.isGuestPopupOpen = !this.isGuestPopupOpen;
+}
+
+increase(type: string) {
+  if (type === 'rooms') this.rooms++;
+  if (type === 'adults') this.adults++;
+  if (type === 'children') {
+    this.children++;
+    this.childrenAges.push(1);
   }
+}
 
-  checkInDate: any;
-  checkOutDate: any;
+decrease(type: string) {
+  if (type === 'rooms' && this.rooms > 1) this.rooms--;
+  if (type === 'adults' && this.adults > 1) this.adults--;
+  if (type === 'children' && this.children > 0) {
+    this.children--;
+    this.childrenAges.pop();
+  }
+}
 
+get guestSummary(): string {
+  return `${this.rooms} Room, ${this.adults} Adults, ${this.children} Children`;
+}
   //Categories
   @ViewChild('categoriesSection') categoriesSection!: ElementRef;
   initCategoryAnimation() {
@@ -131,6 +263,7 @@ export class Home implements OnInit, AfterViewInit {
   categoryCards: any[] = FALLBACK_CATEGORIES;
 
   //Advertisment
+  advertisements: any[] = FALLBACK_ADVERTISEMENTS;
   @ViewChild('advertismentSection') advertismentSection!: ElementRef;
   initAdvertismentAnimation() {
 
@@ -263,7 +396,11 @@ export class Home implements OnInit, AfterViewInit {
     this.isFeaturedBoxOpen = false;
   }
   hotelcard: any[] = FALLBACK_HOTELS;
+  isFav = false;
 
+toggleFav() {
+  this.isFav = !this.isFav;
+}
   //Contact Popup
   closePopup() {
     this.activeContactId = null;
@@ -278,6 +415,7 @@ export class Home implements OnInit, AfterViewInit {
     }
   }
   //Promo Section
+  dashboardStats: any = FALLBACK_STATS;
   @ViewChild('promoSection') promoSection!: ElementRef;
 
   initPromoAnimation() {

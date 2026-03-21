@@ -1,4 +1,4 @@
 export const environment = {
   production: false,
-  apiUrl: 'http://localhost:23011'
+  apiUrl: 'http://api.xcros.in'
 };

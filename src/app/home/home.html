@@ -1,70 +1,221 @@
- <!--Hero section-->
+<!--Hero section-->
 <section #heroSection class="hero-section">
     <div class="hero-container">
-        <!-- <img src="/home/heroimg.jpg" alt="hero"> -->
         <div class="hero-content">
+
+            <!-- TEXT -->
             <div class="hero-tagline-mask mask">
-                <h1 class="hero-tagline hero-item">
-                    ⭐ Enjoy Your Beautiful Moment
-                </h1>
+                <h1 class="hero-tagline hero-item">⭐ Enjoy Your Beautiful Moment</h1>
             </div>
+
             <div class="hero-title-mask mask">
                 <h1 class="hero-title hero-item">
                     Unlock Your Next Adventure <br>
                     Book Your Hotel Stay
                 </h1>
             </div>
+
             <div class="hero-desc-mask mask">
                 <h1 class="hero-desc hero-item">
                     Discover Your Ideal Getaway Find the Perfect Hotel,
                     Villa, or Cottage by Name, Category, or Location!
                 </h1>
             </div>
+
+            <!-- SEARCH BOX -->
             <div class="choose-hotel-mask mask">
-                <div class="choose-hotel d-flex flex-row gap-2 justify-content-between card-item ">
-                    <div class="choose-contents d-flex">
+                <div class="choose-hotel d-flex flex-row gap-2 justify-content-between card-item">
+
+                    <div class="choose-contents d-flex align-items-center">
+
+                        <!-- LOCATION -->
                         <div class="locationdropdown">
-                            <h6 class="loaction-title">Select Location</h6>
-                            <div class="locationdropdown-box d-flex flex-row justify-content-between"
-                                (click)="toggleLocation()">
-                                <p class="m-0">{{selectedLocation}}</p>
+                            <h6>Select Location</h6>
+
+                            
+                            <div class="locationdropdown-box d-flex justify-content-between"
+                                (click)="toggleLocation(); $event.stopPropagation()">
+
+                                <p class="m-0">
+                                    {{ selectedLocation?.name || selectedLocation }}
+                                </p>
+
                                 <i class="fa-solid fa-chevron-down" [class.rotate]="isLocationOpen"></i>
                             </div>
+
+                            
                             @if(isLocationOpen){
-                            <div class="location-menu">
-                                @for(city of locations; track city){
+                            <div class="location-menu" (click)="$event.stopPropagation()">
+                              
+                                <div class="search-box d-flex align-items-center">
+                                    <i class="fa fa-search"></i>
+                                    <input type="text" placeholder="Search location..." [(ngModel)]="locationSearch" />
+                                </div>
+
+                                
+                                @for(city of filteredLocations; track city){
                                 <div class="location-item" (click)="selectLocation(city)"
-                                    [class.selected]="city === selectedLocation">
-                                    {{city}}
+                                    [class.selected]="isSelected(city)">
+                                    {{ city?.name || city }}
                                 </div>
                                 }
+
                             </div>
                             }
                         </div>
+
                         <div class="v-line"></div>
-                        <div class="item">
+
+                        <!-- CHECK-IN -->
+                        <div class="item date-item" (click)="openCalendar('checkin', $event)">
                             <h6>Check-in Date</h6>
-                            <p-datepicker [(ngModel)]="checkInDate"  [showIcon]="true" >
-                            </p-datepicker>
+                            <div class="d-flex justify-content-between">
+                                <p class="m-0">
+                                    {{ checkInDate ? (checkInDate | date:'dd/MM/yyyy') : 'Select date' }}
+                                </p>
+                                <i class="calender-icon fa-solid fa-calendar"></i>
+                            </div>
+
+                            @if(activeCalendar === 'checkin'){
+                            <div class="calendar-popup" (click)="$event.stopPropagation()">
+
+                                <div class="calendar-header">
+                                    <button (click)="prevMonth($event)">‹</button>
+                                    <span>{{ viewDate | date:'MMMM yyyy' }}</span>
+                                    <button (click)="nextMonth($event)">›</button>
+                                </div>
+
+                                <mwl-calendar-month-view [viewDate]="viewDate" [headerTemplate]="headerTemplate"
+                                    (dayClicked)="selectDate($event.day.date, activeCalendar!)">
+
+                                    <ng-template #headerTemplate let-days="days">
+                                        <div class="cal-header custom-header">
+                                            @for(day of days; track day.date){
+                                            <div class="cal-cell">
+                                                {{ day.date | date:'EEEEE' }}
+                                            </div>
+                                            }
+                                        </div>
+                                    </ng-template>
+
+                                </mwl-calendar-month-view>
+
+                            </div>
+                            }
                         </div>
-                       <div class="v-line"></div>
-                        <div class="item">
-                            <h6>Check-out Date</h6>
-                            <p-datepicker [(ngModel)]="checkOutDate" [showIcon]="true">
-                            </p-datepicker>
-                        </div>
+
                         <div class="v-line"></div>
-                        <div class="item">
-                            <h6>Guests</h6>
-                            <h5> 2 adults, 2 children. 1 room</h5>
+
+                        <!-- CHECK-OUT -->
+                        <div class="item date-item" (click)="openCalendar('checkout', $event)">
+                            <h6>Check-out Date</h6>
+                            <div class="d-flex justify-content-between">
+                                <p class="m-0">
+                                    {{ checkOutDate ? (checkOutDate | date:'dd/MM/yyyy') : 'Select date' }}
+                                </p>
+                                <i class="calender-icon fa-solid fa-calendar"></i>
+                            </div>
+
+                            @if(activeCalendar === 'checkout'){
+                            <div class="calendar-popup" (click)="$event.stopPropagation()">
+
+                                <div class="calendar-header">
+                                    <button (click)="prevMonth($event)">‹</button>
+                                    <span>{{ viewDate | date:'MMMM yyyy' }}</span>
+                                    <button (click)="nextMonth($event)">›</button>
+                                </div>
+
+                                <mwl-calendar-month-view [viewDate]="viewDate" [headerTemplate]="headerTemplate"
+                                    (dayClicked)="selectDate($event.day.date, activeCalendar!)">
+
+                                    <ng-template #headerTemplate let-days="days">
+                                        <div class="cal-header custom-header">
+                                            @for(day of days; track day.date){
+                                            <div class="cal-cell">
+                                                {{ day.date | date:'EEEEE' }}
+                                            </div>
+                                            }
+                                        </div>
+                                    </ng-template>
+
+                                </mwl-calendar-month-view>
+
+                            </div>
+                            }
                         </div>
+
+                        <div class="v-line"></div>
+
+                        <!-- GUESTS -->
+                        <div class="item" (click)="toggleGuestPopup(); $event.stopPropagation()">
+                            <h6>Guests</h6>
+                            <h5>{{ guestSummary }}</h5>
+
+                            @if(isGuestPopupOpen){
+                            <div class="guest-popup" (click)="$event.stopPropagation()">
+
+                                <div class="row-item">
+                                    <span>Rooms</span>
+                                    <div>
+                                        <button class="count-btn" (click)="decrease('rooms')">-</button>
+                                        {{ rooms }}
+                                        <button class="count-btn" (click)="increase('rooms')">+</button>
+                                    </div>
+                                </div>
+
+                                <div class="row-item">
+                                    <span>Adults</span>
+                                    <div>
+                                        <button class="count-btn" (click)="decrease('adults')">-</button>
+                                        {{ adults }}
+                                        <button class="count-btn" (click)="increase('adults')">+</button>
+                                    </div>
+                                </div>
+
+                                <div class="row-item">
+                                    <span>Children</span>
+                                    <div>
+                                        <button class="count-btn" (click)="decrease('children')">-</button>
+                                        {{ children }}
+                                        <button class="count-btn" (click)="increase('children')">+</button>
+                                    </div>
+                                </div>
+
+                                @if(children > 0){
+                                <div class="age-section">
+                                    <p>Age of Children</p>
+
+                                    @for(age of childrenAges; track $index; let i = $index){
+                                    <div class="child-age">
+                                        <label>Child {{ i + 1 }}</label>
+
+                                        <select class="agedropdown" [(ngModel)]="childrenAges[i]">
+                                            @for(a of [].constructor(18); track $index; let j = $index){
+                                            <option class="fs-6" [value]="j+1">{{ j+1 }} yrs</option>
+                                            }
+                                        </select>
+                                    </div>
+                                    }
+                                </div>
+                                }
+
+                                <button class="apply-btn" (click)="toggleGuestPopup()">APPLY</button>
+
+                            </div>
+                            }
+                        </div>
+
                     </div>
-                    <button class="search-btn d-flex justify-content-end">
+
+                    <!-- SEARCH BUTTON -->
+                    <button class="search-btn d-flex align-items-center gap-2" [routerLink]="['/roomBookingListing']">
                         <i class="fa-solid fa-magnifying-glass"></i>
                         Search
                     </button>
+
                 </div>
             </div>
+
         </div>
     </div>
 </section>
@@ -88,8 +239,8 @@
             </div>
 
         </div>
-        <swiper-container class="categories-swiper" slides-per-view="6" space-between="25" grab-cursor="true" pagination="true" style="--swiper-pagination-color: #FF9800;"
-            breakpoints='{
+        <swiper-container class="categories-swiper" slides-per-view="6" space-between="25" grab-cursor="true"
+            pagination="true" style="--swiper-pagination-color: #FF9800;" breakpoints='{
         "320": { "slidesPerView": 2, "spaceBetween": 10 },
         "768": { "slidesPerView": 3, "spaceBetween": 15 },
         "1024": { "slidesPerView": 4, "spaceBetween": 20 },
@@ -112,7 +263,7 @@
             </swiper-slide>
             }
         </swiper-container>
-        
+
     </div>
 </section>
 
@@ -120,17 +271,17 @@
 <section #advertismentSection class="advertisement-section">
     <div class="container-fluid">
         <div class="ad-contents pb-3">
-           <div class="ad-title-wrapper ad-title-anim">
-    <span class="diamond"></span>
+            <div class="ad-title-wrapper ad-title-anim">
+                <span class="diamond"></span>
 
-    <div class="line"></div>
+                <div class="line"></div>
 
-    <p class="ad-title m-0">Advertisements</p>
+                <p class="ad-title m-0">Advertisements</p>
 
-    <div class="line"></div>
+                <div class="line"></div>
 
-    <span class="diamond"></span>
-</div>
+                <span class="diamond"></span>
+            </div>
             <div class="row py-5">
                 @for (ad of advertisements; track ad._id) {
                 <div class="col-12 col-lg-4 col-md-4 ad-col">
@@ -146,7 +297,8 @@
                                     <i class="fa-solid fa-eye"></i> : {{ ad.view_count }}
                                 </div>
                                 <div class="addetails-btn">
-                                    <button class="ad-details-btn" (click)="onAdClick(ad._id)">Details <span><i class="fa-solid fa-chevron-right"></i></span></button>
+                                    <button class="ad-details-btn" (click)="onAdClick(ad._id)">Details <span><i
+                                                class="fa-solid fa-chevron-right"></i></span></button>
                                 </div>
                             </div>
                         </div>
@@ -295,7 +447,7 @@
                                     </div>
                                     }
                                     <button class="icon-btn">
-                                        <i class="fa-regular fa-heart"></i>
+                                        <i class="fav fa-solid fa-heart"></i>
                                     </button>
                                     <button class="icon-btn">
                                         <i class="fa-solid fa-location-dot"></i>
@@ -385,135 +537,135 @@
 
 <!--Exclusive Offer-->
 <section #exclusiveOfferSection class="exclusiveoffer-section">
-  <div class="offerscontainer py-5">
-    
+    <div class="offerscontainer py-5">
 
-    <div class="offercontainer-mask">
-    <div class="offer-banner">
-       
-      <img src="/home/exculsiveoffer-img.jpg" class="desktop-bg" alt="exclusive offer">
 
-      <img src="/home/offermobilebg.png" class="mobile-bg" alt="exclusive offer mobile">
+        <div class="offercontainer-mask">
+            <div class="offer-banner">
 
-      <div class="offer-text">
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-        sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-      </div>
+                <img src="/home/exculsiveoffer-img.jpg" class="desktop-bg" alt="exclusive offer">
 
-      <div class="exclusive-hotels">
-        <div class="row">
+                <img src="/home/offermobilebg.png" class="mobile-bg" alt="exclusive offer mobile">
 
-          @for (hotel of exclusiveofferHotels; track hotel.id) {
-
-          <div class="col-12 col-lg-6 mt-4">
-
-            <div class="card hotel-card">
-
-              <div class="card-img">
-                <img [src]="hotel.cardImg">
-
-                <div class="profileimg">
-                  <img [src]="hotel.profileimg">
+                <div class="offer-text">
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit,
+                    sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
                 </div>
 
-                <div class="stars d-flex">
-                  @for (star of hotel.starArray; track $index) {
-                  <i class="fa-solid fa-star"></i>
-                  }
+                <div class="exclusive-hotels">
+                    <div class="row">
+
+                        @for (hotel of exclusiveofferHotels; track hotel.id) {
+
+                        <div class="col-12 col-lg-6 mt-4">
+
+                            <div class="card hotel-card">
+
+                                <div class="card-img">
+                                    <img [src]="hotel.cardImg">
+
+                                    <div class="profileimg">
+                                        <img [src]="hotel.profileimg">
+                                    </div>
+
+                                    <div class="stars d-flex">
+                                        @for (star of hotel.starArray; track $index) {
+                                        <i class="fa-solid fa-star"></i>
+                                        }
+                                    </div>
+
+                                    <div class="views d-flex gap-1">
+                                        <i class="fa-solid fa-eye"></i>
+                                        <p class="m-0">Views: {{ hotel.views }}</p>
+                                    </div>
+
+                                    <div class="review-container">
+                                        <div class="review-text">
+                                            <h5>{{ hotel.reviewText }}</h5>
+                                            <h6>{{ hotel.reviews }} Reviews</h6>
+                                        </div>
+
+                                        <div class="rating-box">
+                                            {{ hotel.rating }}
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <div class="card-body">
+
+                                    <div class="hotel">{{ hotel.hotelType }}</div>
+
+                                    <h3 class="hotel-title">{{ hotel.hotelTitle }}</h3>
+
+                                    <hr>
+
+                                    <div class="facilities">
+
+                                        <div class="facility-item">
+                                            <i class="fa-solid fa-bed"></i>
+                                            <span>{{ hotel.rooms }} Room</span>
+                                        </div>
+
+                                        <div class="facility-item">
+                                            <i class="fa-solid fa-bath"></i>
+                                            <span>{{ hotel.bathrooms }} Bathroom</span>
+                                        </div>
+
+                                        <div class="facility-item">
+                                            <i class="fa-solid fa-cube"></i>
+                                            <span>{{ hotel.size }}</span>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="amenities">
+                                        <i class="fa-solid fa-wifi"></i>
+                                        <i class="fa-solid fa-square-parking"></i>
+                                        <i class="fa-solid fa-ban-smoking"></i>
+                                        <i class="fa-solid fa-utensils"></i>
+                                    </div>
+
+                                    <hr>
+
+                                    <div class="bottom-section">
+
+                                        <div class="price-box">
+                                            <span class="avg">AVG/NIGHT</span>
+                                            <span class="price">$ {{ hotel.price }}</span>
+                                        </div>
+
+                                        <div class="action-buttons">
+
+                                            <button class="contact-btn">
+                                                Contact Info
+                                            </button>
+
+                                            <button class="icon-btn">
+                                                <i class="fa-regular fa-heart"></i>
+                                            </button>
+
+                                            <button class="icon-btn">
+                                                <i class="fa-solid fa-location-dot"></i>
+                                            </button>
+
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                        }
+
+                    </div>
                 </div>
-
-                <div class="views d-flex gap-1">
-                  <i class="fa-solid fa-eye"></i>
-                  <p class="m-0">Views: {{ hotel.views }}</p>
-                </div>
-
-                <div class="review-container">
-                  <div class="review-text">
-                    <h5>{{ hotel.reviewText }}</h5>
-                    <h6>{{ hotel.reviews }} Reviews</h6>
-                  </div>
-
-                  <div class="rating-box">
-                    {{ hotel.rating }}
-                  </div>
-                </div>
-
-              </div>
-
-              <div class="card-body">
-
-                <div class="hotel">{{ hotel.hotelType }}</div>
-
-                <h3 class="hotel-title">{{ hotel.hotelTitle }}</h3>
-
-                <hr>
-
-                <div class="facilities">
-
-                  <div class="facility-item">
-                    <i class="fa-solid fa-bed"></i>
-                    <span>{{ hotel.rooms }} Room</span>
-                  </div>
-
-                  <div class="facility-item">
-                    <i class="fa-solid fa-bath"></i>
-                    <span>{{ hotel.bathrooms }} Bathroom</span>
-                  </div>
-
-                  <div class="facility-item">
-                    <i class="fa-solid fa-cube"></i>
-                    <span>{{ hotel.size }}</span>
-                  </div>
-
-                </div>
-
-                <div class="amenities">
-                  <i class="fa-solid fa-wifi"></i>
-                  <i class="fa-solid fa-square-parking"></i>
-                  <i class="fa-solid fa-ban-smoking"></i>
-                  <i class="fa-solid fa-utensils"></i>
-                </div>
-
-                <hr>
-
-                <div class="bottom-section">
-
-                  <div class="price-box">
-                    <span class="avg">AVG/NIGHT</span>
-                    <span class="price">$ {{ hotel.price }}</span>
-                  </div>
-
-                  <div class="action-buttons">
-
-                    <button class="contact-btn">
-                      Contact Info
-                    </button>
-
-                    <button class="icon-btn">
-                      <i class="fa-regular fa-heart"></i>
-                    </button>
-
-                    <button class="icon-btn">
-                      <i class="fa-solid fa-location-dot"></i>
-                    </button>
-
-                  </div>
-
-                </div>
-
-              </div>
 
             </div>
-
-          </div>
-
-          }
-
         </div>
-      </div>
-
     </div>
- </div>
-  </div>
 </section>
 <app-hoteldiscount></app-hoteldiscount>

@@ -18,7 +18,7 @@
 }
 .hero-content {
   position: absolute;
-  top: 30%;
+  top: 25%;
   left: 8%;
   max-width: 65rem;
 }
@@ -66,7 +66,8 @@
   padding: 30px 25px;
   border-radius: 10px;
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
-  max-width: 62rem;
+  // max-width: 80rem;
+  width: 100%;
   z-index: 99999;
   position:relative;
 }
@@ -75,12 +76,39 @@
   height:60px;
   display: block;
 }
+.search-box {
+  padding: 8px 12px;
+  border-bottom: 1px solid #ddd;
+  gap: 8px;
+}
+
+.search-box i {
+  font-size: 14px;
+  color: #666;
+}
+
+.search-box input {
+  border: none;
+  outline: none;
+  width: 100%;
+  font-size: 14px;
+}
 .choose-contents {
   display: flex;
   gap: 13px;
   align-items: center;
-}
+  width: 100% !important;
 
+}
+.calender-icon{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.item {
+  flex: 1;              
+  min-width: 150px;    
+}
 .item h6 , .loaction-title {
   font-size: 16px;
   color: #9098AD;
@@ -93,6 +121,9 @@
 .location h6 {
   font-size: 16px;
   color: #9098AD;
+}
+.item{
+  position: relative;
 }
 
 .search-btn {
@@ -110,7 +141,7 @@
   overflow: hidden;
   display: block;
    width:100%;
-   height:350px;
+   height:500px;
    
 }
 
@@ -159,28 +190,161 @@
   background: #008080;
   color: white;
 }
+.date-item {
+  position: relative;
+  cursor: pointer;
+}
 
-::ng-deep .p-datepicker-day-view {
-  background-color: #fff;
+
+.calendar-popup {
+  position: absolute;
+  top: 50px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 2000;
+  height:350px;
+  background: #fff;
   padding: 15px;
-  color: #333333;
-  height: 200px;
+  border-radius: 16px;
+  width: 250px;
+
+  box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+}
+::ng-deep .cal-month-view .cal-day-cell {
+  min-height: 50px !important;
+  height: 50px !important;
+}
+::ng-deep .cal-month-view .cal-cell-top {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;   
+}
+::ng-deep .cal-month-view .cal-day-number {
+  margin: 0 !important;
+  font-weight: 600;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+::ng-deep .cal-month-view .cal-day-cell.cal-today {
+  background: #f0f8ff;
+  border-radius: 8px;
 }
 
-::ng-deep .p-datepicker-header {
-  font-size: 15px;
-  background-color: #fff;
-
+::ng-deep .cal-month-view .cal-day-cell.cal-today .cal-day-number {
+  font-size: 14px !important;
+  font-weight: 600;
+}
+.calendar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: 600;
+  font-weight: 14px;
 }
 
-::ng-deep .p-datepicker-weekday-cell {
-  color: #333333;
-  padding-inline: 10px;
-
+.calendar-header button {
+  border: none;
+  background: none;
+  font-size: 18px;
+  cursor: pointer;
 }
 
-::ng-deep .p-datepicker-calendar {
-  height: 200px;
+.custom-header {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  text-align: center;
+  font-weight: 600;
+  font-size: 13px;
+  margin-bottom: 5px;
+}
+
+.custom-header .cal-cell {
+  padding: 5px 0;
+}
+.guest-field {
+  position: relative;
+  cursor: pointer;
+}
+
+.guest-popup {
+  position: absolute;
+  top: 70px;
+  left: 0;
+  width: 320px;
+  background: #fff;
+  border-radius: 12px;
+  padding: 15px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+  z-index: 1000;
+  height:210px;
+  overflow-y: scroll;
+}
+// .kidsage {
+//   max-height: 90px !important;
+//   overflow-y: auto;
+//   font-size: 14px;
+//   padding: 4px;
+// }
+.agefropdown{
+  height: 100px;
+  overflow-y: auto;
+}
+.count-btn{
+  border: 1px solid #666;
+}
+.guest-popup::-webkit-scrollbar {
+  display: none !important;
+}
+.row-item {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.counter {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  height:30px;
+}
+
+.counter button {
+  width: 28px;
+  height: 28px;
+}
+
+.child-age {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+
+.apply-btn {
+  width: 100%;
+  margin-top: 15px;
+  background: #3b82f6;
+  color: white; 
+  border: none;
+  padding: 10px;
+  border-radius: 20px;
+}
+/* Style the options inside the dropdown */
+.age-dropdown option {
+  padding: 10px;
+  font-size: 16px;
+  background-color: white;
+  color: black;
+  height:100px !important ;
+}
+
+/* Add style to the specifically selected option */
+.age-dropdown option:checked {
+  background-color: #007bff;
+  color: white;
 }
 @media(max-width:1024px){
   .hero-content{
@@ -246,6 +410,9 @@
   .item,
   .locationdropdown{
     width:100% !important;
+  }
+  .date-item{
+     width:100% !important;
   }
   .location-menu{
     width: 100% !important;
@@ -873,6 +1040,9 @@
   padding: 8px 10px;
   border-radius: 8px;
   margin-left: 8px;
+}
+.fav i:active {
+  color:red !important;
 }
 
 //popup
