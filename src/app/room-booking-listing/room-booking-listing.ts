@@ -9,6 +9,7 @@ import { InputNumberModule } from 'primeng/inputnumber';
 import { SliderModule } from 'primeng/slider';
 import { Popover, PopoverModule } from 'primeng/popover';
 import { HotelService, FALLBACK_HOTELS } from '../services/hotel.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-room-booking-listing',
@@ -20,6 +21,8 @@ import { HotelService, FALLBACK_HOTELS } from '../services/hotel.service';
 export class RoomBookingListing {
 
   private hotelService = inject(HotelService);
+  private router = inject(Router);
+
 @ViewChild('image') carousel!: Carousel
   position: 'left' = "left";
 prev() {
@@ -237,5 +240,9 @@ togglePopup(id: number) {
     this.activeContactId = id;
   }
 }
+
+  navigateToDetails(id: number) {
+    this.router.navigate(['/roomBookingListingDetails', id]);
+  }
 
 }

@@ -259,27 +259,8 @@
         display: none;
     }
 
-    ::ng-deep .p-datepicker .p-datepicker-header {
-        font-size: 15px;
-    }
-
-    ::ng-deep .p-datepicker .p-datepicker-panel {
-        min-width: 160px;
-    }
-
-    ::ng-deep .p-datepicker-weekday {
-        font-size: 13px;
-    }
-
-    ::ng-deep .p-datepicker-day-view {
-        background-color: #fff;
-        padding: 5px;
-    }
-
-    ::ng-deep .p-datepicker .p-icon {
-        font-size: 1px;
-    }
-
+    // Removed overriding .p-datepicker styles that broke its layout
+    // .p-inputtext
     ::ng-deep .p-inputtext {
         font-size: 18px;
 
@@ -504,12 +485,26 @@
 }
 
 //Hotels
+.cursor-pointer {
+    cursor: pointer;
+}
+
 .hotel-cards {
     background-color: #edf7f6;
     padding-inline: 9rem;
 
     .card {
         border-radius: 10px;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        transition: transform 0.2s, box-shadow 0.2s;
+        min-height: 480px;
+
+        &:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
     }
 
     .card-img {
@@ -518,6 +513,7 @@
 
     .card-img img {
         width: 100%;
+        max-height: 220px;
         object-fit: cover;
         border-radius: 10px 10px 0 0;
     }
@@ -623,9 +619,12 @@
         padding:  10px 15px;
     }
 
-    // .card-body {
-    //     padding: 20px;
-    // }
+    .card-body {
+        padding: 20px;
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+    }
 
     .hotel {
         display: inline-block;
@@ -673,6 +672,7 @@
         align-items: center;
         gap: 8px;
         flex-wrap: nowrap;
+        margin-top: auto;
     }
 
     .price-box {

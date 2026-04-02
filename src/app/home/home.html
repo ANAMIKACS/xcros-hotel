@@ -52,13 +52,14 @@
                                     <input type="text" placeholder="Search location..." [(ngModel)]="locationSearch" />
                                 </div>
 
-                                
-                                @for(city of filteredLocations; track city){
-                                <div class="location-item" (click)="selectLocation(city)"
-                                    [class.selected]="isSelected(city)">
-                                    {{ city?.name || city }}
+                                <div class="location-list mt-2">
+                                    @for(city of filteredLocations; track city){
+                                    <div class="location-item" (click)="selectLocation(city)"
+                                        [class.selected]="isSelected(city)">
+                                        {{ city?.name || city }}
+                                    </div>
+                                    }
                                 </div>
-                                }
 
                             </div>
                             }
@@ -67,81 +68,19 @@
                         <div class="v-line"></div>
 
                         <!-- CHECK-IN -->
-                        <div class="item date-item" (click)="openCalendar('checkin', $event)">
+                        <div class="item date-item">
                             <h6>Check-in Date</h6>
-                            <div class="d-flex justify-content-between">
-                                <p class="m-0">
-                                    {{ checkInDate ? (checkInDate | date:'dd/MM/yyyy') : 'Select date' }}
-                                </p>
-                                <i class="calender-icon fa-solid fa-calendar"></i>
-                            </div>
-
-                            @if(activeCalendar === 'checkin'){
-                            <div class="calendar-popup" (click)="$event.stopPropagation()">
-
-                                <div class="calendar-header">
-                                    <button (click)="prevMonth($event)">‹</button>
-                                    <span>{{ viewDate | date:'MMMM yyyy' }}</span>
-                                    <button (click)="nextMonth($event)">›</button>
-                                </div>
-
-                                <mwl-calendar-month-view [viewDate]="viewDate" [headerTemplate]="headerTemplate"
-                                    (dayClicked)="selectDate($event.day.date, activeCalendar!)">
-
-                                    <ng-template #headerTemplate let-days="days">
-                                        <div class="cal-header custom-header">
-                                            @for(day of days; track day.date){
-                                            <div class="cal-cell">
-                                                {{ day.date | date:'EEEEE' }}
-                                            </div>
-                                            }
-                                        </div>
-                                    </ng-template>
-
-                                </mwl-calendar-month-view>
-
-                            </div>
-                            }
+                            <p-datepicker [(ngModel)]="checkInDate" placeholder="Select date" [showIcon]="true" [style]="{'width': '100%'}" [inputStyle]="{'border': 'none', 'padding': '0', 'box-shadow': 'none', 'font-size': '16px' }" panelStyleClass="custom-cal-popup">
+                            </p-datepicker>
                         </div>
 
                         <div class="v-line"></div>
 
                         <!-- CHECK-OUT -->
-                        <div class="item date-item" (click)="openCalendar('checkout', $event)">
+                        <div class="item date-item">
                             <h6>Check-out Date</h6>
-                            <div class="d-flex justify-content-between">
-                                <p class="m-0">
-                                    {{ checkOutDate ? (checkOutDate | date:'dd/MM/yyyy') : 'Select date' }}
-                                </p>
-                                <i class="calender-icon fa-solid fa-calendar"></i>
-                            </div>
-
-                            @if(activeCalendar === 'checkout'){
-                            <div class="calendar-popup" (click)="$event.stopPropagation()">
-
-                                <div class="calendar-header">
-                                    <button (click)="prevMonth($event)">‹</button>
-                                    <span>{{ viewDate | date:'MMMM yyyy' }}</span>
-                                    <button (click)="nextMonth($event)">›</button>
-                                </div>
-
-                                <mwl-calendar-month-view [viewDate]="viewDate" [headerTemplate]="headerTemplate"
-                                    (dayClicked)="selectDate($event.day.date, activeCalendar!)">
-
-                                    <ng-template #headerTemplate let-days="days">
-                                        <div class="cal-header custom-header">
-                                            @for(day of days; track day.date){
-                                            <div class="cal-cell">
-                                                {{ day.date | date:'EEEEE' }}
-                                            </div>
-                                            }
-                                        </div>
-                                    </ng-template>
-
-                                </mwl-calendar-month-view>
-
-                            </div>
-                            }
+                            <p-datepicker [(ngModel)]="checkOutDate" placeholder="Select date" [showIcon]="true" [style]="{'width': '100%'}" [inputStyle]="{'border': 'none', 'padding': '0', 'box-shadow': 'none', 'font-size': '16px' }" panelStyleClass="custom-cal-popup">
+                            </p-datepicker>
                         </div>
 
                         <div class="v-line"></div>
@@ -156,27 +95,27 @@
 
                                 <div class="row-item">
                                     <span>Rooms</span>
-                                    <div>
+                                    <div class="counter">
                                         <button class="count-btn" (click)="decrease('rooms')">-</button>
-                                        {{ rooms }}
+                                        <span class="count">{{ rooms }}</span>
                                         <button class="count-btn" (click)="increase('rooms')">+</button>
                                     </div>
                                 </div>
 
                                 <div class="row-item">
                                     <span>Adults</span>
-                                    <div>
+                                    <div class="counter">
                                         <button class="count-btn" (click)="decrease('adults')">-</button>
-                                        {{ adults }}
+                                        <span class="count">{{ adults }}</span>
                                         <button class="count-btn" (click)="increase('adults')">+</button>
                                     </div>
                                 </div>
 
                                 <div class="row-item">
                                     <span>Children</span>
-                                    <div>
+                                    <div class="counter">
                                         <button class="count-btn" (click)="decrease('children')">-</button>
-                                        {{ children }}
+                                        <span class="count">{{ children }}</span>
                                         <button class="count-btn" (click)="increase('children')">+</button>
                                     </div>
                                 </div>

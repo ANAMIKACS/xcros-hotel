@@ -3,3 +3,25 @@
 .p-accordioncontent-content,.p-galleria{
         border-style: none !important;
     }
+
+/* Global PrimeNG Datepicker fixes */
+.custom-cal-popup {
+    background-color: #fff !important;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15) !important;
+    border-radius: 12px !important;
+    padding: 15px !important;
+    z-index: 1001 !important;
+}
+
+.p-datepicker-header {
+    background-color: #fff !important;
+    padding-bottom: 10px !important;
+    font-weight: 600 !important;
+}
+
+.p-datepicker-calendar {
+    td {
+        padding: 5px !important;
+        text-align: center;
+    }
+}

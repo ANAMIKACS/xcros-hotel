@@ -105,35 +105,18 @@
                                         </div>
                                         }
                                     </div>
-                                    <!--Checkin and Checkout dates-->
                                     <div class="dates">
                                         <div class="row">
                                             <div class="col-12 col-lg-6">
-                                                <p class="dateTitle pt-4">Check-in Date</p>
-                                                <div class="chechinDate">
-                                                    <div class="category-header d-flex flex-row "
-                                                        (click)="toggleCheckinBoxOpen()">
-                                                        <div class="d-flex gap-3">
-                                                            <i class="fa-solid fa-bars"></i>
-                                                            <p class="m-0"><p-datepicker [(ngModel)]="indate"
-                                                                    [inputStyle]="{'width': '97px' }" /></p>
-                                                        </div>
-                                                        <!-- <i class="fa-solid fa-chevron-down" [class.rotate]="isCheckinBoxOpen"></i> -->
-                                                    </div>
+                                                <p class="dateTitle pt-4 mb-2">Check-in Date</p>
+                                                <div class="chechinDate w-100">
+                                                    <p-datepicker [(ngModel)]="indate" [showIcon]="true" [style]="{'width':'100%'}" [inputStyle]="{'width': '100%', 'height':'45px', 'border-radius':'8px' }" placeholder="Select Date" panelStyleClass="custom-cal-popup" />
                                                 </div>
                                             </div>
                                             <div class="col-12 col-lg-6">
-                                                <p class="dateTitle pt-4">Check-Out Date</p>
-                                                <div class="chechoutDate">
-                                                    <div class="category-header d-flex flex-row "
-                                                        (click)="toggleCheckoutBoxOpen()">
-                                                        <div class="d-flex gap-3">
-                                                            <i class="fa-solid fa-bars"></i>
-                                                            <p class="m-0"><p-datepicker [(ngModel)]="outdate"
-                                                                    [inputStyle]="{'width': '97px' }" /></p>
-                                                        </div>
-                                                        <!-- <i class="fa-solid fa-chevron-down" [class.rotate]="isCheckinBoxOpen"></i> -->
-                                                    </div>
+                                                <p class="dateTitle pt-4 mb-2">Check-Out Date</p>
+                                                <div class="chechoutDate w-100">
+                                                    <p-datepicker [(ngModel)]="outdate" [showIcon]="true" [style]="{'width':'100%'}" [inputStyle]="{'width': '100%', 'height':'45px', 'border-radius':'8px' }" placeholder="Select Date" panelStyleClass="custom-cal-popup" />
                                                 </div>
                                             </div>
                                         </div>
@@ -551,7 +534,7 @@
             <div class="row">
                 @for (hotel of hotelcard; track hotel.id) {
                 <div class="col-12 col-md-4 col-lg-3 col-sm-6 mt-3 p-1">
-                    <div class="card">
+                    <div class="card cursor-pointer" (click)="navigateToDetails(hotel.id)">
                         <div class="card-img">
                             <img [src]="hotel.cardImg">
                             <div class="profileimg">
@@ -607,7 +590,7 @@
                                     <span class="price">$ {{ hotel.price }}</span>
                                 </div>
                                 <div class="action-buttons">
-                                    <button class="contact-btn" (click)="togglePopup(hotel.id)">Contact Info</button>
+                                    <button class="contact-btn" (click)="togglePopup(hotel.id); $event.stopPropagation()">Contact Info</button>
                                      @if(activeContactId===hotel.id)
                                 {
                                     <div class="popup card gap-3">
@@ -673,8 +656,8 @@
         <p class="promotedTitle">Promoted Listing</p>
         <div class="row">
             @for (hotel of promotedHotels; track hotel.id) {
-            <div class="col-12 col-md-4 col-lg-3 col-sm-6 mt-4">
-                <div class="card">
+            <div class="col-12 col-md-4 col-lg-3 col-sm-6 mt-4 p-1">
+                <div class="card cursor-pointer" (click)="navigateToDetails(hotel.id)">
                     <div class="card-img">
                         <img [src]="hotel.cardImg">
                         <div class="profileimg">
@@ -729,8 +712,8 @@
                                 <span class="avg">AVG/NIGHT</span>
                                 <span class="price">$ {{ hotel.price }}</span>
                             </div>
-                                                            <div class="action-buttons">
-                                    <button class="contact-btn" (click)="togglePopup(hotel.id)">Contact Info</button>
+                                <div class="action-buttons">
+                                    <button class="contact-btn" (click)="togglePopup(hotel.id); $event.stopPropagation()">Contact Info</button>
                                      @if(activeContactId===hotel.id)
                                 {
                                     <div class="popup card gap-3">
