@@ -107,12 +107,23 @@ function normalizeCategory(c: any, idx: number): any {
 function normalizeTestimonial(t: any): any {
   return {
     roomImage: t.roomImage || '/home/room1.png',
-    quotes: t.quotesIcon || '/home/SVG.png',
-    title: t.name || 'Guest',
+    quotes: t.quotesIcon || t.quotes || '/home/SVG.png',
+    title: t.title || t.name || 'Our Guest',
     description: t.description || '',
-    profileImg: t.profileImage || '/home/profile.png',
-    name: t.name || '',
-    designation: t.designation || 'Guest'
+    profileImg: t.profileImage || t.userProfile || t.profileImg || '/home/profile.png',
+    name: t.name || t.userName || 'Guest',
+    designation: t.designation || t.userDestination || 'Valued Guest',
+    rating: t.rating || t.star || 4
+  };
+}
+
+function normalizePartner(p: any, baseUrl: string): any {
+  const raw = p.image || '';
+  const image = raw.startsWith('http') ? raw : `${baseUrl}/${raw}`;
+  return {
+    _id: p._id,
+    name: p.name || 'Partner',
+    image
   };
 }
 
@@ -131,6 +142,7 @@ function normalizeAdvertisement(a: any): any {
 @Injectable({ providedIn: 'root' })
 export class HotelService {
   private base = `${environment.apiUrl}/api/hotel`;
+  private baseV1 = `${environment.apiUrl}/api/v1`;
 
   constructor(private http: HttpClient) {}
 
@@ -172,12 +184,12 @@ export class HotelService {
         params = params.append(key, filters[key]);
       }
     });
-    return this.http.get<any>(`${this.base}/listings`, { params }).pipe(
+    return this.http.get<any>(`${this.baseV1}/hotels`, { params }).pipe(
       map(res => {
         const data = res?.success && Array.isArray(res.data) ? res.data : [];
-        return data.length ? data.map(normalizeHotel) : FALLBACK_HOTELS;
+        return data.map(normalizeHotel);
       }),
-      catchError(() => of(FALLBACK_HOTELS))
+      catchError(() => of([]))
     );
   }
 
@@ -202,12 +214,24 @@ export class HotelService {
 
   // --- Testimonials ---
   getTestimonials(): Observable<any[]> {
-    return this.http.get<any>(`${this.base}/testimonials`).pipe(
+    return this.http.get<any>(`${this.baseV1}/meta/testimonials`).pipe(
       map(res => {
         const data = res?.success && Array.isArray(res.data) ? res.data : [];
-        return data.length ? data.map(normalizeTestimonial) : FALLBACK_TESTIMONIALS;
+        return data.map(normalizeTestimonial);
       }),
-      catchError(() => of(FALLBACK_TESTIMONIALS))
+      catchError(() => of([]))
+    );
+  }
+
+  // --- Partners ---
+  getPartners(): Observable<any[]> {
+    const base = environment.apiUrl;
+    return this.http.get<any>(`${this.baseV1}/meta/partners`).pipe(
+      map(res => {
+        const data = res?.success && Array.isArray(res.data) ? res.data : [];
+        return data.map((p: any) => normalizePartner(p, base));
+      }),
+      catchError(() => of([]))
     );
   }
 
@@ -225,6 +249,46 @@ export class HotelService {
   registerAdClick(adId: string): Observable<any> {
     return this.http.put(`${this.base}/advertisements/${adId}/lead`, {}).pipe(
       catchError(() => of(null))
+    );
+  }
+
+  // ─── V1 Booking Engine Integrations ───────────────────────────────────────────
+
+  getHotelDetailsV1(hotelId: string): Observable<any> {
+    return this.http.get<any>(`${environment.apiUrl}/api/v1/hotels/${hotelId}`).pipe(
+      map(res => res?.data || null),
+      catchError(() => of(null))
+    );
+  }
+
+  getRoomsForHotel(hotelId: string, queryParams: any = {}): Observable<any[]> {
+    return this.http.get<any>(`${environment.apiUrl}/api/v1/hotels/${hotelId}/rooms`, { params: queryParams }).pipe(
+      map(res => res?.success && res.data ? res.data : []),
+      catchError(() => of([])) // fallback to empty array
+    );
+  }
+
+  checkRoomAvailability(payload: any): Observable<any> {
+    return this.http.post<any>(`${environment.apiUrl}/api/v1/bookings/availability`, payload).pipe(
+      catchError(() => of({ available: false }))
+    );
+  }
+
+  createBooking(payload: any): Observable<any> {
+    return this.http.post<any>(`${environment.apiUrl}/api/v1/bookings`, payload);
+  }
+
+  getExtraServices(): Observable<any[]> {
+    return this.http.get<any>(`${environment.apiUrl}/api/v1/meta/services`).pipe(
+      map(res => res?.success && res.data ? res.data : []),
+      catchError(() => of([]))
+    );
+  }
+
+  getRoomCategories(): Observable<any[]> {
+    return this.http.get<any>(`${environment.apiUrl}/api/v1/meta/room-categories`).pipe(
+      map(res => res?.success && res.data ? res.data : []),
+      catchError(() => of([]))
     );
   }
 }

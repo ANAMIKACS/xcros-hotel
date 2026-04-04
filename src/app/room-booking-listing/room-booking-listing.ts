@@ -9,7 +9,7 @@ import { InputNumberModule } from 'primeng/inputnumber';
 import { SliderModule } from 'primeng/slider';
 import { Popover, PopoverModule } from 'primeng/popover';
 import { HotelService, FALLBACK_HOTELS } from '../services/hotel.service';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-room-booking-listing',
@@ -22,6 +22,7 @@ export class RoomBookingListing {
 
   private hotelService = inject(HotelService);
   private router = inject(Router);
+  private route = inject(ActivatedRoute);
 
 @ViewChild('image') carousel!: Carousel
   position: 'left' = "left";
@@ -80,8 +81,10 @@ getTotalPages(): number {
       { itemImageSrc: '/listingpage/imagegrid.jpg' }
     ];
 
-    this.hotelService.getHotels().subscribe(data => {
-      this.hotelcard = data;
+    this.route.queryParams.subscribe(params => {
+      this.hotelService.getHotels(params).subscribe(data => {
+        this.hotelcard = data;
+      });
     });
 
     this.hotelService.getPromotedHotels().subscribe(data => {
@@ -119,9 +122,7 @@ toggleViewMap() {
   }
 
   //HOTEL CARD
-  // cardImg="/listingpage/hotelimg.jpg";
-  // profileimg='/listingpage/profileimg.jpg';
-  hotelcard: any[] = FALLBACK_HOTELS;
+  hotelcard: any[] = [];
 
 //pagenation
   currentPage: number = 1;
@@ -138,7 +139,7 @@ toggleViewMap() {
   }
 
   //PROMOTED HOTEL
-  promotedHotels: any[] = FALLBACK_HOTELS;
+  promotedHotels: any[] = [];
 //Page Wrapper
 isFilterOpen = false;
 

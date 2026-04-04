@@ -97,14 +97,14 @@
        
         <div class="card-body">
             <div class="card-wrapper">
-                 @for (room of rooms; track room.name) {
+                 @for (room of availableRooms; track room.id) {
 
 <div class="room-card card mb-3">
     <div class="row">
         <div class="col-lg-5">
             <div class="d-flex justify-content-center align-items-center">
                 <div class="image-on-left">
-                    <img [src]="room.image" alt="">
+                    <img [src]="room.images?.[0] || room.image || '/room-booking_details-page/room.jpg'" alt="">
                 </div>
             </div>
         </div>
@@ -113,21 +113,21 @@
             <div class="right-content">
 
                 <div class="title d-flex flex-row justify-content-between">
-                    <p class="room-name">{{room.name}}</p>
+                    <p class="room-name">{{room.name || room.roomCategory || 'Standard Room'}}</p>
 
                     <p>
                         <span class="price">
                             <i class="fa-solid fa-indian-rupee-sign"></i>
-                            <span>{{room.price}}</span>
+                            <span>{{room.pricing?.basePricePerNight || room.price || room.basePrice || 10000}}</span>
                         </span>
                         <span class="per-person">/Person</span>
                     </p>
                 </div>
 
-                <p class="guest">{{room.guest}}</p>
+                <p class="guest">Max Guest: {{(room.capacity?.adults || 0) + (room.capacity?.children || 0) || room.maxGuests || 4}}</p>
 
                 <p class="text-muted" style="font-size: 14px;">
-                    {{room.description}}
+                    {{room.description || 'Spacious and comfortable room designed for relaxation and convenience.'}}
                 </p>
 
                 <div class="icons-button d-flex flex-row justify-content-between mt-4">
@@ -139,7 +139,7 @@
                     </div>
 
                     <div class="button">
-                        <button class="button detail-btn" (click)="overlay()">Get Details</button>
+                        <button class="button detail-btn" (click)="overlay(room)">Get Details</button>
                     </div>
                     @if (isGetDetailsOpen) {
                         <div class="custom-backdrop" (click)="closeFilter()"></div>
@@ -179,13 +179,13 @@
                                 <div class="selected-room mt-3">
                                     <div class="row align-items-center p-2">
                                         <div class="col-6">
-                                            <h4 class="fw-bold">Standard Room</h4>
-                                            <p class="price fw-semibold">Max Guest: <span class="text-dark">3 person</span></p>
+                                            <h4 class="fw-bold">{{selectedPopupRoom?.name || selectedPopupRoom?.roomCategory || 'Standard Room'}}</h4>
+                                            <p class="price fw-semibold">Max Guest: <span class="text-dark">{{(selectedPopupRoom?.capacity?.adults || 0) + (selectedPopupRoom?.capacity?.children || 0) || selectedPopupRoom?.maxGuests || 4}} person</span></p>
                                             <p class="price fw-semibold">Inclusion</p>
                                             <ul class="list text-muted">
-                                                <li>Complimentary Food or Beverages </li>
+                                                <li>Complimentary Food or Beverages </li>
                                                 <li>Complimentary Laundry service </li>
-                                                <li>Free Access to Holiday Activity Centre </li>
+                                                <li>Free Access to Holiday Activity Centre </li>
                                                 <li>Breakfast  & Lunch Or Dinner included</li>
                                                 <li>Late Check-Out upto 2 hours (subject to availability)</li>
                                             </ul>
@@ -193,14 +193,14 @@
                                         <div class="col-6">
                                             <div class="d-flex flex-column">
                                                 <div class="d-flex flex-row flex-wrap gap-2 justify-content-end">
-                                            <span class="text-danger text-decoration-line-through fw-semibold fs-5"><i class="pi pi-indian-rupee"></i>10,000</span>
-                                            <span class="price fs-4"><i class="pi pi-indian-rupee"></i>9500</span>
+                                            <span class="text-danger text-decoration-line-through fw-semibold fs-5"><i class="pi pi-indian-rupee"></i>{{(selectedPopupRoom?.pricing?.basePricePerNight || selectedPopupRoom?.price || 10000) * 1.2}}</span>
+                                            <span class="price fs-4"><i class="pi pi-indian-rupee"></i>{{selectedPopupRoom?.pricing?.basePricePerNight || selectedPopupRoom?.price || 10000}}</span>
                                             <span class="text-muted fw-semibold fs-4">INR/Night</span>
                                         </div>
 
                                             <p class="text-end text-warning">Plus ₹148.71 In Taxes and Fees/Night</p>
                                             <button class="button book-now-btn px-4 py-2 d-flex align-self-end">Book Now <span><i class="pi pi-angle-right"></i></span></button>
-                                            <p class="mt-3 text-muted text-end" style="font-size: 13px;">Total ₹9,648.71 for 1 Night Includes Taxes and Fees</p>
+                                            <p class="mt-3 text-muted text-end" style="font-size: 13px;">Total ₹{{((selectedPopupRoom?.pricing?.basePricePerNight || selectedPopupRoom?.price || 10000) + 148.71) | number }} for 1 Night Includes Taxes and Fees</p>
 
                                             </div>
                                         </div>
@@ -693,117 +693,73 @@
         <div class="card-body p-0">
             
              <div class="extra-services">
-                <p class="Options mt-2">Extra Services</p>
+                                        <p class="Options mt-2">Room Type</p>
                                         <div class="category">
-                                            <div class="category-header d-flex flex-row justify-content-between"
-                                                (click)="toggleRoomBoxOpen()">
-                                                <div class="d-flex gap-3">
-                                                    <i class="fa-solid fa-bars"></i>
-                                                    <p class="m-0 fw">Extra Services</p>
-                                                </div>
-                                                <i class="fa-solid fa-chevron-down text-black"
-                                                    [class.rotate]="isRoomBoxOpen"></i>
+                                            <div class="custom-input-box">
+                                                <i class="fa-solid fa-bars pe-2" style="color: #008080;"></i>
+                                                <p-select [options]="roomCategories" [(ngModel)]="selectedRoomCategory" optionLabel="name" placeholder="Room Type" [style]="{'width': '100%', 'border': 'none', 'box-shadow': 'none', 'background': 'transparent'}" appendTo="body" styleClass="border-0 w-full"></p-select>
                                             </div>
-                                            @if (isRoomBoxOpen) {
-                                            <div class="category-box-contents py-3">
-                                                <div class="search_container d-flex gap-2">
-                                                    <p class="search-btn m-0"><i
-                                                            class="fa-solid fa-magnifying-glass"></i>
-                                                    </p>
-                                                    <input type="text" pInputText [(ngModel)]="value"
-                                                        placeholder="Search" />
-                                                </div>
-                                                <div class="greenline"> </div>
-                                                <div class="categoryTitle">
-                                                    <div class="categorynameTitle">Budget</div>
-                                                    <div class="categorynameTitle">Mid-range</div>
-                                                    <div class="categorynameTitle">Luxury</div>
-                                                    <div class="categorynameTitle">Family-friendly</div>
-                                                    <div class="categorynameTitle">Business</div>
-
-                                                </div>
-                                            </div>
-                                            }
                                         </div>
 
-                                <div class="dates">
+                                <div class="dates mt-3">
                                         <div class="row">
                                             <div class="col-12 col-lg-6">
                                                 <p class="dateTitle mt-2">Check-in Date</p>
                                                 <div class="chechinDate">
-                                                    <div class="category-header d-flex flex-row "
-                                                        (click)="toggleCheckinBoxOpen()">
-                                                        <div class="d-flex gap-3">
-                                                            <i class="fa-solid fa-bars"></i>
-                                                            <p class="m-0"><p-datepicker [(ngModel)]="indate"
-                                                                    [inputStyle]="{'width': '97px' }" /></p>
-                                                        </div>
-                                                        <!-- <i class="fa-solid fa-chevron-down" [class.rotate]="isCheckinBoxOpen"></i> -->
+                                                    <div class="custom-input-box">
+                                                        <i class="fa-solid fa-bars pe-2" style="color: #008080;"></i>
+                                                        <p-datepicker [(ngModel)]="indate" placeholder="01/02/2026" [style]="{'width': '100%'}" [inputStyle]="{'border': 'none', 'padding': '5px', 'box-shadow': 'none', 'background': 'transparent', 'width': '100%'}" appendTo="body" [showIcon]="true" iconDisplay="input">
+                                                            <ng-template pTemplate="inputicon">
+                                                                <i class="fa-solid fa-chevron-down text-black"></i>
+                                                            </ng-template>
+                                                        </p-datepicker>
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="col-12 col-lg-6">
                                                 <p class="dateTitle mt-2">Check-Out Date</p>
                                                 <div class="chechoutDate">
-                                                    <div class="category-header d-flex flex-row "
-                                                        (click)="toggleCheckoutBoxOpen()">
-                                                        <div class="d-flex gap-3">
-                                                            <i class="fa-solid fa-bars"></i>
-                                                            <p class="m-0"><p-datepicker [(ngModel)]="outdate"
-                                                                    [inputStyle]="{'width': '97px' }" /></p>
-                                                        </div>
-                                                        <!-- <i class="fa-solid fa-chevron-down" [class.rotate]="isCheckinBoxOpen"></i> -->
+                                                    <div class="custom-input-box">
+                                                        <i class="fa-solid fa-bars pe-2" style="color: #008080;"></i>
+                                                        <p-datepicker [(ngModel)]="outdate" placeholder="02/02/2026" [style]="{'width': '100%'}" [inputStyle]="{'border': 'none', 'padding': '5px', 'box-shadow': 'none', 'background': 'transparent', 'width': '100%'}" appendTo="body" [showIcon]="true" iconDisplay="input">
+                                                            <ng-template pTemplate="inputicon">
+                                                                <i class="fa-solid fa-chevron-down text-black"></i>
+                                                            </ng-template>
+                                                        </p-datepicker>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                        <div class="count mt-2">
+                                    <div class="count mt-3">
                                         <div class="row">
                                             <div class="col-4 col-lg-4 col-md-4">
-                                                <!-- <p class="roomTitle pt-4">Rooms</p> -->
                                                 <div class="flex-auto">
-                                                    <label class="roomTitle pt-2" for="minmax-buttons">Rooms</label>
-                                                    <p-inputnumber [(ngModel)]="room" mode="decimal"
-                                                        [showButtons]="true" inputId="minmax-buttons" [min]="0"
-                                                        [max]="100" [inputStyle]="{'width': '10px' }" />
+                                                    <label class="roomTitle pt-2" for="rooms">Rooms</label>
+                                                    <p-inputnumber [(ngModel)]="room" mode="decimal" [showButtons]="true" inputId="rooms" [min]="0" [max]="100" [style]="{'width': '100%'}" buttonLayout="stacked" decrementButtonClass="p-button-secondary" incrementButtonClass="p-button-secondary" incrementButtonIcon="pi pi-angle-up" decrementButtonIcon="pi pi-angle-down" [inputStyle]="{'width':'100%', 'text-align':'center'}"></p-inputnumber>
                                                 </div>
                                             </div>
                                             <div class="col-4 col-lg-4 col-md-4 col-sm-4">
-                                                <!-- <p class="roomTitle pt-4">Rooms</p> -->
                                                 <div class="flex-auto">
-                                                    <label class="roomTitle pt-2" for="minmax-buttons">Aduts</label>
-                                                    <p-inputnumber [(ngModel)]="adult" mode="decimal"
-                                                        [showButtons]="true" inputId="minmax-buttons" [min]="0"
-                                                        [max]="100" [inputStyle]="{'width': '10px' }" />
+                                                    <label class="roomTitle pt-2" for="adults">Adults</label>
+                                                    <p-inputnumber [(ngModel)]="adult" mode="decimal" [showButtons]="true" inputId="adults" [min]="0" [max]="100" [style]="{'width': '100%'}" buttonLayout="stacked" decrementButtonClass="p-button-secondary" incrementButtonClass="p-button-secondary" incrementButtonIcon="pi pi-angle-up" decrementButtonIcon="pi pi-angle-down" [inputStyle]="{'width':'100%', 'text-align':'center'}"></p-inputnumber>
                                                 </div>
                                             </div>
                                             <div class="col-4 col-lg-4 col-md-4 col-sm-4">
-                                                <!-- <p class="roomTitle pt-4">Rooms</p> -->
                                                 <div class="flex-auto">
-                                                    <label class="roomTitle pt-2" for="minmax-buttons">Children</label>
-                                                    <p-inputnumber [(ngModel)]="children" mode="decimal"
-                                                        [showButtons]="true" inputId="minmax-buttons" [min]="0"
-                                                        [max]="100" [inputStyle]="{'width': '10px' }" />
+                                                    <label class="roomTitle pt-2" for="children">Childrens</label>
+                                                    <p-inputnumber [(ngModel)]="children" mode="decimal" [showButtons]="true" inputId="children" [min]="0" [max]="100" [style]="{'width': '100%'}" buttonLayout="stacked" decrementButtonClass="p-button-secondary" incrementButtonClass="p-button-secondary" incrementButtonIcon="pi pi-angle-up" decrementButtonIcon="pi pi-angle-down" [inputStyle]="{'width':'100%', 'text-align':'center'}"></p-inputnumber>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
 
-                                    <p class="Options mt-2">Extra Services</p>
+                                    <p class="Options mt-3">Extra Services</p>
                                         <div class="category">
-                                            <div class="category-header d-flex flex-row justify-content-between"
-                                                (click)="toggleExtraServiceOpen()">
-                                                <div class="d-flex gap-3">
-                                                    <i class="fa-solid fa-bars"></i>
-                                                    <p class="m-0 fw">Extra Services</p>
-                                                </div>
-                                                <i class="fa-solid fa-chevron-down text-black"
-                                                    [class.rotate]="isExtraService"></i>
+                                            <div class="custom-input-box">
+                                                <i class="fa-solid fa-bars pe-2" style="color: #008080;"></i>
+                                                <p-select [options]="extraServicesList" [(ngModel)]="selectedExtraService" optionLabel="name" placeholder="Extra Services" [style]="{'width': '100%', 'border': 'none', 'box-shadow': 'none', 'background': 'transparent'}" appendTo="body" styleClass="border-0 w-full"></p-select>
                                             </div>
-                                            @if (isExtraService) {
-                                            <!-- content-->
-                                            }
                                         </div>
 
              </div>
@@ -812,12 +768,12 @@
                 <p class="m-0">Total Cost</p>
                 <div class="rupee">
                     <i class="fa-solid fa-indian-rupee-sign"></i>
-                    <p class="m-0">10,000</p>
+                    <p class="m-0">{{ getCalculatedTotal() | number }}</p>
                 </div>
              </div>
              <div class="line"></div>
              <div class="button px-4 m-3">
-                <button class="button booknow-btn">Book Now
+                <button class="button booknow-btn" (click)="bookNow()">Book Now
                     <i class="fa-regular fa-paper-plane"></i>
                 </button>
              </div>

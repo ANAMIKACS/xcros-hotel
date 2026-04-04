@@ -147,7 +147,7 @@
                     </div>
 
                     <!-- SEARCH BUTTON -->
-                    <button class="search-btn d-flex align-items-center gap-2" [routerLink]="['/roomBookingListing']">
+                    <button class="search-btn d-flex align-items-center gap-2" (click)="onSearch()">
                         <i class="fa-solid fa-magnifying-glass"></i>
                         Search
                     </button>
@@ -310,7 +310,7 @@
             <div class="row">
                 @for (hotel of hotelcard; track hotel.id) {
                 <div class="col-12 col-md-4 col-lg-3 col-sm-6 mt-3 p-1">
-                    <div class="card featured-card">
+                    <div class="card featured-card" style="cursor: pointer;" [routerLink]="['/roomBookingListingDetails', hotel.id]">
                         <div class="card-img">
                             <img [src]="hotel.cardImg">
                             <div class="profileimg">
@@ -366,7 +366,7 @@
                                     <span class="price">$ {{ hotel.price }}</span>
                                 </div>
                                 <div class="action-buttons">
-                                    <button class="contact-btn" (click)="togglePopup(hotel.id)">Contact Info</button>
+                                    <button class="contact-btn" (click)="togglePopup(hotel.id); $event.stopPropagation()">Contact Info</button>
                                     @if(activeContactId===hotel.id)
                                     {
                                     <div class="popup card gap-3">
@@ -385,10 +385,10 @@
 
                                     </div>
                                     }
-                                    <button class="icon-btn">
+                                    <button class="icon-btn" (click)="$event.stopPropagation()">
                                         <i class="fav fa-solid fa-heart"></i>
                                     </button>
-                                    <button class="icon-btn">
+                                    <button class="icon-btn" (click)="$event.stopPropagation()">
                                         <i class="fa-solid fa-location-dot"></i>
                                     </button>
                                 </div>
@@ -498,7 +498,7 @@
 
                         <div class="col-12 col-lg-6 mt-4">
 
-                            <div class="card hotel-card">
+                            <div class="card hotel-card" style="cursor: pointer;" [routerLink]="['/roomBookingListingDetails', hotel.id]">
 
                                 <div class="card-img">
                                     <img [src]="hotel.cardImg">
@@ -576,15 +576,15 @@
 
                                         <div class="action-buttons">
 
-                                            <button class="contact-btn">
+                                            <button class="contact-btn" (click)="$event.stopPropagation()">
                                                 Contact Info
                                             </button>
 
-                                            <button class="icon-btn">
+                                            <button class="icon-btn" (click)="$event.stopPropagation()">
                                                 <i class="fa-regular fa-heart"></i>
                                             </button>
 
-                                            <button class="icon-btn">
+                                            <button class="icon-btn" (click)="$event.stopPropagation()">
                                                 <i class="fa-solid fa-location-dot"></i>
                                             </button>
 

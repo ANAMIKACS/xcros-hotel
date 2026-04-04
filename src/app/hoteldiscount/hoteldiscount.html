@@ -89,10 +89,9 @@
                                 <div class="d-flex flex-row gap-3 mt-4">
                                     <p class="feedback-title">{{item.title}}</p>
                                     <span>
+                                        @for (s of [].constructor(item.rating || 4); track $index) {
                                         <i class="fa-solid fa-star"></i>
-                                        <i class="fa-solid fa-star"></i>
-                                        <i class="fa-solid fa-star"></i>
-                                        <i class="fa-solid fa-star"></i>
+                                        }
                                     </span>
                                 </div>
 
@@ -142,10 +141,12 @@
                     <div #logosSection class="logos-container">
                         <div class="logos d-flex flex-row gap-3">
 
-                            @for(item of logos; track $index){
+                            @for(item of logos; track item._id){
                             <div class="company-logo">
-                                <img [src]="item.image" alt="">
+                                <img [src]="item.image" [alt]="item.name" [title]="item.name">
                             </div>
+                            } @empty {
+                            <p class="text-muted m-0" style="font-size:13px;">No partners yet</p>
                             }
 
                         </div>

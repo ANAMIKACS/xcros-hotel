@@ -1,0 +1,35 @@
+{
+  "success": true,
+  "data": {
+    "location": {
+      "coordinates": {
+        "lat": 34.02,
+        "lng": -118.49
+      },
+      "address": "123 Ocean Drive",
+      "city": "Malibu"
+    },
+    "contactInfo": {
+      "phone": "+1234567890",
+      "email": "contact@moonlight.com"
+    },
+    "images": {
+      "cardImg": "https://images.unsplash.com/photo-1566073771259-6a8506099945",
+      "profileImg": "https://images.unsplash.com/photo-1566073771259-6a8506099945"
+    },
+    "stats": {
+      "rating": 4.1,
+      "reviewCount": 8,
+      "reviewText": "Good",
+      "views": 240
+    },
+    "_id": "69cdfe9f154642552ceb2eba",
+    "hotelName": "Moonlight Hotel",
+    "hotelType": "Hotel",
+    "description": "A beautiful stay near the ocean.",
+    "isActive": true,
+    "createdAt": "2026-04-02T05:29:03.079Z",
+    "updatedAt": "2026-04-02T05:29:03.079Z",
+    "__v": 0
+  }
+}

@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit, ElementRef, ViewChild, CUSTOM_ELEMENTS_SCHEMA, inject, } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ElementRef, ViewChild, CUSTOM_ELEMENTS_SCHEMA, inject, ChangeDetectorRef } from '@angular/core';
 import { AvatarModule } from 'primeng/avatar';
 import { CommonModule } from '@angular/common';
 import { Hoteldiscount } from "../hoteldiscount/hoteldiscount";
@@ -12,7 +12,7 @@ import { DateAdapter, provideCalendar, CalendarPreviousViewDirective, CalendarTo
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import type { CalendarEvent } from 'angular-calendar';
 import { HostListener } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { RouterLink, Router } from '@angular/router';
 
 
 register();
@@ -34,6 +34,8 @@ gsap.registerPlugin(ScrollTrigger);
 export class Home implements OnInit, AfterViewInit {
 
   private hotelService = inject(HotelService);
+  private router = inject(Router);
+  private cdr = inject(ChangeDetectorRef);
 // view: CalendarView = CalendarView.Month;
 
   ngOnInit(): void {
@@ -46,18 +48,38 @@ export class Home implements OnInit, AfterViewInit {
 
     this.hotelService.getCategories().subscribe(data => {
       this.categoryCards = data;
+      this.cdr.detectChanges();
+      setTimeout(() => {
+        if (this.categoriesSection) this.initCategoryAnimation();
+        ScrollTrigger.refresh();
+      }, 100);
     });
 
     this.hotelService.getFeaturedHotels().subscribe(data => {
       this.hotelcard = data;
+      this.cdr.detectChanges();
+      setTimeout(() => {
+        if (this.featuredSection) this.initFeaturedAnimation();
+        ScrollTrigger.refresh();
+      }, 100);
     });
 
     this.hotelService.getExclusiveOfferHotels().subscribe(data => {
       this.exclusiveofferHotels = data;
+      this.cdr.detectChanges();
+      setTimeout(() => {
+        if (this.exclusiveOfferSection) this.initExclusiveOfferAnimation();
+        ScrollTrigger.refresh();
+      }, 100);
     });
 
     this.hotelService.getAdvertisements().subscribe(data => {
       this.advertisements = data;
+      this.cdr.detectChanges();
+      setTimeout(() => {
+        if (this.advertismentSection) this.initAdvertismentAnimation();
+        ScrollTrigger.refresh();
+      }, 100);
     });
 
     this.hotelService.getDashboardStats().subscribe(data => {
@@ -65,16 +87,36 @@ export class Home implements OnInit, AfterViewInit {
     });
   }
 
+  onSearch() {
+    const queryParams: any = {};
+    if (this.selectedLocation) {
+      queryParams.city = this.selectedLocation?.name || this.selectedLocation;
+      if (queryParams.city === 'All Locations') {
+        delete queryParams.city;
+      }
+    }
+    if (this.checkInDate) {
+      const gmtDate = new Date(this.checkInDate.getTime() - this.checkInDate.getTimezoneOffset() * 60000);
+      queryParams.checkIn = gmtDate.toISOString().split('T')[0];
+    }
+    if (this.checkOutDate) {
+      const gmtDate = new Date(this.checkOutDate.getTime() - this.checkOutDate.getTimezoneOffset() * 60000);
+      queryParams.checkOut = gmtDate.toISOString().split('T')[0];
+    }
+    const totalGuests = this.adults + this.children;
+    if (totalGuests > 0) {
+      queryParams.guests = totalGuests;
+    }
+
+    this.router.navigate(['/roomBookingListing'], { queryParams });
+  }
+
   @ViewChild('heroSection') heroSection!: ElementRef;
 
   ngAfterViewInit(): void {
     this.initHeroAnimation();
-    this.initCategoryAnimation();
     this.initOffersAnimation();
-    this.initFeaturedAnimation();
     this.initPromoAnimation();
-    this.initExclusiveOfferAnimation();
-    this.initAdvertismentAnimation();
   }
 
   initHeroAnimation() {
@@ -238,7 +280,7 @@ get guestSummary(): string {
   //Categories
   @ViewChild('categoriesSection') categoriesSection!: ElementRef;
   initCategoryAnimation() {
-
+    if (!this.categoryCards.length) return;
     const section = this.categoriesSection.nativeElement;
     const titles = section.querySelectorAll('.category-item');
     const cards = section.querySelectorAll('.category-card');
@@ -260,13 +302,13 @@ get guestSummary(): string {
     );
 
   }
-  categoryCards: any[] = FALLBACK_CATEGORIES;
+  categoryCards: any[] = [];
 
   //Advertisment
-  advertisements: any[] = FALLBACK_ADVERTISEMENTS;
+  advertisements: any[] = [];
   @ViewChild('advertismentSection') advertismentSection!: ElementRef;
   initAdvertismentAnimation() {
-
+    if (!this.advertisements.length) return;
     const section = this.advertismentSection.nativeElement;
     const title = section.querySelector('.ad-title-anim');
     const contents = section.querySelectorAll('.img-contents');
@@ -363,6 +405,7 @@ get guestSummary(): string {
   //Featured Section
   @ViewChild('featuredSection') featuredSection!: ElementRef;
   initFeaturedAnimation() {
+    if (!this.hotelcard.length) return;
     const section = this.featuredSection.nativeElement;
     const titles = section.querySelectorAll('.feature-item');
     const cards = section.querySelectorAll('.featured-card');
@@ -395,7 +438,7 @@ get guestSummary(): string {
     this.selectedOption = option;
     this.isFeaturedBoxOpen = false;
   }
-  hotelcard: any[] = FALLBACK_HOTELS;
+  hotelcard: any[] = [];
   isFav = false;
 
 toggleFav() {
@@ -415,7 +458,7 @@ toggleFav() {
     }
   }
   //Promo Section
-  dashboardStats: any = FALLBACK_STATS;
+  dashboardStats: any = { locations: 0, properties: 0, bookings: 0, ratings: 0 };
   @ViewChild('promoSection') promoSection!: ElementRef;
 
   initPromoAnimation() {
@@ -443,6 +486,7 @@ toggleFav() {
   //Exclusive Offer HOTEL
   @ViewChild('exclusiveOfferSection') exclusiveOfferSection!: ElementRef;
   initExclusiveOfferAnimation() {
+    if (!this.exclusiveofferHotels.length) return;
     const section = this.exclusiveOfferSection.nativeElement;
     const banner = section.querySelector('.offer-banner');
     const cards = section.querySelectorAll('.hotel-card');
@@ -464,7 +508,7 @@ toggleFav() {
     );
 
   }
-  exclusiveofferHotels: any[] = FALLBACK_HOTELS.slice(0, 2);
+  exclusiveofferHotels: any[] = [];
 
   onAdClick(adId: string): void {
     this.hotelService.registerAdClick(adId).subscribe();

@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit, ElementRef, ViewChild, inject } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ElementRef, ViewChild, inject, ChangeDetectorRef } from '@angular/core';
 import { AvatarModule } from 'primeng/avatar';
 import { CommonModule } from '@angular/common';
 import { InputGroupModule } from 'primeng/inputgroup';
@@ -18,6 +18,7 @@ gsap.registerPlugin(ScrollTrigger);
   styleUrl: './hoteldiscount.scss',
 })
 export class Hoteldiscount implements OnInit, AfterViewInit {
+  private cdr = inject(ChangeDetectorRef);
 
   @ViewChild('discountSection') discountSection!: ElementRef;
   @ViewChild('benefitsSection') benefitsSection!: ElementRef;
@@ -28,10 +29,8 @@ export class Hoteldiscount implements OnInit, AfterViewInit {
     this.initDiscountAnimation();
     this.initBenefitsAnimation();
     this.initTestimonialTitleAnimation();
-    this.initTestimonialAnimation();
-    this.initTestimonialHoverAnimation();
+    // initTestimonialHoverAnimation is called after data loads to avoid GSAP hiding an empty wrapper
     this.initSubscribeAnimation();
-    this.initLogoAnimation();
     this.initConnectSection();
   }
 
@@ -73,21 +72,9 @@ export class Hoteldiscount implements OnInit, AfterViewInit {
 
   //partners
   @ViewChild('logosSection') logosSection!: ElementRef;
-  logos = [
-    { image: '/home/ri_visa-line.png' },
-    { image: '/home/logos_mastercard.png' },
-    { image: '/home/logos_paypal.png' },
-    { image: '/home/logo (2).png' },
-    { image: '/home/b..png' },
-    { image: '/home/airbnb.png' },
-    { image: '/home/ri_visa-line.png' },
-    { image: '/home/logos_mastercard.png' },
-    { image: '/home/b..png' },
-    { image: '/home/airbnb.png' },
-
-  ]
+  logos: any[] = [];
   initLogoAnimation() {
-
+    if (!this.logos.length) return;
     const container = this.logosSection.nativeElement;
     const logos = container.querySelector('.logos');
 
@@ -144,12 +131,14 @@ export class Hoteldiscount implements OnInit, AfterViewInit {
   @ViewChild('testimonialWrapper') testimonialWrapper!: ElementRef;
   private hotelService = inject(HotelService);
 
-  testimonials: any[] = FALLBACK_TESTIMONIALS;
+  testimonials: any[] = [];
 
   initTestimonialAnimation() {
 
     const wrapper = this.testimonialWrapper.nativeElement;
     const cards = wrapper.querySelectorAll('.testimonial-card-container');
+
+    if (cards.length < 3) return;
 
     gsap.set(cards[0], { y: 0, scale: 1, opacity: 1, zIndex: 3 });
     gsap.set(cards[1], { y: 40, scale: 0.95, opacity: 0.7, zIndex: 2 });
@@ -238,8 +227,27 @@ export class Hoteldiscount implements OnInit, AfterViewInit {
 
   ngOnInit() {
     this.items = [{ label: 'Web Search' }, { label: 'AI Assistant' }, { label: 'History' }];
+
     this.hotelService.getTestimonials().subscribe(data => {
       this.testimonials = data;
+      this.cdr.detectChanges();
+      // Wait for Angular to render the cards into the DOM before animating
+      setTimeout(() => {
+        if (this.testimonialWrapper) {
+          this.initTestimonialHoverAnimation();
+          ScrollTrigger.refresh();
+        }
+        this.initTestimonialAnimation();
+      }, 100);
+    });
+
+    this.hotelService.getPartners().subscribe(data => {
+      this.logos = data;
+      this.cdr.detectChanges();
+      setTimeout(() => {
+        this.initLogoAnimation();
+        ScrollTrigger.refresh();
+      }, 100);
     });
   }
 
